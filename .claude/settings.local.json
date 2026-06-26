@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm install framer-motion lucide-react clsx 2>&1)",
+      "PowerShell(Start-Sleep -Seconds 8; try { \\(Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -TimeoutSec 10\\).StatusCode } catch { $_.Exception.Message })",
+      "PowerShell(try { $pages = @\\(\"/\", \"/treatments\", \"/hospitals\", \"/doctors\", \"/packages\", \"/about\", \"/contact\", \"/dashboard/patient\", \"/dashboard/doctor\", \"/dashboard/hospital\", \"/dashboard/admin\"\\); foreach \\($p in $pages\\) { $r = Invoke-WebRequest -Uri \"http://localhost:3000$p\" -UseBasicParsing -TimeoutSec 10; Write-Output \"$p -> $\\($r.StatusCode\\)\" } } catch { $_.Exception.Message })",
+      "PowerShell($env:PATH = \"C:\\\\Users\\\\ANIL\\\\Downloads\\\\PortableGit\\\\cmd;$env:PATH\"; cd \"c:\\\\Users\\\\ANIL\\\\OneDrive\\\\Desktop\\\\gativcare\"; git --version)",
+      "PowerShell($env:PATH = \"C:\\\\Users\\\\ANIL\\\\Downloads\\\\PortableGit\\\\cmd;$env:PATH\"; cd \"c:\\\\Users\\\\ANIL\\\\OneDrive\\\\Desktop\\\\gativcare\"; git init; git add -A; git status --short | Select-Object -First 30)"
+    ]
+  }
+}
