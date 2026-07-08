@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, Stethoscope, ShieldCheck, TrendingDown, Users2 } from "lucide-react";
+import { Star, ShieldCheck, TrendingDown, Users2 } from "lucide-react";
 import { stats } from "@/lib/constants";
 import { AnimatedCounter } from "@/components/ui/motion";
 import { HeroQuoteCard } from "./HeroQuoteCard";
@@ -76,71 +76,25 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="relative"
           >
-            <div className="lg:hidden mb-8">
-              <HeroQuoteCard className="mx-auto" />
-            </div>
+            <HeroQuoteCard className="mx-auto" />
 
-            <div className="relative hidden lg:block">
-              <div className="relative w-full aspect-square max-w-lg mx-auto rounded-3xl overflow-hidden border border-border shadow-2xl shadow-black/5 bg-gradient-to-br from-primary/10 via-white to-accent/10 dark:from-primary/15 dark:via-slate-900 dark:to-accent/15">
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-10">
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-xl shadow-primary/30 mb-6">
-                    <Stethoscope size={40} className="text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">India&apos;s Trusted Healthcare Network</h3>
-                  <p className="text-sm text-muted">250+ JCI &amp; NABH Accredited Hospitals across 12 cities</p>
-                </div>
-
-                <motion.div
-                  className="absolute top-8 left-8 glass-card rounded-2xl p-3 shadow-xl"
-                  animate={{ y: [0, -6, 0] }}
-                  transition={{ duration: 4, repeat: Infinity }}
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="w-9 h-9 rounded-lg bg-green-500/15 flex items-center justify-center">
-                      <ShieldCheck size={18} className="text-green-600" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold">JCI Accredited</p>
-                      <p className="text-[10px] text-muted">250+ Hospitals</p>
-                    </div>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  className="absolute bottom-8 left-8 glass-card rounded-2xl p-3 shadow-xl"
-                  animate={{ y: [0, 6, 0] }}
-                  transition={{ duration: 4.5, repeat: Infinity }}
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="w-9 h-9 rounded-lg bg-amber-500/15 flex items-center justify-center">
-                      <TrendingDown size={18} className="text-amber-600" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold">Save up to 90%</p>
-                      <p className="text-[10px] text-muted">vs Western countries</p>
-                    </div>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  className="absolute bottom-8 right-8 glass-card rounded-2xl p-3 shadow-xl"
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{ duration: 5, repeat: Infinity }}
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="w-9 h-9 rounded-lg bg-blue-500/15 flex items-center justify-center">
-                      <Users2 size={18} className="text-blue-600" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold">3,000+ Doctors</p>
-                      <p className="text-[10px] text-muted">World-class experts</p>
-                    </div>
-                  </div>
-                </motion.div>
+            <div className="grid grid-cols-3 gap-3 max-w-sm mx-auto mt-6">
+              <div className="glass-card rounded-2xl p-3 text-center">
+                <ShieldCheck size={18} className="text-green-600 mx-auto mb-1" />
+                <p className="text-xs font-semibold">JCI Accredited</p>
+                <p className="text-[10px] text-muted">250+ Hospitals</p>
+              </div>
+              <div className="glass-card rounded-2xl p-3 text-center">
+                <TrendingDown size={18} className="text-amber-600 mx-auto mb-1" />
+                <p className="text-xs font-semibold">Save up to 90%</p>
+                <p className="text-[10px] text-muted">vs Western countries</p>
+              </div>
+              <div className="glass-card rounded-2xl p-3 text-center">
+                <Users2 size={18} className="text-blue-600 mx-auto mb-1" />
+                <p className="text-xs font-semibold">3,000+ Doctors</p>
+                <p className="text-[10px] text-muted">World-class experts</p>
               </div>
             </div>
-
-            <HeroQuoteCard className="hidden lg:block absolute top-1/2 -translate-y-1/2 -right-6 xl:right-2 z-10" />
           </motion.div>
         </div>
 
