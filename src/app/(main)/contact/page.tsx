@@ -1,19 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, MessageCircle, Send, Upload, Clock, Globe, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Send, Upload, Clock, Globe, CheckCircle2 } from "lucide-react";
 import { FadeIn } from "@/components/ui/motion";
+
+const WHATSAPP_LINK = "https://wa.me/918886963612";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     name: "", email: "", phone: "", country: "", treatment: "", message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setError(null);
+
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => data.append(key, value));
+    files.forEach((file) => data.append("reports", file));
+
+    try {
+      const res = await fetch("/api/leads", { method: "POST", body: data });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || "Something went wrong. Please try again.");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -49,11 +73,11 @@ export default function ContactPage() {
               {[
                 { icon: Phone, label: "Phone / WhatsApp", value: "+91 88869 63612", href: "tel:+918886963612", color: "text-primary" },
                 { icon: Mail, label: "Email", value: "care@gativcare.com", href: "mailto:care@gativcare.com", color: "text-primary" },
-                { icon: MessageCircle, label: "WhatsApp", value: "+91 88869 63612", href: "#", color: "text-green-500" },
-                { icon: MapPin, label: "Office", value: "Connaught Place, New Delhi, India 110001", href: "#", color: "text-primary" },
+                { icon: MessageCircle, label: "WhatsApp", value: "+91 88869 63612", href: WHATSAPP_LINK, color: "text-green-500" },
+                { icon: MapPin, label: "Office", value: "Connaught Place, New Delhi, India 110001", href: "https://maps.google.com/?q=Connaught+Place+New+Delhi", color: "text-primary" },
               ].map((contact, i) => (
                 <FadeIn key={contact.label} delay={i * 0.1}>
-                  <a href={contact.href} className="flex items-start gap-4 p-4 glass-card rounded-xl hover:bg-surface-hover transition-colors group">
+                  <a href={contact.href} target={contact.href.startsWith("http") ? "_blank" : undefined} rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined} className="flex items-start gap-4 p-4 glass-card rounded-xl hover:bg-surface-hover transition-colors group">
                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
                       <contact.icon size={20} className={contact.color} />
                     </div>
@@ -205,21 +229,38 @@ export default function ContactPage() {
                           placeholder="Describe your medical condition or query..."
                         />
                       </div>
-                      <div>
+                      <div id="reports">
                         <label className="text-sm font-medium mb-1.5 block">Upload Medical Reports (optional)</label>
-                        <div className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-primary/50 transition-colors cursor-pointer">
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          multiple
+                          accept="application/pdf,image/jpeg,image/png"
+                          className="hidden"
+                          onChange={(e) => setFiles(Array.from(e.target.files ?? []))}
+                        />
+                        <div
+                          onClick={() => fileInputRef.current?.click()}
+                          className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-primary/50 transition-colors cursor-pointer"
+                        >
                           <Upload size={24} className="mx-auto text-muted mb-2" />
-                          <p className="text-sm text-muted">Drag & drop or click to upload</p>
-                          <p className="text-xs text-muted mt-1">PDF, JPG, PNG up to 10MB</p>
+                          <p className="text-sm text-muted">
+                            {files.length > 0 ? `${files.length} file(s) selected` : "Drag & drop or click to upload"}
+                          </p>
+                          <p className="text-xs text-muted mt-1">
+                            {files.length > 0 ? files.map((f) => f.name).join(", ") : "PDF, JPG, PNG up to 10MB"}
+                          </p>
                         </div>
                       </div>
+                      {error && <p className="text-sm text-red-500 text-center">{error}</p>}
                       <motion.button
                         type="submit"
-                        className="w-full btn-primary flex items-center justify-center gap-2 py-4 text-base"
+                        disabled={submitting}
+                        className="w-full btn-primary flex items-center justify-center gap-2 py-4 text-base disabled:opacity-60"
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.99 }}
                       >
-                        <Send size={18} /> Submit Free Consultation Request
+                        <Send size={18} /> {submitting ? "Submitting..." : "Submit Free Consultation Request"}
                       </motion.button>
                       <p className="text-xs text-muted text-center">
                         By submitting, you agree to our Privacy Policy. Your data is encrypted and secure.

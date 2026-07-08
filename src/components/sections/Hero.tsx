@@ -104,7 +104,7 @@ export default function Hero() {
                 Book Free Consultation
               </motion.a>
               <motion.a
-                href="#upload"
+                href="/contact#reports"
                 className="btn-secondary flex items-center justify-center gap-2 text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -113,7 +113,9 @@ export default function Hero() {
                 Upload Medical Reports
               </motion.a>
               <motion.a
-                href="#whatsapp"
+                href="https://wa.me/918886963612"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-green-500 text-white font-semibold hover:bg-green-600 transition-colors shadow-lg shadow-green-500/30"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

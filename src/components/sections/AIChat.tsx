@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot, User, Sparkles, Upload, Minimize2 } from "lucide-react";
 
@@ -37,6 +38,7 @@ function getBotResponse(input: string): string {
 }
 
 export default function AIChat() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: "bot", text: "Hello! 👋 I'm your AI Healthcare Assistant. I can help you find the right treatment, hospital, and doctor in India. How can I assist you today?" },
@@ -158,7 +160,11 @@ export default function AIChat() {
 
             <div className="p-3 border-t border-border bg-white/50 dark:bg-slate-900/50">
               <div className="flex items-center gap-2">
-                <button className="p-2 rounded-xl hover:bg-surface transition-colors text-muted" title="Upload reports">
+                <button
+                  onClick={() => router.push("/contact#reports")}
+                  className="p-2 rounded-xl hover:bg-surface transition-colors text-muted"
+                  title="Upload reports"
+                >
                   <Upload size={18} />
                 </button>
                 <input

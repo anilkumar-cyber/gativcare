@@ -55,7 +55,7 @@ export default function CTASection() {
               <Phone size={18} /> Book Free Consultation <ArrowRight size={16} />
             </motion.a>
             <motion.a
-              href="#upload"
+              href="/contact#reports"
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white/10 text-white font-semibold text-base border border-white/30 hover:bg-white/20 transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -63,7 +63,9 @@ export default function CTASection() {
               <Upload size={18} /> Upload Reports
             </motion.a>
             <motion.a
-              href="#whatsapp"
+              href="https://wa.me/918886963612"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-green-500 text-white font-semibold text-base shadow-xl shadow-green-500/30 hover:bg-green-600 transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

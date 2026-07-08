@@ -72,7 +72,7 @@ export default function Footer() {
               <div className="flex items-center gap-3">
                 <MapPin size={16} className="text-primary" /> New Delhi, India
               </div>
-              <a href="#" className="flex items-center gap-3 text-green-400 hover:text-green-300 transition-colors">
+              <a href="https://wa.me/918886963612" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-green-400 hover:text-green-300 transition-colors">
                 <MessageCircle size={16} /> WhatsApp: +91 88869 63612
               </a>
             </div>
