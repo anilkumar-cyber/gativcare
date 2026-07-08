@@ -4,7 +4,39 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, Globe, Moon, Sun, ChevronDown, MessageCircle } from "lucide-react";
-import { navLinks } from "@/lib/constants";
+import { navLinks, treatments, hospitals } from "@/lib/constants";
+
+const moreLinks = [
+  { label: "FAQ", href: "/faq" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+  { label: "Refund Policy", href: "/refund" },
+];
+
+function NavDropdown({ label, href, items, viewAllLabel }: { label: string; href: string; items: { label: string; href: string; icon?: string }[]; viewAllLabel: string }) {
+  return (
+    <div className="relative group">
+      <Link
+        href={href}
+        className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors rounded-lg hover:bg-primary/5"
+      >
+        {label} <ChevronDown size={14} className="transition-transform group-hover:rotate-180" />
+      </Link>
+      <div className="absolute top-full left-0 pt-1 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 z-50">
+        <div className="w-64 rounded-xl border border-border bg-white dark:bg-slate-900 shadow-xl p-2">
+          {items.map((item) => (
+            <Link key={item.label} href={item.href} className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-surface transition-colors">
+              {item.icon && <span>{item.icon}</span>} {item.label}
+            </Link>
+          ))}
+          <Link href={href} className="block px-3 py-2 mt-1 border-t border-border rounded-lg text-sm font-semibold text-primary hover:bg-surface transition-colors">
+            {viewAllLabel} →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -60,7 +92,19 @@ export default function Navbar() {
             </Link>
 
             <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
+              <NavDropdown
+                label="Treatments"
+                href="/treatments"
+                viewAllLabel="View All Treatments"
+                items={treatments.slice(0, 8).map((t) => ({ label: t.name, href: "/treatments", icon: t.image }))}
+              />
+              <NavDropdown
+                label="Hospitals"
+                href="/hospitals"
+                viewAllLabel="View All Hospitals"
+                items={hospitals.map((h) => ({ label: h.name, href: "/hospitals", icon: h.image }))}
+              />
+              {navLinks.filter((l) => l.label !== "Treatments" && l.label !== "Hospitals").map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -72,8 +116,17 @@ export default function Navbar() {
               ))}
               <div className="relative group">
                 <button className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors rounded-lg hover:bg-primary/5">
-                  More <ChevronDown size={14} />
+                  More <ChevronDown size={14} className="transition-transform group-hover:rotate-180" />
                 </button>
+                <div className="absolute top-full right-0 pt-1 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 z-50">
+                  <div className="w-56 rounded-xl border border-border bg-white dark:bg-slate-900 shadow-xl p-2">
+                    {moreLinks.map((item) => (
+                      <Link key={item.href} href={item.href} className="block px-3 py-2 rounded-lg text-sm hover:bg-surface transition-colors">
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -91,7 +144,7 @@ export default function Navbar() {
                 className="hidden sm:flex btn-primary text-sm py-2.5 px-5 items-center gap-2"
               >
                 <Phone size={14} />
-                Free Consultation
+                Get a FREE Quote
               </Link>
 
               <button
@@ -114,7 +167,7 @@ export default function Navbar() {
               transition={{ duration: 0.3 }}
               className="lg:hidden border-t border-border overflow-hidden"
             >
-              <div className="px-4 py-4 space-y-1 bg-white dark:bg-slate-950">
+              <div className="px-4 py-4 space-y-1 bg-white dark:bg-slate-950 max-h-[70vh] overflow-y-auto">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
@@ -125,9 +178,21 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
+                <div className="pt-2 mt-2 border-t border-border">
+                  {moreLinks.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="block px-4 py-2.5 text-xs text-muted rounded-xl hover:bg-surface transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
                 <div className="pt-3 border-t border-border">
                   <Link href="/contact" className="block btn-primary text-center text-sm py-3">
-                    Book Free Consultation
+                    Get a FREE Quote
                   </Link>
                 </div>
               </div>

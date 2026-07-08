@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone, Upload, MessageCircle, Play, ArrowRight, Shield, Star, Users, Globe } from "lucide-react";
+import { Shield, Star, Users, Globe } from "lucide-react";
 import { stats } from "@/lib/constants";
 import { AnimatedCounter } from "@/components/ui/motion";
+import { HeroQuoteCard } from "./HeroQuoteCard";
 
 function FloatingIcon({ icon: Icon, className, delay = 0 }: { icon: React.ElementType; className: string; delay?: number }) {
   return (
@@ -93,39 +94,7 @@ export default function Hero() {
               end-to-end medical travel assistance. Save up to 90% on treatments.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 mb-10">
-              <motion.a
-                href="/contact"
-                className="btn-primary flex items-center justify-center gap-2 text-base"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Phone size={18} />
-                Book Free Consultation
-              </motion.a>
-              <motion.a
-                href="/contact#reports"
-                className="btn-secondary flex items-center justify-center gap-2 text-base"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Upload size={18} />
-                Upload Medical Reports
-              </motion.a>
-              <motion.a
-                href="https://wa.me/918886963612"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-green-500 text-white font-semibold hover:bg-green-600 transition-colors shadow-lg shadow-green-500/30"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <MessageCircle size={18} />
-                WhatsApp
-              </motion.a>
-            </div>
-
-            <div className="flex items-center gap-6 text-sm text-muted">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted mb-2">
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
                   {[...Array(4)].map((_, i) => (
@@ -134,17 +103,34 @@ export default function Hero() {
                     </div>
                   ))}
                 </div>
-                <span className="font-medium">4.9★ from 2,000+ reviews</span>
+                <span className="font-medium">50,000+ Patients Assisted</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="flex text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={14} fill="currentColor" strokeWidth={0} />
+                  ))}
+                </div>
+                <span className="font-medium">4.9 from 2,000+ reviews</span>
               </div>
             </div>
+
+            <a href="tel:+918886963612" className="text-sm text-primary font-medium hover:underline">
+              or call us directly: +91 88869 63612
+            </a>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="relative hidden lg:block"
+            className="relative"
           >
+            <div className="lg:hidden mb-8">
+              <HeroQuoteCard className="mx-auto" />
+            </div>
+
+            <div className="relative hidden lg:block">
             <div className="relative w-full aspect-square max-w-lg mx-auto">
               <motion.div
                 className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 blur-2xl"
@@ -229,6 +215,9 @@ export default function Hero() {
                 </motion.div>
               </div>
             </div>
+            </div>
+
+            <HeroQuoteCard className="hidden lg:block absolute top-1/2 -translate-y-1/2 -right-6 xl:right-2 z-10" />
           </motion.div>
         </div>
 
