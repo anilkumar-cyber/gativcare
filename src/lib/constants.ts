@@ -65,16 +65,6 @@ export const stats = [
   { label: "Success Rate", value: 98, suffix: "%" },
 ];
 
-export const costComparison = [
-  { treatment: "Heart Bypass Surgery", india: 5500, usa: 75000, uk: 42000, germany: 28000, australia: 55000 },
-  { treatment: "Knee Replacement", india: 5000, usa: 50000, uk: 30000, germany: 22000, australia: 35000 },
-  { treatment: "Liver Transplant", india: 25000, usa: 300000, uk: 180000, germany: 150000, australia: 200000 },
-  { treatment: "IVF Treatment", india: 3000, usa: 15000, uk: 8000, germany: 6000, australia: 10000 },
-  { treatment: "Dental Implant", india: 800, usa: 5000, uk: 3000, germany: 2500, australia: 4000 },
-  { treatment: "Spine Surgery", india: 6000, usa: 80000, uk: 45000, germany: 35000, australia: 50000 },
-  { treatment: "Cosmetic Surgery", india: 3000, usa: 20000, uk: 12000, germany: 10000, australia: 15000 },
-  { treatment: "Hip Replacement", india: 6000, usa: 45000, uk: 25000, germany: 20000, australia: 38000 },
-];
 
 export const journeySteps = [
   { step: 1, title: "Inquiry", description: "Submit your medical query or call our helpline", icon: "MessageCircle" },

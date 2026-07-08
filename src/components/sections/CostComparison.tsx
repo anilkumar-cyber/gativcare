@@ -3,11 +3,15 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/components/ui/motion";
-import { costComparison } from "@/lib/constants";
+import { treatmentPricing } from "@/lib/pricing";
+import { formatCurrency } from "@/lib/currency";
 import { TrendingDown, DollarSign, ArrowRight } from "lucide-react";
 
 const countries = ["usa", "uk", "germany", "australia"] as const;
 const countryLabels: Record<string, string> = { usa: "🇺🇸 USA", uk: "🇬🇧 UK", germany: "🇩🇪 Germany", australia: "🇦🇺 Australia" };
+const countryField = { usa: "usaUSD", uk: "ukUSD", germany: "germanyUSD", australia: "australiaUSD" } as const;
+
+const comparableTreatments = treatmentPricing.filter((t) => t.ukUSD !== undefined);
 
 export default function CostComparison() {
   const [selectedCountry, setSelectedCountry] = useState<string>("usa");
@@ -66,9 +70,9 @@ export default function CostComparison() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                {costComparison.map((item, i) => {
-                  const comparePrice = item[selectedCountry as keyof typeof item] as number;
-                  const savings = Math.round(((comparePrice - item.india) / comparePrice) * 100);
+                {comparableTreatments.map((item, i) => {
+                  const comparePrice = item[countryField[selectedCountry as keyof typeof countryField]] as number;
+                  const savings = Math.round(((comparePrice - item.indiaUSD) / comparePrice) * 100);
 
                   return (
                     <motion.div
@@ -81,11 +85,11 @@ export default function CostComparison() {
                       <div className="font-medium text-sm sm:text-base">{item.treatment}</div>
                       <div className="sm:text-center">
                         <span className="sm:hidden text-xs text-muted mr-2">India:</span>
-                        <span className="text-green-600 font-bold">${item.india.toLocaleString()}</span>
+                        <span className="text-green-600 font-bold">{formatCurrency(item.indiaUSD, "USD")}</span>
                       </div>
                       <div className="sm:text-center">
                         <span className="sm:hidden text-xs text-muted mr-2">{countryLabels[selectedCountry]}:</span>
-                        <span className="text-muted line-through">${comparePrice.toLocaleString()}</span>
+                        <span className="text-muted line-through">{formatCurrency(comparePrice, "USD")}</span>
                       </div>
                       <div className="sm:text-center">
                         <span className="sm:hidden text-xs text-muted mr-2">Savings:</span>

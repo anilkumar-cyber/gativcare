@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { PersonStanding, IndianRupee, TrendingDown, X, Smile, HeartPulse, Heart, Activity, Bone, Sparkles, Award, GraduationCap, ReceiptText, Plane, Headphones, ArrowRight, type LucideIcon } from "lucide-react";
+import { getTreatmentPricing } from "@/lib/pricing";
+import { formatCurrency, USD_TO_INR_RATE } from "@/lib/currency";
 
 const trustPoints: { title: string; description: string; icon: LucideIcon }[] = [
   { title: "JCI & NABH Accredited Hospitals", description: "Same global safety standards as US and UK hospitals", icon: Award },
@@ -14,28 +16,20 @@ const trustPoints: { title: string; description: string; icon: LucideIcon }[] = 
   { title: "Dedicated Case Manager, 24/7", description: "One point of contact from first call to your flight home", icon: Headphones },
 ];
 
-const INR_RATE = 83;
-
-const bodyCostData: {
-  id: string;
-  name: string;
-  top: number;
-  left: number;
-  india: number;
-  usa: number;
-  icon: LucideIcon;
-}[] = [
-  { id: "dental", name: "Dental Implant", top: 33.2, left: 51.9, india: 1000, usa: 2800, icon: Smile },
-  { id: "heart-bypass", name: "Heart Bypass Surgery", top: 38.5, left: 55.6, india: 5200, usa: 144000, icon: HeartPulse },
-  { id: "heart-valve", name: "Heart Valve Replacement", top: 43.5, left: 57.5, india: 5500, usa: 170000, icon: Heart },
-  { id: "angioplasty", name: "Angioplasty", top: 59.2, left: 41.25, india: 3300, usa: 57000, icon: Activity },
-  { id: "hip", name: "Hip Replacement", top: 65, left: 55, india: 7000, usa: 50000, icon: Bone },
-  { id: "knee", name: "Knee Replacement", top: 70, left: 48.75, india: 6200, usa: 50000, icon: Bone },
+const bodyCostSpots: { id: string; slug: string; name: string; top: number; left: number; icon: LucideIcon }[] = [
+  { id: "dental", slug: "dental-implant", name: "Dental Implant", top: 33.2, left: 51.9, icon: Smile },
+  { id: "heart-bypass", slug: "heart-bypass-surgery", name: "Heart Bypass Surgery", top: 38.5, left: 55.6, icon: HeartPulse },
+  { id: "heart-valve", slug: "heart-valve-replacement", name: "Heart Valve Replacement", top: 43.5, left: 57.5, icon: Heart },
+  { id: "angioplasty", slug: "angioplasty", name: "Angioplasty", top: 59.2, left: 41.25, icon: Activity },
+  { id: "hip", slug: "hip-replacement", name: "Hip Replacement", top: 65, left: 55, icon: Bone },
+  { id: "knee", slug: "knee-replacement", name: "Knee Replacement", top: 70, left: 48.75, icon: Bone },
 ];
 
-function formatINR(usd: number) {
-  return `₹${Math.round(usd * INR_RATE).toLocaleString("en-IN")}`;
-}
+const bodyCostData = bodyCostSpots.map((spot) => {
+  const pricing = getTreatmentPricing(spot.slug);
+  if (!pricing) throw new Error(`Missing pricing for treatment slug: ${spot.slug}`);
+  return { ...spot, india: pricing.indiaUSD, usa: pricing.usaUSD };
+});
 
 function savingsPct(india: number, usa: number) {
   return Math.round(((usa - india) / usa) * 100);
@@ -134,11 +128,11 @@ export default function BodyCostMap() {
                           <div className="p-4">
                             <div className="flex items-center gap-1.5 text-green-600 font-bold text-lg mb-1">
                               <IndianRupee size={16} />
-                              {formatINR(part.india).replace("₹", "")}
+                              {formatCurrency(part.india * USD_TO_INR_RATE, "INR").replace("₹", "")}
                             </div>
                             <p className="text-xs text-muted mb-2">in India</p>
                             <div className="flex items-center justify-between text-xs">
-                              <span className="text-muted line-through">${part.usa.toLocaleString()} in USA</span>
+                              <span className="text-muted line-through">{formatCurrency(part.usa, "USD")} in USA</span>
                               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/10 text-green-600 font-bold">
                                 <TrendingDown size={11} /> {savings}%
                               </span>
@@ -173,7 +167,7 @@ export default function BodyCostMap() {
                       </span>
                       <span className="min-w-0">
                         <span className="block text-xs font-medium truncate">{part.name}</span>
-                        <span className="block text-sm font-bold text-green-600">{formatINR(part.india)}</span>
+                        <span className="block text-sm font-bold text-green-600">{formatCurrency(part.india * USD_TO_INR_RATE, "INR")}</span>
                       </span>
                     </button>
                   </StaggerItem>
