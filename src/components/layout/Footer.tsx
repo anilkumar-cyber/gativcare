@@ -20,19 +20,14 @@ const footerLinks = {
     { label: "Our Doctors", href: "/doctors" },
     { label: "Packages", href: "/packages" },
     { label: "Testimonials", href: "/#testimonials" },
-    { label: "Blog", href: "/blog" },
-    { label: "Careers", href: "/careers" },
     { label: "Contact", href: "/contact" },
   ],
   support: [
-    { label: "Patient Guide", href: "/guide" },
-    { label: "Visa Assistance", href: "/visa" },
-    { label: "Insurance", href: "/insurance" },
     { label: "FAQ", href: "/faq" },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
     { label: "Refund Policy", href: "/refund" },
-    { label: "Sitemap", href: "/sitemap" },
+    { label: "Sitemap", href: "/sitemap.xml" },
   ],
 };
 
@@ -130,12 +125,6 @@ export default function Footer() {
           <p className="text-sm text-slate-500">
             © 2024 GativCare. All rights reserved. Made with <Heart size={14} className="inline text-red-500" /> in India
           </p>
-          <div className="flex items-center gap-4">
-            <span className="text-xs text-slate-600">We accept:</span>
-            {["Visa", "Mastercard", "PayPal", "UPI"].map((p) => (
-              <span key={p} className="text-xs px-2 py-1 rounded bg-white/5 text-slate-400">{p}</span>
-            ))}
-          </div>
         </div>
       </div>
 

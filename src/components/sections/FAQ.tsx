@@ -13,7 +13,7 @@ const faqs = [
   { q: "Can I consult with a doctor before traveling to India?", a: "Yes! We offer free video consultations with our specialist doctors. You can discuss your condition, treatment options, and expected outcomes before making any travel decisions. Simply upload your medical reports and we'll arrange a consultation within 24-48 hours." },
   { q: "What happens after I return home?", a: "We provide comprehensive post-treatment support including virtual follow-up consultations with your treating doctor, prescription management, recovery monitoring, and 24/7 emergency support. Our care continues until you're fully recovered." },
   { q: "Are there language barriers at Indian hospitals?", a: "No. All our partner hospitals have English-speaking medical staff. Additionally, we provide professional medical translators in 20+ languages including Arabic, French, Russian, Chinese, Spanish, and many more." },
-  { q: "How do I make payments?", a: "We accept international credit/debit cards, bank transfers, PayPal, and other digital payment methods. We also work with international insurance providers for cashless treatment. You'll receive transparent cost breakdowns with no hidden charges." },
+  { q: "How do I make payments?", a: "You'll receive a transparent, all-inclusive cost estimate with no hidden charges before you travel. Payment is arranged directly with your treating hospital, which typically accepts bank transfer and major cards — our coordinator will walk you through the exact process for your chosen hospital." },
 ];
 
 export default function FAQ() {
