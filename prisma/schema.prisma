@@ -7,3 +7,184 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Role {
+  ADMIN
+  DOCTOR
+  HOSPITAL
+  PATIENT
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  IN_PROGRESS
+  CONVERTED
+  CLOSED
+}
+
+enum LeadSource {
+  CONTACT_FORM
+  AI_CHAT
+  WHATSAPP
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum AppointmentType {
+  IN_PERSON
+  VIDEO
+}
+
+enum ReportStatus {
+  PENDING_REVIEW
+  REVIEWED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         Role
+  name         String
+  phone        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sessions      Session[]
+  doctor        Doctor?
+  hospitalOwned Hospital? @relation("HospitalOwner")
+  patient       Patient?
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Hospital {
+  id              String   @id @default(cuid())
+  name            String
+  city            String
+  rating          Float    @default(0)
+  reviews         Int      @default(0)
+  accreditations  String[]
+  specialties     String[]
+  beds            Int?
+  establishedYear Int?
+  image           String?
+  createdAt       DateTime @default(now())
+
+  ownerUserId  String?       @unique
+  owner        User?         @relation("HospitalOwner", fields: [ownerUserId], references: [id])
+  doctors      Doctor[]
+  appointments Appointment[]
+}
+
+model Doctor {
+  id             String @id @default(cuid())
+  name           String
+  hospitalId     String
+  specialization String
+  experience     Int
+  fee            String
+  rating         Float  @default(0)
+  reviews        Int    @default(0)
+  languages      String[]
+  education      String?
+  successRate    String?
+
+  hospital     Hospital      @relation(fields: [hospitalId], references: [id])
+  userId       String?       @unique
+  user         User?         @relation(fields: [userId], references: [id])
+  appointments Appointment[]
+}
+
+model Patient {
+  id       String  @id @default(cuid())
+  userId   String  @unique
+  gcNumber String  @unique
+  country  String?
+
+  user         User            @relation(fields: [userId], references: [id])
+  appointments Appointment[]
+  reports      MedicalReport[]
+}
+
+model Appointment {
+  id          String            @id @default(cuid())
+  patientId   String
+  doctorId    String
+  hospitalId  String
+  scheduledAt DateTime
+  type        AppointmentType   @default(IN_PERSON)
+  status      AppointmentStatus @default(PENDING)
+  notes       String?
+  createdAt   DateTime          @default(now())
+
+  patient  Patient  @relation(fields: [patientId], references: [id])
+  doctor   Doctor   @relation(fields: [doctorId], references: [id])
+  hospital Hospital @relation(fields: [hospitalId], references: [id])
+}
+
+model Treatment {
+  id          String @id @default(cuid())
+  name        String
+  slug        String @unique
+  icon        String
+  description String
+  costMinINR  Int
+  costMaxINR  Int
+  color       String
+}
+
+model Package {
+  id       String   @id @default(cuid())
+  name     String
+  duration String
+  priceINR Int
+  includes String[]
+  color    String
+  icon     String
+}
+
+model Lead {
+  id        String     @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  country   String?
+  treatment String?
+  message   String?
+  status    LeadStatus @default(NEW)
+  source    LeadSource @default(CONTACT_FORM)
+  createdAt DateTime   @default(now())
+
+  reports MedicalReport[]
+}
+
+model MedicalReport {
+  id         String       @id @default(cuid())
+  fileName   String
+  storedPath String
+  mimeType   String
+  sizeBytes  Int
+  status     ReportStatus @default(PENDING_REVIEW)
+  uploadedAt DateTime     @default(now())
+
+  leadId    String?
+  lead      Lead?    @relation(fields: [leadId], references: [id])
+  patientId String?
+  patient   Patient? @relation(fields: [patientId], references: [id])
+}
