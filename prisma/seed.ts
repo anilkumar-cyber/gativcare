@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from "@prisma/client";
+import { PrismaClient, Role, AppointmentStatus, AppointmentType, LeadStatus, LeadSource } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { hospitals, doctors, treatments, packages } from "../src/lib/constants";
 
@@ -163,7 +163,50 @@ async function main() {
       name: "James Wilson",
       patient: { create: { gcNumber: "GC-2024-001", country: "USA" } },
     },
+    include: { patient: true },
   });
+
+  if (medantaId && drTrehanId && patientUser.patient) {
+    console.log("Seeding sample appointments...");
+    const inDays = (n: number) => new Date(Date.now() + n * 24 * 60 * 60 * 1000);
+    const appointments = [
+      { id: "seed-appointment-1", scheduledAt: inDays(2), type: AppointmentType.IN_PERSON, status: AppointmentStatus.CONFIRMED, notes: "Follow-up consultation" },
+      { id: "seed-appointment-2", scheduledAt: inDays(-10), type: AppointmentType.IN_PERSON, status: AppointmentStatus.COMPLETED, notes: "Initial consultation" },
+      { id: "seed-appointment-3", scheduledAt: inDays(-3), type: AppointmentType.VIDEO, status: AppointmentStatus.COMPLETED, notes: "Pre-surgery review" },
+    ];
+    for (const apt of appointments) {
+      await prisma.appointment.upsert({
+        where: { id: apt.id },
+        update: {},
+        create: {
+          id: apt.id,
+          patientId: patientUser.patient.id,
+          doctorId: drTrehanId,
+          hospitalId: medantaId,
+          scheduledAt: apt.scheduledAt,
+          type: apt.type,
+          status: apt.status,
+          notes: apt.notes,
+        },
+      });
+    }
+  }
+
+  console.log("Seeding sample leads...");
+  const sampleLeads = [
+    { id: "seed-lead-1", name: "Ahmad Hassan", email: "ahmad.hassan@example.com", phone: "+971500000001", country: "UAE", treatment: "Heart Surgery", status: LeadStatus.NEW },
+    { id: "seed-lead-2", name: "Jennifer Smith", email: "jennifer.smith@example.com", phone: "+15550000002", country: "USA", treatment: "Knee Replacement", status: LeadStatus.CONTACTED },
+    { id: "seed-lead-3", name: "Liu Mei", email: "liu.mei@example.com", phone: "+8613000000003", country: "China", treatment: "IVF", status: LeadStatus.QUALIFIED },
+    { id: "seed-lead-4", name: "Patrick Brown", email: "patrick.brown@example.com", phone: "+441770000004", country: "UK", treatment: "Dental Care", status: LeadStatus.NEW },
+    { id: "seed-lead-5", name: "Fatima Al-Sayed", email: "fatima.alsayed@example.com", phone: "+966500000005", country: "Saudi Arabia", treatment: "Oncology", status: LeadStatus.IN_PROGRESS },
+  ];
+  for (const lead of sampleLeads) {
+    await prisma.lead.upsert({
+      where: { id: lead.id },
+      update: {},
+      create: { ...lead, source: LeadSource.CONTACT_FORM },
+    });
+  }
 
   console.log("Seed complete:", {
     admin: adminUser.email,

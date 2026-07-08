@@ -233,13 +233,13 @@ export function DashboardShell({
   );
 }
 
-export function ComingSoon({ label, onBack }: { label: string; onBack: () => void }) {
+export function ComingSoon({ label, backHref }: { label: string; backHref: string }) {
   return (
     <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-12 text-center">
       <div className="text-6xl mb-4">🏗️</div>
       <h3 className="text-xl font-bold mb-2 capitalize">{label}</h3>
       <p className="text-muted mb-6">This section is under development.</p>
-      <button onClick={onBack} className="btn-primary">Back to Dashboard</button>
+      <Link href={backHref} className="btn-primary">Back to Dashboard</Link>
     </div>
   );
 }
