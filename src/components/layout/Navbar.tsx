@@ -26,7 +26,7 @@ export default function Navbar() {
       <div className="hidden lg:block bg-gradient-to-r from-primary to-accent text-white text-sm">
         <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
           <div className="flex items-center gap-6">
-            <span className="flex items-center gap-1.5"><Phone size={13} /> +91 98765 43210</span>
+            <span className="flex items-center gap-1.5"><Phone size={13} /> +91 88869 63612</span>
             <span className="flex items-center gap-1.5"><MessageCircle size={13} /> WhatsApp Support</span>
           </div>
           <div className="flex items-center gap-4">

@@ -63,8 +63,8 @@ export default function Footer() {
               with world-class healthcare. Trusted by 50,000+ patients from 65+ countries.
             </p>
             <div className="space-y-3 text-sm">
-              <a href="tel:+919876543210" className="flex items-center gap-3 hover:text-primary transition-colors">
-                <Phone size={16} className="text-primary" /> +91 98765 43210
+              <a href="tel:+918886963612" className="flex items-center gap-3 hover:text-primary transition-colors">
+                <Phone size={16} className="text-primary" /> +91 88869 63612
               </a>
               <a href="mailto:care@gativcare.com" className="flex items-center gap-3 hover:text-primary transition-colors">
                 <Mail size={16} className="text-primary" /> care@gativcare.com
@@ -73,7 +73,7 @@ export default function Footer() {
                 <MapPin size={16} className="text-primary" /> New Delhi, India
               </div>
               <a href="#" className="flex items-center gap-3 text-green-400 hover:text-green-300 transition-colors">
-                <MessageCircle size={16} /> WhatsApp: +91 98765 43210
+                <MessageCircle size={16} /> WhatsApp: +91 88869 63612
               </a>
             </div>
           </div>

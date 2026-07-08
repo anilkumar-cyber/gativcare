@@ -47,9 +47,9 @@ export default function ContactPage() {
               </FadeIn>
 
               {[
-                { icon: Phone, label: "Phone / WhatsApp", value: "+91 98765 43210", href: "tel:+919876543210", color: "text-primary" },
+                { icon: Phone, label: "Phone / WhatsApp", value: "+91 88869 63612", href: "tel:+918886963612", color: "text-primary" },
                 { icon: Mail, label: "Email", value: "care@gativcare.com", href: "mailto:care@gativcare.com", color: "text-primary" },
-                { icon: MessageCircle, label: "WhatsApp", value: "+91 98765 43210", href: "#", color: "text-green-500" },
+                { icon: MessageCircle, label: "WhatsApp", value: "+91 88869 63612", href: "#", color: "text-green-500" },
                 { icon: MapPin, label: "Office", value: "Connaught Place, New Delhi, India 110001", href: "#", color: "text-primary" },
               ].map((contact, i) => (
                 <FadeIn key={contact.label} delay={i * 0.1}>
