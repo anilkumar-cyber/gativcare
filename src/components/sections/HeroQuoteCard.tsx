@@ -6,6 +6,11 @@ import { Send, CheckCircle2, User } from "lucide-react";
 
 const countries = ["United States", "United Kingdom", "UAE", "Australia", "Canada", "Germany", "Bangladesh", "Nigeria", "Kenya", "Other"];
 
+// This card is intentionally hardcoded to a light theme (not theme-aware
+// bg-surface/text-foreground) — hospital lead-capture forms stay light and
+// high-contrast regardless of the site's dark mode, same as real reference sites.
+const inputClass = "w-full bg-slate-50 text-slate-900 placeholder-slate-400 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 border border-slate-200";
+
 export function HeroQuoteCard({ className = "" }: { className?: string }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -39,19 +44,19 @@ export function HeroQuoteCard({ className = "" }: { className?: string }) {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, delay: 0.4 }}
-      className={`w-full max-w-sm bg-white dark:bg-slate-900 rounded-2xl shadow-2xl shadow-black/10 border border-border p-6 ${className}`}
+      className={`w-full max-w-sm bg-white rounded-2xl shadow-2xl shadow-black/10 border border-slate-200 p-6 ${className}`}
     >
       {submitted ? (
         <div className="text-center py-6">
           <div className="w-14 h-14 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-4">
             <CheckCircle2 size={28} className="text-green-500" />
           </div>
-          <h3 className="text-lg font-bold mb-1">Thank You!</h3>
-          <p className="text-sm text-muted">Our coordinator will call you within 2 hours.</p>
+          <h3 className="text-lg font-bold text-slate-900 mb-1">Thank You!</h3>
+          <p className="text-sm text-slate-500">Our coordinator will call you within 2 hours.</p>
         </div>
       ) : (
         <>
-          <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+          <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
             <User size={18} className="text-primary" /> Let Us Help You
           </h3>
           <form onSubmit={handleSubmit} className="space-y-3">
@@ -61,7 +66,7 @@ export function HeroQuoteCard({ className = "" }: { className?: string }) {
               placeholder="Patient Name"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full bg-surface rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 border border-border"
+              className={inputClass}
             />
             <input
               type="email"
@@ -69,13 +74,13 @@ export function HeroQuoteCard({ className = "" }: { className?: string }) {
               placeholder="Email Address"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full bg-surface rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 border border-border"
+              className={inputClass}
             />
             <select
               required
               value={formData.country}
               onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-              className="w-full bg-surface rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 border border-border"
+              className={inputClass}
             >
               <option value="">Select Country</option>
               {countries.map((c) => (
@@ -88,14 +93,14 @@ export function HeroQuoteCard({ className = "" }: { className?: string }) {
               placeholder="Phone / WhatsApp Number"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              className="w-full bg-surface rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 border border-border"
+              className={inputClass}
             />
             <textarea
               rows={2}
               placeholder="Describe the current medical problem"
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              className="w-full bg-surface rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 border border-border resize-none"
+              className={`${inputClass} resize-none`}
             />
 
             {error && <p className="text-xs text-red-500">{error}</p>}
@@ -109,7 +114,7 @@ export function HeroQuoteCard({ className = "" }: { className?: string }) {
             >
               <Send size={15} /> {submitting ? "Sending..." : "Get FREE Quote"}
             </motion.button>
-            <p className="text-[11px] text-muted text-center">
+            <p className="text-[11px] text-slate-500 text-center">
               By submitting, you agree to our <a href="/privacy" className="underline">Privacy Policy</a>.
             </p>
           </form>
