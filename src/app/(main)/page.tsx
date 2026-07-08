@@ -4,6 +4,7 @@ import Treatments from "@/components/sections/Treatments";
 import Hospitals from "@/components/sections/Hospitals";
 import Doctors from "@/components/sections/Doctors";
 import CostComparison from "@/components/sections/CostComparison";
+import BodyCostMap from "@/components/sections/BodyCostMap";
 import PatientJourney from "@/components/sections/PatientJourney";
 import Packages from "@/components/sections/Packages";
 import Testimonials from "@/components/sections/Testimonials";
@@ -22,6 +23,7 @@ export default function Home() {
       <Hospitals />
       <Doctors />
       <CostComparison />
+      <BodyCostMap />
       <PatientJourney />
       <Packages />
       <Testimonials />
