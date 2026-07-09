@@ -43,16 +43,22 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
     return () => document.removeEventListener("mousedown", onClickOutside);
   }, []);
 
-  const filtered = LANGUAGES.filter((l) => l.name.toLowerCase().includes(query.toLowerCase()));
-  const currentLabel = LANGUAGES.find((l) => l.code === current)?.name ?? "English";
+  const q = query.toLowerCase();
+  const filtered = LANGUAGES.filter(
+    (l) => l.name.toLowerCase().includes(q) || l.nativeName.toLowerCase().includes(q),
+  );
+  const currentLang = LANGUAGES.find((l) => l.code === current);
+  const currentLabel = currentLang?.nativeName ?? "English";
 
   function selectLanguage(code: string) {
     setLangCookie(code);
     window.location.reload();
   }
 
+  // translate="no" + notranslate: Google Translate rewrites this widget's own DOM
+  // otherwise, making language names unreadable and breaking its layout.
   return (
-    <div className="relative" ref={ref}>
+    <div className="relative notranslate" translate="no" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
         className={`flex items-center gap-1.5 ${compact ? "text-sm" : "px-3 py-1.5 rounded-lg hover:bg-surface"} transition-colors`}
@@ -63,8 +69,8 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
       </button>
 
       {open && (
-        <div className="absolute top-full right-0 mt-2 w-64 rounded-xl border border-border bg-white dark:bg-slate-900 shadow-xl z-50 overflow-hidden text-foreground">
-          <div className="p-2 border-b border-border">
+        <div className="absolute top-full right-0 mt-2 w-64 rounded-xl border border-border bg-white dark:bg-slate-900 shadow-xl z-50 text-foreground flex flex-col max-h-80">
+          <div className="p-2 border-b border-border flex-shrink-0">
             <div className="relative">
               <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted" />
               <input
@@ -76,15 +82,18 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
               />
             </div>
           </div>
-          <div className="max-h-72 overflow-y-auto py-1">
+          <div className="overflow-y-auto py-1">
             {filtered.map((lang) => (
               <button
                 key={lang.code}
                 onClick={() => selectLanguage(lang.code)}
                 className="w-full flex items-center justify-between px-3 py-2 text-sm text-left hover:bg-surface transition-colors"
               >
-                {lang.name}
-                {current === lang.code && <Check size={14} className="text-primary" />}
+                <span className="flex items-baseline gap-2">
+                  <span>{lang.nativeName}</span>
+                  {lang.nativeName !== lang.name && <span className="text-xs text-muted">{lang.name}</span>}
+                </span>
+                {current === lang.code && <Check size={14} className="text-primary flex-shrink-0" />}
               </button>
             ))}
             {filtered.length === 0 && <p className="px-3 py-4 text-sm text-muted text-center">No matches.</p>}
