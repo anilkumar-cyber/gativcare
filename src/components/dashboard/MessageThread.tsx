@@ -26,7 +26,7 @@ export function MessageThread({ patientId, currentUserId, messages }: { patientI
               <div className={`max-w-[75%] px-3.5 py-2.5 rounded-2xl text-sm ${isMe ? "bg-gradient-to-r from-primary to-accent text-white rounded-tr-md" : "bg-surface rounded-tl-md"}`}>
                 {!isMe && <p className="text-[11px] font-semibold opacity-70 mb-0.5">{m.author.name}</p>}
                 <p className="leading-relaxed whitespace-pre-wrap">{m.body}</p>
-                <p className={`text-[10px] mt-1 ${isMe ? "text-white/70" : "text-muted"}`}>{m.createdAt.toLocaleString()}</p>
+                <p className={`text-[10px] mt-1 ${isMe ? "text-white/70" : "text-muted"}`} suppressHydrationWarning>{m.createdAt.toLocaleString()}</p>
               </div>
             </div>
           );

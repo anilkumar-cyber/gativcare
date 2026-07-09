@@ -52,7 +52,7 @@ export function RecoveryChecklist({ patientId, tasks, canAdd = false }: { patien
             <div className="min-w-0">
               <p className="text-sm font-medium">{t.title}</p>
               {t.notes && <p className="text-xs text-muted">{t.notes}</p>}
-              {t.dueDate && <p className="text-[11px] text-muted mt-0.5">Due {t.dueDate.toLocaleDateString()}</p>}
+              {t.dueDate && <p className="text-[11px] text-muted mt-0.5" suppressHydrationWarning>Due {t.dueDate.toLocaleDateString()}</p>}
             </div>
           </div>
         ))}
@@ -61,7 +61,7 @@ export function RecoveryChecklist({ patientId, tasks, canAdd = false }: { patien
             <CheckCircle2 size={18} className="text-green-600 mt-0.5 flex-shrink-0" />
             <div className="min-w-0">
               <p className="text-sm font-medium line-through">{t.title}</p>
-              <p className="text-[11px] text-muted mt-0.5">Completed {t.completedAt?.toLocaleDateString()}</p>
+              <p className="text-[11px] text-muted mt-0.5" suppressHydrationWarning>Completed {t.completedAt?.toLocaleDateString()}</p>
             </div>
           </div>
         ))}

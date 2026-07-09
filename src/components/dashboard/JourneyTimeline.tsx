@@ -124,7 +124,7 @@ export function JourneyTimeline({
               <div className="min-w-0">
                 <p className="text-sm font-semibold">{meta.label}</p>
                 {m.note && <p className="text-xs text-muted">{m.note}</p>}
-                <p className="text-[11px] text-muted mt-1">{m.createdAt.toLocaleString()} • {m.createdBy.name}</p>
+                <p className="text-[11px] text-muted mt-1" suppressHydrationWarning>{m.createdAt.toLocaleString()} • {m.createdBy.name}</p>
               </div>
             </div>
           );
