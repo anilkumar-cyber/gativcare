@@ -1,8 +1,10 @@
-import { Calendar, FileText, Download } from "lucide-react";
+import { Calendar, FileText, Download, Bell, ClipboardList, Stethoscope, Building2 } from "lucide-react";
 import { requireRole } from "@/lib/auth";
 import { ComingSoon } from "@/components/dashboard/DashboardShell";
 import { StatCard } from "@/components/dashboard/StatCard";
-import { getPatientOverview } from "@/lib/queries/patient";
+import { SettingsForm } from "@/components/dashboard/SettingsForm";
+import { PatientCountryForm } from "@/components/dashboard/PatientCountryForm";
+import { getPatientOverview, getPatientTreatmentContext, getPatientNotifications } from "@/lib/queries/patient";
 import { ReportUploadForm } from "@/components/dashboard/ReportUploadForm";
 import { Role } from "@prisma/client";
 
@@ -78,6 +80,74 @@ export default async function PatientDashboard({
             </tbody>
           </table>
         </div>
+      </div>
+    );
+  }
+
+  if (activeTab === "treatment") {
+    const { treatmentPlan, doctors, hospitals } = await getPatientTreatmentContext(user.patient.id);
+    return (
+      <div className="space-y-6">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-6">
+          <h3 className="font-semibold mb-3 flex items-center gap-2"><ClipboardList size={18} className="text-primary" /> Treatment Plan</h3>
+          <p className="text-sm text-muted">{treatmentPlan ?? "Your doctor hasn't added a treatment plan yet."}</p>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-6">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-6">
+            <h3 className="font-semibold mb-4 flex items-center gap-2"><Stethoscope size={16} className="text-primary" /> Care Team</h3>
+            <div className="space-y-2">
+              {doctors.map((d) => (
+                <div key={d.id} className="p-3 rounded-xl bg-surface border border-border">
+                  <p className="text-sm font-semibold">{d.name}</p>
+                  <p className="text-xs text-muted">{d.specialization}</p>
+                </div>
+              ))}
+              {doctors.length === 0 && <p className="text-sm text-muted">No doctors assigned yet.</p>}
+            </div>
+          </div>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-6">
+            <h3 className="font-semibold mb-4 flex items-center gap-2"><Building2 size={16} className="text-primary" /> Hospitals</h3>
+            <div className="space-y-2">
+              {hospitals.map((h) => (
+                <div key={h.id} className="p-3 rounded-xl bg-surface border border-border">
+                  <p className="text-sm font-semibold">{h.name}</p>
+                  <p className="text-xs text-muted">{h.city}</p>
+                </div>
+              ))}
+              {hospitals.length === 0 && <p className="text-sm text-muted">No hospitals assigned yet.</p>}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (activeTab === "notifications") {
+    const notifications = await getPatientNotifications(user.patient.id);
+    return (
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-6">
+        <h3 className="font-semibold mb-5">Notifications</h3>
+        <div className="space-y-3">
+          {notifications.map((n) => (
+            <div key={n.id} className="flex items-start gap-3 p-3 rounded-xl bg-surface border border-border">
+              <Bell size={16} className="text-primary mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-semibold">{n.title}</p>
+                <p className="text-xs text-muted">{n.detail}</p>
+              </div>
+            </div>
+          ))}
+          {notifications.length === 0 && <p className="text-sm text-muted text-center py-6">No notifications right now.</p>}
+        </div>
+      </div>
+    );
+  }
+
+  if (activeTab === "settings") {
+    return (
+      <div className="space-y-6">
+        <SettingsForm name={user.name} phone={user.phone} email={user.email} />
+        <PatientCountryForm country={user.patient.country} />
       </div>
     );
   }

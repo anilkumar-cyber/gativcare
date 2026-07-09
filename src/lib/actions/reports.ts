@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireRole } from "@/lib/auth";
 import { saveUpload, UploadValidationError } from "@/lib/uploads";
 import { prisma } from "@/lib/db";
-import { Role } from "@prisma/client";
+import { Role, ReportStatus } from "@prisma/client";
 
 export async function uploadReportAction(_prevState: { error?: string } | undefined, formData: FormData) {
   const user = await requireRole(Role.PATIENT);
@@ -25,4 +25,21 @@ export async function uploadReportAction(_prevState: { error?: string } | undefi
 
   revalidatePath("/dashboard/patient");
   return { error: undefined };
+}
+
+export async function markReportReviewedAction(formData: FormData) {
+  const user = await requireRole(Role.DOCTOR);
+  if (!user.doctor) return;
+
+  const id = formData.get("id");
+  if (typeof id !== "string") return;
+
+  const report = await prisma.medicalReport.findUnique({ where: { id }, select: { patientId: true } });
+  if (!report?.patientId) return;
+
+  const treatsPatient = await prisma.appointment.findFirst({ where: { doctorId: user.doctor.id, patientId: report.patientId } });
+  if (!treatsPatient) return;
+
+  await prisma.medicalReport.update({ where: { id }, data: { status: ReportStatus.REVIEWED } });
+  revalidatePath("/dashboard/doctor");
 }

@@ -13,6 +13,7 @@ enum Role {
   DOCTOR
   HOSPITAL
   PATIENT
+  COORDINATOR
 }
 
 enum LeadStatus {
@@ -112,10 +113,11 @@ model Doctor {
 }
 
 model Patient {
-  id       String  @id @default(cuid())
-  userId   String  @unique
-  gcNumber String  @unique
-  country  String?
+  id            String  @id @default(cuid())
+  userId        String  @unique
+  gcNumber      String  @unique
+  country       String?
+  treatmentPlan String?
 
   user         User            @relation(fields: [userId], references: [id])
   appointments Appointment[]
@@ -172,6 +174,28 @@ model Lead {
   createdAt DateTime   @default(now())
 
   reports MedicalReport[]
+}
+
+model FAQ {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Testimonial {
+  id         String   @id @default(cuid())
+  name       String
+  country    String
+  treatment  String
+  hospital   String
+  doctorName String?
+  rating     Int      @default(5)
+  text       String
+  savings    String?
+  published  Boolean  @default(true)
+  createdAt  DateTime @default(now())
 }
 
 model MedicalReport {

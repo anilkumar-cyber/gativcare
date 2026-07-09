@@ -1,6 +1,17 @@
 import { PrismaClient, Role, AppointmentStatus, AppointmentType, LeadStatus, LeadSource } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import { hospitals, doctors, treatments, packages } from "../src/lib/constants";
+import { hospitals, doctors, treatments, packages, testimonials } from "../src/lib/constants";
+
+const faqSeed = [
+  { question: "Is medical treatment in India safe for international patients?", answer: "Absolutely. India has 250+ JCI and NABH accredited hospitals with world-class infrastructure, internationally trained doctors, and success rates comparable to the best hospitals globally. Many doctors are trained at top institutions like Harvard, Johns Hopkins, and Oxford." },
+  { question: "How much can I save on treatment in India?", answer: "You can save 60-90% on treatment costs compared to the USA, UK, and other Western countries. For example, a heart bypass surgery costs around $5,500 in India vs $75,000 in the USA. Our cost calculator can give you precise estimates for your treatment." },
+  { question: "How do I get a medical visa for India?", answer: "We handle the entire medical visa process for you. Typically, you'll need a valid passport, medical documents from your home doctor, and a treatment plan from our partner hospital. The visa is usually processed within 3-5 business days." },
+  { question: "What is included in your medical tourism packages?", answer: "Our all-inclusive packages cover hospital treatment, accommodation, airport transfers, local transportation, translator services, personal healthcare coordinator, medicines, follow-up consultations, and even tourism activities during recovery." },
+  { question: "Can I consult with a doctor before traveling to India?", answer: "Yes! We offer free video consultations with our specialist doctors. You can discuss your condition, treatment options, and expected outcomes before making any travel decisions. Simply upload your medical reports and we'll arrange a consultation within 24-48 hours." },
+  { question: "What happens after I return home?", answer: "We provide comprehensive post-treatment support including virtual follow-up consultations with your treating doctor, prescription management, recovery monitoring, and 24/7 emergency support. Our care continues until you're fully recovered." },
+  { question: "Are there language barriers at Indian hospitals?", answer: "No. All our partner hospitals have English-speaking medical staff. Additionally, we provide professional medical translators in 20+ languages including Arabic, French, Russian, Chinese, Spanish, and many more." },
+  { question: "How do I make payments?", answer: "You'll receive a transparent, all-inclusive cost estimate with no hidden charges before you travel. Payment is arranged directly with your treating hospital, which typically accepts bank transfer and major cards — our coordinator will walk you through the exact process for your chosen hospital." },
+];
 
 const prisma = new PrismaClient();
 const INR_RATE = 83;
@@ -205,6 +216,34 @@ async function main() {
       where: { id: lead.id },
       update: {},
       create: { ...lead, source: LeadSource.CONTACT_FORM },
+    });
+  }
+
+  console.log("Seeding FAQs...");
+  for (const [i, f] of faqSeed.entries()) {
+    await prisma.fAQ.upsert({
+      where: { id: `seed-faq-${i + 1}` },
+      update: {},
+      create: { id: `seed-faq-${i + 1}`, question: f.question, answer: f.answer, order: i },
+    });
+  }
+
+  console.log("Seeding testimonials...");
+  for (const t of testimonials) {
+    await prisma.testimonial.upsert({
+      where: { id: `seed-testimonial-${t.id}` },
+      update: {},
+      create: {
+        id: `seed-testimonial-${t.id}`,
+        name: t.name,
+        country: t.country,
+        treatment: t.treatment,
+        hospital: t.hospital,
+        doctorName: t.doctor,
+        rating: t.rating,
+        text: t.text,
+        savings: t.savings,
+      },
     });
   }
 

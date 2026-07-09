@@ -98,3 +98,9 @@ export async function requireRole(role: Role) {
   if (user.role !== role) redirect("/login");
   return user;
 }
+
+export async function requireAnyRole(roles: Role[]) {
+  const user = await requireSession();
+  if (!roles.includes(user.role)) redirect("/login");
+  return user;
+}

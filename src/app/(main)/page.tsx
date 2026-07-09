@@ -13,8 +13,13 @@ import Destinations from "@/components/sections/Destinations";
 import Concierge from "@/components/sections/Concierge";
 import FAQ from "@/components/sections/FAQ";
 import CTASection from "@/components/sections/CTASection";
+import { getPublishedFaqs, getPublishedTestimonials } from "@/lib/queries/admin";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const [faqs, testimonials] = await Promise.all([getPublishedFaqs(), getPublishedTestimonials()]);
+
   return (
     <>
       <Hero />
@@ -26,11 +31,11 @@ export default function Home() {
       <BodyCostMap />
       <PatientJourney />
       <Packages />
-      <Testimonials />
+      <Testimonials testimonials={testimonials} />
       <Certifications />
       <Destinations />
       <Concierge />
-      <FAQ />
+      <FAQ faqs={faqs.map((f) => ({ q: f.question, a: f.answer }))} />
       <CTASection />
     </>
   );

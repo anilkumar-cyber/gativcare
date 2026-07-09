@@ -4,10 +4,22 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Quote, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/ui/motion";
-import { testimonials } from "@/lib/constants";
 
-export default function Testimonials() {
+export type TestimonialItem = {
+  name: string;
+  country: string;
+  treatment: string;
+  hospital: string;
+  doctorName: string | null;
+  rating: number;
+  text: string;
+  savings: string | null;
+};
+
+export default function Testimonials({ testimonials }: { testimonials: TestimonialItem[] }) {
   const [active, setActive] = useState(0);
+
+  if (testimonials.length === 0) return null;
 
   const next = () => setActive((prev) => (prev + 1) % testimonials.length);
   const prev = () => setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
@@ -51,7 +63,7 @@ export default function Testimonials() {
                     {testimonials[active].country} • {testimonials[active].treatment}
                   </p>
                   <p className="text-xs text-primary font-medium mt-1">
-                    {testimonials[active].hospital}
+                    {testimonials[active].hospital}{testimonials[active].doctorName ? ` • ${testimonials[active].doctorName}` : ""}
                   </p>
                   <div className="flex gap-0.5 mt-2">
                     {[...Array(testimonials[active].rating)].map((_, i) => (
@@ -67,7 +79,7 @@ export default function Testimonials() {
 
               <div className="flex items-center justify-between">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 text-green-600 font-semibold">
-                  Saved {testimonials[active].savings} on treatment costs
+                  {testimonials[active].savings ? `Saved ${testimonials[active].savings} on treatment costs` : "Successful treatment outcome"}
                 </div>
                 <div className="flex gap-2">
                   {testimonials.map((_, i) => (

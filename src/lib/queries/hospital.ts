@@ -25,3 +25,32 @@ export async function getHospitalAppointments(hospitalId: string) {
     take: 20,
   });
 }
+
+export async function getHospitalPatients(hospitalId: string) {
+  const appointments = await prisma.appointment.findMany({
+    where: { hospitalId },
+    include: { patient: { include: { user: true } } },
+    orderBy: { scheduledAt: "desc" },
+  });
+
+  const seen = new Set<string>();
+  const patients = [];
+  for (const apt of appointments) {
+    if (seen.has(apt.patientId)) continue;
+    seen.add(apt.patientId);
+    patients.push({ patient: apt.patient, lastAppointment: apt });
+  }
+  return patients;
+}
+
+export async function getHospitalTodayApptCount(hospitalId: string) {
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  const endOfToday = new Date();
+  endOfToday.setHours(23, 59, 59, 999);
+  return prisma.appointment.count({ where: { hospitalId, scheduledAt: { gte: startOfToday, lte: endOfToday } } });
+}
+
+export async function getAllPackages() {
+  return prisma.package.findMany({ orderBy: { name: "asc" } });
+}

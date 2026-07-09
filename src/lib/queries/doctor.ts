@@ -32,6 +32,49 @@ export async function getDoctorOverview(doctorId: string) {
   };
 }
 
+export async function getDoctorReports(doctorId: string) {
+  const patientIds = await prisma.appointment
+    .findMany({ where: { doctorId }, select: { patientId: true }, distinct: ["patientId"] })
+    .then((rows) => rows.map((r) => r.patientId));
+
+  return prisma.medicalReport.findMany({
+    where: { patientId: { in: patientIds } },
+    include: { patient: { include: { user: true } } },
+    orderBy: { uploadedAt: "desc" },
+  });
+}
+
+export async function getDoctorAnalytics(doctorId: string) {
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
+  sixMonthsAgo.setDate(1);
+  sixMonthsAgo.setHours(0, 0, 0, 0);
+
+  const [appointmentsSinceStart, statusBreakdown, doctor] = await Promise.all([
+    prisma.appointment.findMany({ where: { doctorId, scheduledAt: { gte: sixMonthsAgo } }, select: { scheduledAt: true } }),
+    prisma.appointment.groupBy({ by: ["status"], where: { doctorId }, _count: { status: true } }),
+    prisma.doctor.findUnique({ where: { id: doctorId } }),
+  ]);
+
+  const monthKey = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+  const monthLabels: string[] = [];
+  const cursor = new Date(sixMonthsAgo);
+  for (let i = 0; i < 6; i++) {
+    monthLabels.push(monthKey(cursor));
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
+  const appointmentsByMonth = monthLabels.map((key) => ({
+    month: key,
+    count: appointmentsSinceStart.filter((a) => monthKey(a.scheduledAt) === key).length,
+  }));
+
+  return {
+    appointmentsByMonth,
+    statusBreakdown: statusBreakdown.map((s) => ({ status: s.status, count: s._count.status })),
+    doctor,
+  };
+}
+
 export async function getDoctorPatients(doctorId: string) {
   const appointments = await prisma.appointment.findMany({
     where: { doctorId },

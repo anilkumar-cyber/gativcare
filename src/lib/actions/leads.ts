@@ -1,12 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { requireRole } from "@/lib/auth";
+import { requireAnyRole } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { Role, LeadStatus } from "@prisma/client";
 
 export async function updateLeadStatusAction(formData: FormData) {
-  await requireRole(Role.ADMIN);
+  await requireAnyRole([Role.ADMIN, Role.COORDINATOR]);
 
   const id = formData.get("id");
   const status = formData.get("status");

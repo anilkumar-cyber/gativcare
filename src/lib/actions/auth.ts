@@ -11,6 +11,7 @@ const dashboardPathByRole: Record<Role, string> = {
   DOCTOR: "/dashboard/doctor",
   HOSPITAL: "/dashboard/hospital",
   PATIENT: "/dashboard/patient",
+  COORDINATOR: "/dashboard/admin",
 };
 
 const loginSchema = z.object({
