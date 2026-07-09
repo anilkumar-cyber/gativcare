@@ -10,6 +10,7 @@ import { TrustLogoStrip } from "./TrustLogoStrip";
 
 export default function Hero() {
   return (
+    <>
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       {/* Warm, photo-like background — no real photograph asset available, so this
           is built from layered gradients/blur rather than a literal image. Drop a
@@ -36,7 +37,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/60 to-slate-950/5" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -157,10 +158,8 @@ export default function Hero() {
           </div>
         </motion.div>
       </div>
-
-      <div className="relative mt-16 lg:mt-20">
-        <TrustLogoStrip />
-      </div>
     </section>
+    <TrustLogoStrip />
+    </>
   );
 }
