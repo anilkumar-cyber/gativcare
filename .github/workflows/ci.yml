@@ -12,7 +12,10 @@ jobs:
     env:
       DATABASE_URL: "postgresql://user:password@localhost:5432/gativcare?schema=public"
       AUTH_SECRET: "ci-dummy-secret"
-      RESEND_API_KEY: "ci-dummy-key"
+      SMTP_HOST: "smtp.example.com"
+      SMTP_PORT: "465"
+      SMTP_USER: "ci-dummy@example.com"
+      SMTP_PASSWORD: "ci-dummy-password"
 
     steps:
       - uses: actions/checkout@v4

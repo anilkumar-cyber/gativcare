@@ -1,10 +1,19 @@
 import "server-only";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-function getResend(): Resend {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) throw new Error("RESEND_API_KEY env var is not set");
-  return new Resend(apiKey);
+function getTransport() {
+  const host = process.env.SMTP_HOST;
+  const port = Number(process.env.SMTP_PORT ?? 465);
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASSWORD;
+  if (!host || !user || !pass) throw new Error("SMTP_HOST, SMTP_USER, and SMTP_PASSWORD env vars must be set");
+
+  return nodemailer.createTransport({
+    host,
+    port,
+    secure: port === 465,
+    auth: { user, pass },
+  });
 }
 
 export async function sendLeadNotification(lead: {
@@ -16,9 +25,10 @@ export async function sendLeadNotification(lead: {
   message?: string | null;
 }) {
   const to = process.env.ADMIN_NOTIFICATION_EMAIL || "care@gativcare.com";
+  const from = process.env.SMTP_USER || to;
 
-  await getResend().emails.send({
-    from: "GativCare Leads <leads@gativcare.com>",
+  await getTransport().sendMail({
+    from: `GativCare Leads <${from}>`,
     to,
     replyTo: lead.email,
     subject: `New enquiry: ${lead.name}${lead.treatment ? ` — ${lead.treatment}` : ""}`,
