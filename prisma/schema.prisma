@@ -48,6 +48,38 @@ enum ReportStatus {
   REVIEWED
 }
 
+enum JourneyStage {
+  INQUIRY
+  DOCUMENTATION
+  VISA
+  TRAVEL
+  TREATMENT
+  RECOVERY
+  FOLLOW_UP
+  COMPLETED
+}
+
+enum VisaStatus {
+  NOT_STARTED
+  DOCUMENTS_REQUESTED
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum FollowUpType {
+  DAY_30
+  DAY_90
+  DAY_180
+  DAY_365
+}
+
+enum FollowUpStatus {
+  PENDING
+  SENT
+  COMPLETED
+}
+
 model User {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -62,6 +94,10 @@ model User {
   doctor        Doctor?
   hospitalOwned Hospital? @relation("HospitalOwner")
   patient       Patient?
+
+  journeyMilestonesAdded  JourneyMilestone[]
+  messagesAuthored        PatientMessage[]
+  recoveryMilestonesAdded RecoveryMilestone[]
 }
 
 model Session {
@@ -113,15 +149,74 @@ model Doctor {
 }
 
 model Patient {
-  id            String  @id @default(cuid())
-  userId        String  @unique
-  gcNumber      String  @unique
+  id            String       @id @default(cuid())
+  userId        String       @unique
+  gcNumber      String       @unique
   country       String?
   treatmentPlan String?
+  journeyStage  JourneyStage @default(INQUIRY)
+  visaStatus    VisaStatus   @default(NOT_STARTED)
+  visaNotes     String?
 
-  user         User            @relation(fields: [userId], references: [id])
+  user         User                @relation(fields: [userId], references: [id])
   appointments Appointment[]
   reports      MedicalReport[]
+  milestones   JourneyMilestone[]
+  messages     PatientMessage[]
+  recoveryTasks RecoveryMilestone[]
+  followUps    FollowUp[]
+}
+
+model JourneyMilestone {
+  id          String       @id @default(cuid())
+  patientId   String
+  stage       JourneyStage
+  note        String?
+  createdById String
+  createdAt   DateTime     @default(now())
+
+  patient   Patient @relation(fields: [patientId], references: [id])
+  createdBy User    @relation(fields: [createdById], references: [id])
+}
+
+model PatientMessage {
+  id            String   @id @default(cuid())
+  patientId     String
+  authorId      String
+  body          String
+  createdAt     DateTime @default(now())
+  readByPatient Boolean  @default(false)
+  readByStaff   Boolean  @default(false)
+
+  patient Patient @relation(fields: [patientId], references: [id])
+  author  User    @relation(fields: [authorId], references: [id])
+}
+
+model RecoveryMilestone {
+  id          String    @id @default(cuid())
+  patientId   String
+  title       String
+  dueDate     DateTime?
+  completedAt DateTime?
+  notes       String?
+  createdById String
+  createdAt   DateTime  @default(now())
+
+  patient   Patient @relation(fields: [patientId], references: [id])
+  createdBy User    @relation(fields: [createdById], references: [id])
+}
+
+model FollowUp {
+  id           String         @id @default(cuid())
+  patientId    String
+  type         FollowUpType
+  scheduledFor DateTime
+  status       FollowUpStatus @default(PENDING)
+  sentAt       DateTime?
+  notes        String?
+  createdAt    DateTime       @default(now())
+
+  patient Patient @relation(fields: [patientId], references: [id])
 }
 
 model Appointment {

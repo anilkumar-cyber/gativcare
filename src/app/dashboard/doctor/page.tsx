@@ -1,14 +1,15 @@
-import { Calendar, Users, Star, TrendingUp, Download } from "lucide-react";
+import Link from "next/link";
+import { Calendar, Users, Star, TrendingUp, Download, ArrowRight } from "lucide-react";
 import { requireRole } from "@/lib/auth";
 import { ComingSoon } from "@/components/dashboard/DashboardShell";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { SettingsForm } from "@/components/dashboard/SettingsForm";
 import { DoctorProfileForm } from "@/components/dashboard/DoctorProfileForm";
-import { TreatmentPlanForm } from "@/components/dashboard/TreatmentPlanForm";
 import { getDoctorOverview, getDoctorPatients, getDoctorReports, getDoctorAnalytics } from "@/lib/queries/doctor";
 import { markReportReviewedAction } from "@/lib/actions/reports";
+import { confirmAppointmentAction } from "@/lib/actions/appointments";
 import { getEffectiveTabs } from "@/lib/queries/permissions";
-import { Role } from "@prisma/client";
+import { Role, AppointmentStatus } from "@prisma/client";
 
 export default async function DoctorDashboard({
   searchParams,
@@ -44,7 +45,9 @@ export default async function DoctorDashboard({
                 <span className="text-xs text-muted">Last visit: {lastAppointment.scheduledAt.toLocaleDateString()}</span>
               </div>
               {patient.treatmentPlan && <p className="text-xs text-muted mt-2 italic">Plan: {patient.treatmentPlan}</p>}
-              <TreatmentPlanForm patientId={patient.id} initialPlan={patient.treatmentPlan} />
+              <Link href={`/dashboard/doctor/patients/${patient.id}`} className="text-xs text-primary font-medium flex items-center gap-1 mt-2">
+                View care record <ArrowRight size={12} />
+              </Link>
             </div>
           ))}
           {patients.length === 0 && <p className="text-sm text-muted text-center py-6">No patients yet.</p>}
@@ -65,7 +68,23 @@ export default async function DoctorDashboard({
                 <p className="text-sm font-semibold">{apt.patient.user.name}</p>
                 <p className="text-xs text-muted">{apt.type.replace("_", " ")} • {apt.status}</p>
               </div>
-              <span className="text-sm font-medium">{apt.scheduledAt.toLocaleString()}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium">{apt.scheduledAt.toLocaleString()}</span>
+                {apt.status === "PENDING" && (
+                  <div className="flex items-center gap-1.5">
+                    <form action={confirmAppointmentAction}>
+                      <input type="hidden" name="id" value={apt.id} />
+                      <input type="hidden" name="status" value={AppointmentStatus.CONFIRMED} />
+                      <button type="submit" className="text-xs px-2.5 py-1 rounded-full bg-green-100 text-green-600 dark:bg-green-900/30 font-medium">Confirm</button>
+                    </form>
+                    <form action={confirmAppointmentAction}>
+                      <input type="hidden" name="id" value={apt.id} />
+                      <input type="hidden" name="status" value={AppointmentStatus.CANCELLED} />
+                      <button type="submit" className="text-xs px-2.5 py-1 rounded-full bg-red-100 text-red-600 dark:bg-red-900/30 font-medium">Decline</button>
+                    </form>
+                  </div>
+                )}
+              </div>
             </div>
           ))}
           {recentAppointments.length === 0 && <p className="text-sm text-muted text-center py-6">No appointments yet.</p>}

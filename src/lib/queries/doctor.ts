@@ -75,6 +75,14 @@ export async function getDoctorAnalytics(doctorId: string) {
   };
 }
 
+export async function getDoctorPatientIfOwned(doctorId: string, patientId: string) {
+  const appointment = await prisma.appointment.findFirst({
+    where: { doctorId, patientId },
+    include: { patient: { include: { user: true } } },
+  });
+  return appointment?.patient ?? null;
+}
+
 export async function getDoctorPatients(doctorId: string) {
   const appointments = await prisma.appointment.findMany({
     where: { doctorId },

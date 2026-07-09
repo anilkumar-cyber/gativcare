@@ -20,6 +20,8 @@ import {
   getAdminAnalytics, getCountryBreakdown, getAllFaqs, getAllTestimonials,
 } from "@/lib/queries/admin";
 import { getEffectiveTabs, getAllRolePermissions } from "@/lib/queries/permissions";
+import { getDueFollowUps } from "@/lib/queries/journey";
+import { SendFollowUpsButton } from "@/components/dashboard/admin/SendFollowUpsButton";
 
 const KNOWN_TABS = [
   "overview", "leads", "analytics", "reports", "hospitals", "doctors", "patients",
@@ -114,7 +116,11 @@ export default async function AdminDashboard({
                 <p className="text-sm font-semibold">{p.user.name}</p>
                 <p className="text-xs text-muted">{p.user.email} • {p.country ?? "—"} • ID: {p.gcNumber}</p>
               </div>
-              <span className="text-xs text-muted">{p._count.appointments} appointments</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] px-2 py-0.5 rounded-full font-medium bg-primary/10 text-primary">{p.journeyStage.replace("_", " ")}</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full font-medium bg-surface border border-border">Visa: {p.visaStatus.replace(/_/g, " ")}</span>
+                <span className="text-xs text-muted">{p._count.appointments} appts</span>
+              </div>
             </div>
           ))}
           {patients.length === 0 && <p className="text-sm text-muted text-center py-6">No patients yet.</p>}
@@ -262,13 +268,21 @@ export default async function AdminDashboard({
   }
 
   if (activeTab === "reports") {
+    const dueFollowUps = await getDueFollowUps();
     return (
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-6">
-        <h3 className="font-semibold mb-2">Export Data</h3>
-        <p className="text-sm text-muted mb-5">Download raw records as CSV for offline reporting.</p>
-        <div className="flex flex-wrap gap-3">
-          <a href="/api/admin/export/leads" className="btn-primary text-sm px-4 py-2 flex items-center gap-2"><Download size={14} /> Leads CSV</a>
-          <a href="/api/admin/export/appointments" className="btn-primary text-sm px-4 py-2 flex items-center gap-2"><Download size={14} /> Appointments CSV</a>
+      <div className="space-y-6">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-6">
+          <h3 className="font-semibold mb-2">Export Data</h3>
+          <p className="text-sm text-muted mb-5">Download raw records as CSV for offline reporting.</p>
+          <div className="flex flex-wrap gap-3">
+            <a href="/api/admin/export/leads" className="btn-primary text-sm px-4 py-2 flex items-center gap-2"><Download size={14} /> Leads CSV</a>
+            <a href="/api/admin/export/appointments" className="btn-primary text-sm px-4 py-2 flex items-center gap-2"><Download size={14} /> Appointments CSV</a>
+          </div>
+        </div>
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-6">
+          <h3 className="font-semibold mb-2">Recovery Follow-ups</h3>
+          <p className="text-sm text-muted mb-5">Sends a check-in email to patients due for their 1/3/6-month or 1-year post-treatment follow-up.</p>
+          <SendFollowUpsButton dueCount={dueFollowUps.length} />
         </div>
       </div>
     );

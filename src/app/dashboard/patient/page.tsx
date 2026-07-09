@@ -5,7 +5,13 @@ import { StatCard } from "@/components/dashboard/StatCard";
 import { SettingsForm } from "@/components/dashboard/SettingsForm";
 import { PatientCountryForm } from "@/components/dashboard/PatientCountryForm";
 import { getPatientOverview, getPatientTreatmentContext, getPatientNotifications } from "@/lib/queries/patient";
+import { getPatientJourney, getPatientMessages, getRecoveryTasks } from "@/lib/queries/journey";
+import { getAllDoctors } from "@/lib/queries/admin";
 import { ReportUploadForm } from "@/components/dashboard/ReportUploadForm";
+import { RequestAppointmentForm } from "@/components/dashboard/patient/RequestAppointmentForm";
+import { JourneyTimeline } from "@/components/dashboard/JourneyTimeline";
+import { MessageThread } from "@/components/dashboard/MessageThread";
+import { RecoveryChecklist } from "@/components/dashboard/RecoveryChecklist";
 import { getEffectiveTabs } from "@/lib/queries/permissions";
 import { Role } from "@prisma/client";
 
@@ -30,7 +36,10 @@ export default async function PatientDashboard({
   const { upcoming, past, reports } = await getPatientOverview(user.patient.id);
 
   if (activeTab === "appointments") {
+    const doctors = await getAllDoctors();
     return (
+      <div>
+        <RequestAppointmentForm doctors={doctors} />
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-6">
         <h3 className="font-semibold mb-5">Appointments</h3>
         <div className="space-y-3">
@@ -46,6 +55,7 @@ export default async function PatientDashboard({
           ))}
           {upcoming.length === 0 && past.length === 0 && <p className="text-sm text-muted text-center py-6">No appointments yet.</p>}
         </div>
+      </div>
       </div>
     );
   }
@@ -91,13 +101,23 @@ export default async function PatientDashboard({
   }
 
   if (activeTab === "treatment") {
-    const { treatmentPlan, doctors, hospitals } = await getPatientTreatmentContext(user.patient.id);
+    const [{ treatmentPlan, doctors, hospitals }, journey] = await Promise.all([
+      getPatientTreatmentContext(user.patient.id),
+      getPatientJourney(user.patient.id),
+    ]);
     return (
       <div className="space-y-6">
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-6">
           <h3 className="font-semibold mb-3 flex items-center gap-2"><ClipboardList size={18} className="text-primary" /> Treatment Plan</h3>
           <p className="text-sm text-muted">{treatmentPlan ?? "Your doctor hasn't added a treatment plan yet."}</p>
         </div>
+        <JourneyTimeline
+          patientId={user.patient.id}
+          journeyStage={journey.journeyStage}
+          visaStatus={journey.visaStatus}
+          visaNotes={journey.visaNotes}
+          milestones={journey.milestones}
+        />
         <div className="grid sm:grid-cols-2 gap-6">
           <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-6">
             <h3 className="font-semibold mb-4 flex items-center gap-2"><Stethoscope size={16} className="text-primary" /> Care Team</h3>
@@ -126,6 +146,16 @@ export default async function PatientDashboard({
         </div>
       </div>
     );
+  }
+
+  if (activeTab === "messages") {
+    const messages = await getPatientMessages(user.patient.id);
+    return <MessageThread patientId={user.patient.id} currentUserId={user.id} messages={messages} />;
+  }
+
+  if (activeTab === "recovery") {
+    const tasks = await getRecoveryTasks(user.patient.id);
+    return <RecoveryChecklist patientId={user.patient.id} tasks={tasks} />;
   }
 
   if (activeTab === "notifications") {

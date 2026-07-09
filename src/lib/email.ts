@@ -1,5 +1,6 @@
 import "server-only";
 import nodemailer from "nodemailer";
+import type { FollowUpType } from "@prisma/client";
 
 function getTransport() {
   const host = process.env.SMTP_HOST;
@@ -42,5 +43,32 @@ export async function sendLeadNotification(lead: {
     ]
       .filter(Boolean)
       .join("\n"),
+  });
+}
+
+const FOLLOW_UP_LABEL: Record<FollowUpType, string> = {
+  DAY_30: "1 month",
+  DAY_90: "3 months",
+  DAY_180: "6 months",
+  DAY_365: "1 year",
+};
+
+export async function sendFollowUpReminder(patient: { name: string; email: string; type: FollowUpType }) {
+  const from = process.env.SMTP_USER || "care@gativcare.com";
+  const milestone = FOLLOW_UP_LABEL[patient.type];
+
+  await getTransport().sendMail({
+    from: `GativCare Care Team <${from}>`,
+    to: patient.email,
+    subject: `Checking in — your ${milestone} recovery follow-up`,
+    text: [
+      `Hi ${patient.name},`,
+      "",
+      `It's been ${milestone} since your treatment with GativCare, and we'd love to hear how your recovery is going.`,
+      "",
+      "Reply to this email or log in to your patient dashboard to share an update with your care team.",
+      "",
+      "— The GativCare Care Team",
+    ].join("\n"),
   });
 }
