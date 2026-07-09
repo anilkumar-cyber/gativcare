@@ -1,9 +1,9 @@
-FROM node:22-alpine AS deps
+FROM node:22 AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install --ignore-scripts
 
-FROM node:22-alpine AS builder
+FROM node:22 AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -11,7 +11,6 @@ RUN npx prisma generate
 RUN npm run build
 
 FROM builder AS migrator
-RUN apk add --no-cache openssl
 CMD ["npx", "prisma", "migrate", "deploy"]
 
 FROM node:22-alpine AS runner
