@@ -7,6 +7,7 @@ import { DoctorProfileForm } from "@/components/dashboard/DoctorProfileForm";
 import { TreatmentPlanForm } from "@/components/dashboard/TreatmentPlanForm";
 import { getDoctorOverview, getDoctorPatients, getDoctorReports, getDoctorAnalytics } from "@/lib/queries/doctor";
 import { markReportReviewedAction } from "@/lib/actions/reports";
+import { getEffectiveTabs } from "@/lib/queries/permissions";
 import { Role } from "@prisma/client";
 
 export default async function DoctorDashboard({
@@ -20,6 +21,11 @@ export default async function DoctorDashboard({
 
   if (!user.doctor) {
     return <ComingSoon label="No doctor profile linked to this account" backHref="/dashboard/doctor?tab=overview" />;
+  }
+
+  const enabledTabs = await getEffectiveTabs("DOCTOR");
+  if (!enabledTabs.includes(activeTab)) {
+    return <ComingSoon label="This tab isn't enabled for your role — ask an admin" backHref="/dashboard/doctor?tab=overview" />;
   }
 
   if (activeTab === "patients") {

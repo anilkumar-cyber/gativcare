@@ -1,6 +1,7 @@
 import { PrismaClient, Role, AppointmentStatus, AppointmentType, LeadStatus, LeadSource } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { hospitals, doctors, treatments, packages, testimonials } from "../src/lib/constants";
+import { DEFAULT_COORDINATOR_TABS } from "../src/lib/dashboardTabs";
 
 const faqSeed = [
   { question: "Is medical treatment in India safe for international patients?", answer: "Absolutely. India has 250+ JCI and NABH accredited hospitals with world-class infrastructure, internationally trained doctors, and success rates comparable to the best hospitals globally. Many doctors are trained at top institutions like Harvard, Johns Hopkins, and Oxford." },
@@ -246,6 +247,13 @@ async function main() {
       },
     });
   }
+
+  console.log("Seeding default coordinator role permissions...");
+  await prisma.rolePermission.upsert({
+    where: { role: Role.COORDINATOR },
+    update: {},
+    create: { role: Role.COORDINATOR, tabs: DEFAULT_COORDINATOR_TABS },
+  });
 
   console.log("Seed complete:", {
     admin: adminUser.email,

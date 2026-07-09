@@ -6,6 +6,7 @@ import { SettingsForm } from "@/components/dashboard/SettingsForm";
 import { PatientCountryForm } from "@/components/dashboard/PatientCountryForm";
 import { getPatientOverview, getPatientTreatmentContext, getPatientNotifications } from "@/lib/queries/patient";
 import { ReportUploadForm } from "@/components/dashboard/ReportUploadForm";
+import { getEffectiveTabs } from "@/lib/queries/permissions";
 import { Role } from "@prisma/client";
 
 export default async function PatientDashboard({
@@ -19,6 +20,11 @@ export default async function PatientDashboard({
 
   if (!user.patient) {
     return <ComingSoon label="No patient profile linked to this account" backHref="/dashboard/patient?tab=overview" />;
+  }
+
+  const enabledTabs = await getEffectiveTabs("PATIENT");
+  if (!enabledTabs.includes(activeTab)) {
+    return <ComingSoon label="This tab isn't enabled for your role — ask an admin" backHref="/dashboard/patient?tab=overview" />;
   }
 
   const { upcoming, past, reports } = await getPatientOverview(user.patient.id);

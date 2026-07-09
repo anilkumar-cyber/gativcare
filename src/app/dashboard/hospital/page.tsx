@@ -5,6 +5,7 @@ import { StatCard } from "@/components/dashboard/StatCard";
 import { SettingsForm } from "@/components/dashboard/SettingsForm";
 import { HospitalDetailsForm, HospitalSpecialtiesForm, HospitalBedsForm } from "@/components/dashboard/hospital/HospitalForms";
 import { getHospitalOverview, getHospitalAppointments, getHospitalPatients, getAllPackages, getHospitalTodayApptCount } from "@/lib/queries/hospital";
+import { getEffectiveTabs } from "@/lib/queries/permissions";
 import { Role } from "@prisma/client";
 
 export default async function HospitalDashboard({
@@ -20,6 +21,11 @@ export default async function HospitalDashboard({
     return <ComingSoon label="No hospital linked to this account" backHref="/dashboard/hospital?tab=overview" />;
   }
   const hospitalId = user.hospitalOwned.id;
+
+  const enabledTabs = await getEffectiveTabs("HOSPITAL");
+  if (!enabledTabs.includes(activeTab)) {
+    return <ComingSoon label="This tab isn't enabled for your role — ask an admin" backHref="/dashboard/hospital?tab=overview" />;
+  }
 
   if (activeTab === "doctors") {
     const { doctors } = await getHospitalOverview(hospitalId);

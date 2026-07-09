@@ -11,6 +11,7 @@ import { DoctorsPanel } from "@/components/dashboard/admin/DoctorsPanel";
 import { CoordinatorsPanel } from "@/components/dashboard/admin/CoordinatorsPanel";
 import { FaqPanel } from "@/components/dashboard/admin/FaqPanel";
 import { TestimonialsPanel } from "@/components/dashboard/admin/TestimonialsPanel";
+import { RolePermissionsPanel } from "@/components/dashboard/admin/RolePermissionsPanel";
 import { requireAnyRole } from "@/lib/auth";
 import { Role } from "@prisma/client";
 import {
@@ -18,13 +19,14 @@ import {
   getAllHospitals, getAllDoctors, getAllPatients, getAllCoordinators, getAllAppointmentsAdmin,
   getAdminAnalytics, getCountryBreakdown, getAllFaqs, getAllTestimonials,
 } from "@/lib/queries/admin";
+import { getEffectiveTabs, getAllRolePermissions } from "@/lib/queries/permissions";
 
 const KNOWN_TABS = [
   "overview", "leads", "analytics", "reports", "hospitals", "doctors", "patients",
-  "coordinators", "appointments", "faq", "testimonials", "countries", "settings",
+  "coordinators", "appointments", "faq", "testimonials", "countries", "settings", "roles",
 ];
 
-const ADMIN_ONLY_TABS = ["hospitals", "doctors", "coordinators", "faq", "testimonials", "reports"];
+const ADMIN_ONLY_TABS = ["hospitals", "doctors", "coordinators", "faq", "testimonials", "reports", "roles"];
 
 export default async function AdminDashboard({
   searchParams,
@@ -39,8 +41,19 @@ export default async function AdminDashboard({
     return <ComingSoon label={activeTab} backHref="/dashboard/admin?tab=overview" />;
   }
 
-  if (user.role === Role.COORDINATOR && ADMIN_ONLY_TABS.includes(activeTab)) {
-    return <ComingSoon label="Admins only — ask an admin for access" backHref="/dashboard/admin?tab=overview" />;
+  if (user.role === Role.COORDINATOR) {
+    if (ADMIN_ONLY_TABS.includes(activeTab)) {
+      return <ComingSoon label="Admins only — ask an admin for access" backHref="/dashboard/admin?tab=overview" />;
+    }
+    const enabledTabs = await getEffectiveTabs("COORDINATOR");
+    if (!enabledTabs.includes(activeTab)) {
+      return <ComingSoon label="This tab isn't enabled for your role — ask an admin" backHref="/dashboard/admin?tab=overview" />;
+    }
+  }
+
+  if (activeTab === "roles") {
+    const permissions = await getAllRolePermissions();
+    return <RolePermissionsPanel permissions={permissions} />;
   }
 
   if (activeTab === "leads") {

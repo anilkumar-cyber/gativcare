@@ -176,6 +176,13 @@ model Lead {
   reports MedicalReport[]
 }
 
+model RolePermission {
+  id        String   @id @default(cuid())
+  role      Role     @unique
+  tabs      String[]
+  updatedAt DateTime @updatedAt
+}
+
 model FAQ {
   id        String   @id @default(cuid())
   question  String
