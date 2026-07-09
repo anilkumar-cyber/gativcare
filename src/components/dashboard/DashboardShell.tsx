@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Bell, MessageCircle, Menu, X, LogOut } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { logoutAction } from "@/lib/actions/auth";
 import { sectionsByRole, type DashboardRole } from "@/lib/dashboardTabs";
 
@@ -54,7 +55,7 @@ export function DashboardShell({
       >
         <div className="p-5 border-b border-border flex items-center justify-between sticky top-0 bg-white dark:bg-slate-900 z-10">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent text-white flex items-center justify-center text-sm font-bold">G</div>
+            <Image src="/images/logo-icon.png" alt="GativCare" width={32} height={32} className="w-8 h-8" />
             <span className="font-bold text-gradient">{brandLabel}</span>
           </Link>
           <button onClick={() => setSidebarOpen(false)} className="lg:hidden"><X size={20} /></button>

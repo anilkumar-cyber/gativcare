@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { Menu, X, Phone, Moon, Sun, ChevronDown, MessageCircle } from "lucide-react";
 import { navLinks, treatments, hospitals } from "@/lib/constants";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
@@ -83,9 +84,7 @@ export default function Navbar() {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 lg:h-18">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-primary/30 group-hover:shadow-primary/50 transition-shadow">
-                G
-              </div>
+              <Image src="/images/logo-icon.png" alt="GativCare" width={40} height={40} className="w-10 h-10 drop-shadow-lg" priority />
               <div>
                 <span className="text-xl font-bold text-gradient">GativCare</span>
                 <span className="hidden sm:block text-[10px] text-muted -mt-1 tracking-wider uppercase">Medical Tourism India</span>

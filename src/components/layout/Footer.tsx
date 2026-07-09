@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Heart, Phone, Mail, MapPin, MessageCircle, ArrowUp } from "lucide-react";
 
 const footerLinks = {
@@ -45,9 +46,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2.5 mb-5">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg">
-                G
-              </div>
+              <Image src="/images/logo-icon.png" alt="GativCare" width={40} height={40} className="w-10 h-10" />
               <div>
                 <span className="text-xl font-bold text-white">GativCare</span>
                 <span className="block text-[10px] text-slate-400 -mt-1 tracking-wider uppercase">Medical Tourism India</span>

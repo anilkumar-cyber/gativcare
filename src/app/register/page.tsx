@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { registerAction } from "@/lib/actions/auth";
 import { UserPlus } from "lucide-react";
 
@@ -12,7 +13,7 @@ export default function RegisterPage() {
     <div className="min-h-screen flex items-center justify-center bg-surface px-4 py-12">
       <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl border border-border p-8 shadow-lg">
         <Link href="/" className="flex items-center gap-2 justify-center mb-6">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-accent text-white flex items-center justify-center font-bold">G</div>
+          <Image src="/images/logo-icon.png" alt="GativCare" width={36} height={36} className="w-9 h-9" />
           <span className="font-bold text-gradient text-lg">GativCare</span>
         </Link>
 
