@@ -269,3 +269,23 @@ body {
   background: rgba(14, 116, 144, 0.2);
   color: inherit;
 }
+
+/* Google Website Translator: we drive it via our own LanguageSwitcher UI,
+   so hide all of its default chrome (top banner, gadget icon, tooltips). */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-gadget-icon,
+.goog-tooltip,
+.goog-tooltip:hover,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
