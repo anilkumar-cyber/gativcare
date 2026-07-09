@@ -272,7 +272,8 @@ body {
 
 /* Google Website Translator: we drive it via our own LanguageSwitcher UI,
    so hide all of its default chrome (top banner, gadget icon, tooltips). */
-.goog-te-banner-frame.skiptranslate,
+iframe.skiptranslate,
+.goog-te-banner-frame,
 .goog-te-gadget-icon,
 .goog-tooltip,
 .goog-tooltip:hover,
@@ -283,6 +284,11 @@ body {
 
 body {
   top: 0 !important;
+  position: static !important;
+}
+
+.VIpgJd-ZVi9od-ORHb-OEVmcd {
+  display: none !important;
 }
 
 .goog-text-highlight {
