@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Star, ShieldCheck, TrendingDown, Users2 } from "lucide-react";
+import { Star, ShieldCheck, TrendingDown, Users2, ArrowRight } from "lucide-react";
 import { stats } from "@/lib/constants";
 import { AnimatedCounter } from "@/components/ui/motion";
 import { HeroQuoteCard } from "./HeroQuoteCard";
+import { TrustLogoStrip } from "./TrustLogoStrip";
 
 export default function Hero() {
   return (
@@ -17,7 +19,7 @@ export default function Hero() {
           overridden at once) didn't win against the light values in this project's
           Tailwind v4 setup, so light and dark are split into separately-visible
           layers instead of relying on dark: on every gradient stop. */}
-      <div className="absolute inset-0 dark:hidden">
+      <div className="absolute inset-0 dark:hidden" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-rose-50 to-teal-50" />
         <div className="absolute -top-24 -right-10 w-[36rem] h-[36rem] bg-gradient-to-br from-amber-200/60 to-orange-300/30 rounded-full blur-[110px]" />
         <div className="absolute -bottom-32 left-[8%] w-[32rem] h-[32rem] bg-gradient-to-br from-primary/25 to-accent/20 rounded-full blur-[120px]" />
@@ -26,7 +28,7 @@ export default function Hero() {
       </div>
 
       {/* Dark-mode layer */}
-      <div className="hidden absolute inset-0 dark:block">
+      <div className="hidden absolute inset-0 dark:block" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
         <div className="absolute -top-24 -right-10 w-[36rem] h-[36rem] bg-gradient-to-br from-amber-500/10 to-orange-500/5 rounded-full blur-[110px]" />
         <div className="absolute -bottom-32 left-[8%] w-[32rem] h-[32rem] bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-[120px]" />
@@ -64,6 +66,18 @@ export default function Hero() {
               end-to-end medical travel assistance. Save up to 90% on treatments.
             </p>
 
+            <div className="flex flex-wrap items-center gap-4 mb-8">
+              <a
+                href="#quote"
+                className="btn-primary text-base py-3.5 px-7 flex items-center gap-2"
+              >
+                Get Your Free Consultation <ArrowRight size={18} />
+              </a>
+              <Link href="/treatments" className="btn-secondary text-base py-3.5 px-7 flex items-center gap-2">
+                Explore Treatments
+              </Link>
+            </div>
+
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted mb-2">
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
@@ -91,10 +105,11 @@ export default function Hero() {
           </motion.div>
 
           <motion.div
+            id="quote"
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="relative"
+            className="relative scroll-mt-28"
           >
             <HeroQuoteCard className="mx-auto" />
 
@@ -141,6 +156,10 @@ export default function Hero() {
             ))}
           </div>
         </motion.div>
+      </div>
+
+      <div className="relative mt-16 lg:mt-20">
+        <TrustLogoStrip />
       </div>
     </section>
   );

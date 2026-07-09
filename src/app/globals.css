@@ -95,6 +95,21 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
 .animate-aurora {
   background-size: 400% 400%;
   animation: aurora 15s ease infinite;
