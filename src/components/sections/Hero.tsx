@@ -13,12 +13,25 @@ export default function Hero() {
           is built from layered gradients/blur rather than a literal image. Drop a
           real photo at public/images/hero-bg.jpg and swap this div for an <Image>
           to upgrade it later. */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-rose-50 to-teal-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950" />
-        <div className="absolute -top-24 -right-10 w-[36rem] h-[36rem] bg-gradient-to-br from-amber-200/60 to-orange-300/30 dark:from-amber-500/10 dark:to-orange-500/5 rounded-full blur-[110px]" />
-        <div className="absolute -bottom-32 left-[8%] w-[32rem] h-[32rem] bg-gradient-to-br from-primary/25 to-accent/20 dark:from-primary/10 dark:to-accent/10 rounded-full blur-[120px]" />
-        <div className="absolute top-[18%] left-[38%] w-80 h-80 bg-rose-200/40 dark:bg-rose-500/5 rounded-full blur-[100px]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/60 to-white/5 dark:from-slate-950/95 dark:via-slate-950/60 dark:to-slate-950/5" />
+      {/* Light-mode layer. Chained dark: gradient-stop utilities (from/via/to all
+          overridden at once) didn't win against the light values in this project's
+          Tailwind v4 setup, so light and dark are split into separately-visible
+          layers instead of relying on dark: on every gradient stop. */}
+      <div className="absolute inset-0 dark:hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-rose-50 to-teal-50" />
+        <div className="absolute -top-24 -right-10 w-[36rem] h-[36rem] bg-gradient-to-br from-amber-200/60 to-orange-300/30 rounded-full blur-[110px]" />
+        <div className="absolute -bottom-32 left-[8%] w-[32rem] h-[32rem] bg-gradient-to-br from-primary/25 to-accent/20 rounded-full blur-[120px]" />
+        <div className="absolute top-[18%] left-[38%] w-80 h-80 bg-rose-200/40 rounded-full blur-[100px]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/60 to-white/5" />
+      </div>
+
+      {/* Dark-mode layer */}
+      <div className="hidden absolute inset-0 dark:block">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+        <div className="absolute -top-24 -right-10 w-[36rem] h-[36rem] bg-gradient-to-br from-amber-500/10 to-orange-500/5 rounded-full blur-[110px]" />
+        <div className="absolute -bottom-32 left-[8%] w-[32rem] h-[32rem] bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-[120px]" />
+        <div className="absolute top-[18%] left-[38%] w-80 h-80 bg-rose-500/5 rounded-full blur-[100px]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/60 to-slate-950/5" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
