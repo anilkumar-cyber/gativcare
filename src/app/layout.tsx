@@ -22,6 +22,14 @@ export const metadata: Metadata = {
     description: "Affordable, trusted, internationally accredited healthcare with complete end-to-end medical travel assistance.",
     type: "website",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/icon-192.png",
+  },
 };
 
 export default function RootLayout({
