@@ -31,6 +31,7 @@ export async function sendLeadNotification(lead: {
   await getTransport().sendMail({
     from: `GativCare Leads <${from}>`,
     to,
+    cc: "support@gativcare.com",
     replyTo: lead.email,
     subject: `New enquiry: ${lead.name}${lead.treatment ? ` — ${lead.treatment}` : ""}`,
     text: [
