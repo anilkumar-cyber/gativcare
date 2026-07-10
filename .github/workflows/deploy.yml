@@ -20,9 +20,10 @@ jobs:
           port: ${{ secrets.VPS_PORT || 22 }}
           script: |
             set -e
-            cd ${{ secrets.VPS_APP_PATH }}
+            cd /docker/gativcare/app
             git pull origin main
-            docker compose build
-            docker compose run --rm migrator
-            docker compose up -d app
+            cd /docker/gativcare
+            docker compose build gativcare gativcare-migrate
+            docker compose run --rm gativcare-migrate
+            docker compose up -d gativcare
             docker image prune -f
