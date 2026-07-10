@@ -78,20 +78,18 @@ export default function Doctors() {
                       <span className="block text-lg font-bold text-primary">{doctor.fee}</span>
                     </div>
                     <div className="flex gap-2">
-                      <motion.button
+                      <Link
+                        href={`/contact?doctor=${encodeURIComponent(doctor.name)}&type=video`}
                         className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary/10 text-primary text-xs font-medium hover:bg-primary hover:text-white transition-all"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
                       >
                         <Video size={13} /> Video Call
-                      </motion.button>
-                      <motion.button
+                      </Link>
+                      <Link
+                        href={`/contact?doctor=${encodeURIComponent(doctor.name)}&type=booking`}
                         className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary text-white text-xs font-medium hover:bg-primary-dark transition-all"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
                       >
                         <Calendar size={13} /> Book
-                      </motion.button>
+                      </Link>
                     </div>
                   </div>
                 </div>

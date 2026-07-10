@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Search, Star, MapPin, Video, Calendar, GraduationCap, Languages } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { doctors } from "@/lib/constants";
@@ -107,12 +108,18 @@ export default function DoctorsClient() {
                       <span className="block text-lg font-bold text-primary">{doctor.fee}</span>
                     </div>
                     <div className="flex gap-2">
-                      <button className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary/10 text-primary text-xs font-medium hover:bg-primary hover:text-white transition-all">
+                      <Link
+                        href={`/contact?doctor=${encodeURIComponent(doctor.name)}&type=video`}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary/10 text-primary text-xs font-medium hover:bg-primary hover:text-white transition-all"
+                      >
                         <Video size={13} /> Video Call
-                      </button>
-                      <button className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary text-white text-xs font-medium">
+                      </Link>
+                      <Link
+                        href={`/contact?doctor=${encodeURIComponent(doctor.name)}&type=booking`}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary text-white text-xs font-medium hover:bg-primary-dark transition-all"
+                      >
                         <Calendar size={13} /> Book
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </motion.div>

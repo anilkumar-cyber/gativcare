@@ -7,14 +7,29 @@ import { FadeIn } from "@/components/ui/motion";
 
 const WHATSAPP_LINK = "https://wa.me/918886963612";
 
-export default function ContactClient() {
+export default function ContactClient({
+  prefillDoctor,
+  prefillType,
+}: {
+  prefillDoctor?: string;
+  prefillType?: string;
+} = {}) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
-    name: "", email: "", phone: "", country: "", treatment: "", message: "",
+    name: "",
+    email: "",
+    phone: "",
+    country: "",
+    treatment: "",
+    message: prefillDoctor
+      ? prefillType === "video"
+        ? `I'd like to schedule a video consultation with ${prefillDoctor}.`
+        : `I'd like to book an appointment with ${prefillDoctor}.`
+      : "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
