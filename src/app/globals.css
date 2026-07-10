@@ -5,10 +5,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: #0e7490;
+  --color-primary: var(--primary);
   --color-primary-light: #22d3ee;
   --color-primary-dark: #064e3b;
-  --color-accent: #7c3aed;
+  --color-accent: var(--accent);
   --color-accent-light: #a78bfa;
   --color-gold: #f59e0b;
   --color-success: #10b981;
@@ -28,6 +28,8 @@
   --surface-hover: #f1f5f9;
   --muted: #64748b;
   --border-color: #e2e8f0;
+  --primary: #0e7490;
+  --accent: #7c3aed;
 }
 
 .dark {
@@ -35,8 +37,10 @@
   --foreground: #f1f5f9;
   --surface: #0f172a;
   --surface-hover: #1e293b;
-  --muted: #94a3b8;
-  --border-color: #1e293b;
+  --muted: #a1acc4;
+  --border-color: #293548;
+  --primary: #22d3ee;
+  --accent: #a78bfa;
 }
 
 * {
@@ -181,6 +185,14 @@ body {
   animation: gradient-shift 5s ease infinite;
 }
 
+.dark .text-gradient {
+  background: linear-gradient(135deg, #22d3ee, #a78bfa, #22d3ee);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .text-gradient-gold {
   background: linear-gradient(135deg, #f59e0b, #ef4444, #f59e0b);
   background-size: 200% 200%;
@@ -219,8 +231,8 @@ body {
 }
 
 .btn-secondary:hover {
-  border-color: #0e7490;
-  color: #0e7490;
+  border-color: var(--primary);
+  color: var(--primary);
   transform: translateY(-2px);
 }
 
