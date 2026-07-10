@@ -17,3 +17,33 @@ export function formatCurrency(amount: number, currency: CurrencyCode): string {
     maximumFractionDigits: 0,
   }).format(amount);
 }
+
+export interface CurrencyInfo {
+  code: CurrencyCode;
+  symbol: string;
+  name: string;
+  /** Units of this currency per 1 USD. */
+  rateFromUsd: number;
+}
+
+// Static approximate rates — good enough for display purposes on a
+// marketing site; not used for actual billing/payment amounts.
+export const CURRENCIES: CurrencyInfo[] = [
+  { code: "USD", symbol: "$", name: "US Dollar", rateFromUsd: 1 },
+  { code: "INR", symbol: "₹", name: "Indian Rupee", rateFromUsd: USD_TO_INR_RATE },
+  { code: "GBP", symbol: "£", name: "British Pound", rateFromUsd: 0.79 },
+  { code: "EUR", symbol: "€", name: "Euro", rateFromUsd: 0.92 },
+  { code: "AUD", symbol: "A$", name: "Australian Dollar", rateFromUsd: 1.52 },
+];
+
+export function convertFromUsd(amountUsd: number, currency: CurrencyCode): number {
+  const info = CURRENCIES.find((c) => c.code === currency);
+  return amountUsd * (info?.rateFromUsd ?? 1);
+}
+
+/** Pulls the numeric USD amount(s) out of strings like "$3,000" or "$3,000 - $7,000". */
+export function parseUsdAmounts(input: string | number): number[] {
+  if (typeof input === "number") return [input];
+  const matches = input.match(/[\d,]+(?:\.\d+)?/g) ?? [];
+  return matches.map((m) => Number(m.replace(/,/g, "")));
+}

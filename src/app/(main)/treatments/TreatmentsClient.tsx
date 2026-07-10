@@ -6,8 +6,10 @@ import { Search, ArrowRight, Filter } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { treatments } from "@/lib/constants";
+import { useCurrency } from "@/components/layout/CurrencyContext";
 
 export default function TreatmentsClient() {
+  const { display } = useCurrency();
   const [search, setSearch] = useState("");
   const filtered = treatments.filter((t) =>
     t.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -57,7 +59,7 @@ export default function TreatmentsClient() {
                   <div className={`h-40 bg-gradient-to-br ${treatment.color} bg-opacity-10 flex items-center justify-center relative`}>
                     <span className="text-5xl group-hover:scale-110 transition-transform">{treatment.image}</span>
                     <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-white/90 dark:bg-slate-800/90 text-xs font-bold text-foreground">
-                      {treatment.cost}
+                      {display(treatment.cost)}
                     </div>
                   </div>
                   <div className="p-5">

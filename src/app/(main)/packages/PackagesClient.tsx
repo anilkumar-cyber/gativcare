@@ -5,8 +5,10 @@ import { Check, ArrowRight, Clock, Star } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { packages } from "@/lib/constants";
+import { useCurrency } from "@/components/layout/CurrencyContext";
 
 export default function PackagesClient() {
+  const { display } = useCurrency();
   return (
     <div className="min-h-screen">
       <section className="relative py-20 overflow-hidden hero-gradient">
@@ -42,7 +44,7 @@ export default function PackagesClient() {
                   <div className="p-8">
                     <h3 className="text-2xl font-bold mb-3">{pkg.name}</h3>
                     <div className="flex items-baseline gap-2 mb-2">
-                      <span className="text-4xl font-bold text-gradient">{pkg.price}</span>
+                      <span className="text-4xl font-bold text-gradient">{display(pkg.price)}</span>
                       <span className="text-sm text-muted">starting from</span>
                     </div>
                     <div className="flex items-center gap-1.5 text-sm text-muted mb-8">

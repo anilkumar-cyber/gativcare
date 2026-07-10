@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Menu, X, Phone, Moon, Sun, ChevronDown, MessageCircle } from "lucide-react";
 import { navLinks, treatments, hospitals } from "@/lib/constants";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { CurrencySwitcher } from "@/components/layout/CurrencySwitcher";
 
 const moreLinks = [
   { label: "FAQ", href: "/faq" },
@@ -65,6 +66,7 @@ export default function Navbar() {
           </div>
           <div className="flex items-center gap-4">
             <LanguageSwitcher compact />
+            <CurrencySwitcher compact />
             <span>|</span>
             <span>Free Consultation</span>
           </div>
@@ -193,6 +195,10 @@ export default function Navbar() {
                 <div className="pt-3 mt-2 border-t border-border flex items-center justify-between">
                   <span className="text-xs text-muted">Language</span>
                   <LanguageSwitcher />
+                </div>
+                <div className="pt-3 mt-2 border-t border-border flex items-center justify-between">
+                  <span className="text-xs text-muted">Currency</span>
+                  <CurrencySwitcher />
                 </div>
                 <div className="pt-3 border-t border-border">
                   <Link href="/contact" className="block btn-primary text-center text-sm py-3">

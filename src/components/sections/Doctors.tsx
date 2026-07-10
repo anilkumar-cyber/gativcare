@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Star, MapPin, ArrowRight, Video, Calendar, Languages, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import { useCurrency } from "@/components/layout/CurrencyContext";
 
 type Doctor = {
   id: string;
@@ -21,6 +22,7 @@ type Doctor = {
 };
 
 export default function Doctors({ doctors }: { doctors: Doctor[] }) {
+  const { display } = useCurrency();
   return (
     <section className="section-padding relative overflow-hidden" id="doctors">
       <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px]" />
@@ -89,7 +91,7 @@ export default function Doctors({ doctors }: { doctors: Doctor[] }) {
                   <div className="flex items-center justify-between pt-4 border-t border-border">
                     <div>
                       <span className="text-xs text-muted">Consultation</span>
-                      <span className="block text-lg font-bold text-primary">{doctor.fee}</span>
+                      <span className="block text-lg font-bold text-primary">{display(doctor.fee)}</span>
                     </div>
                     <div className="flex gap-2">
                       <Link

@@ -92,6 +92,7 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
                 <span className="flex items-baseline gap-2">
                   <span>{lang.nativeName}</span>
                   {lang.nativeName !== lang.name && <span className="text-xs text-muted">{lang.name}</span>}
+                  <span className="text-xs text-muted">{lang.currencySymbol}</span>
                 </span>
                 {current === lang.code && <Check size={14} className="text-primary flex-shrink-0" />}
               </button>

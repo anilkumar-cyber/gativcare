@@ -5,8 +5,10 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { treatments } from "@/lib/constants";
+import { useCurrency } from "@/components/layout/CurrencyContext";
 
 export default function Treatments() {
+  const { display } = useCurrency();
   return (
     <section className="section-padding relative overflow-hidden" id="treatments">
       <div className="absolute top-1/2 left-0 w-[600px] h-[600px] -translate-y-1/2 -translate-x-1/2 bg-accent/5 rounded-full blur-[120px]" />
@@ -43,7 +45,7 @@ export default function Treatments() {
                       {treatment.image}
                     </motion.div>
                     <span className="text-xs font-medium px-3 py-1 rounded-full bg-surface text-muted">
-                      {treatment.cost}
+                      {display(treatment.cost)}
                     </span>
                   </div>
 

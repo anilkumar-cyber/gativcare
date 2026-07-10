@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
+import { CurrencyProvider } from "@/components/layout/CurrencyContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -59,7 +60,7 @@ export default function RootLayout({
             document.body.appendChild(gtScript);
           `}
         </Script>
-        {children}
+        <CurrencyProvider>{children}</CurrencyProvider>
       </body>
     </html>
   );
