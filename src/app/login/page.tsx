@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { loginAction } from "@/lib/actions/auth";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 import { LogIn } from "lucide-react";
 
 export default function LoginPage() {
@@ -33,8 +34,7 @@ export default function LoginPage() {
           </div>
           <div>
             <label className="text-sm font-medium mb-1.5 block">Password</label>
-            <input
-              type="password"
+            <PasswordInput
               name="password"
               required
               className="w-full bg-surface rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30 border border-border"

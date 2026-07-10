@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { updateProfileAction, changePasswordAction } from "@/lib/actions/admin";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 
 export function SettingsForm({ name, phone, email }: { name: string; phone?: string | null; email: string }) {
   const [profileState, profileAction, profilePending] = useActionState(updateProfileAction, undefined);
@@ -37,11 +38,11 @@ export function SettingsForm({ name, phone, email }: { name: string; phone?: str
         <form action={passwordAction} className="space-y-4">
           <div>
             <label className="text-sm font-medium mb-1.5 block">Current password</label>
-            <input type="password" name="currentPassword" required className="w-full bg-surface rounded-xl px-4 py-2.5 text-sm border border-border outline-none focus:ring-2 focus:ring-primary/30" />
+            <PasswordInput name="currentPassword" required className="w-full bg-surface rounded-xl px-4 py-2.5 text-sm border border-border outline-none focus:ring-2 focus:ring-primary/30" />
           </div>
           <div>
             <label className="text-sm font-medium mb-1.5 block">New password</label>
-            <input type="password" name="newPassword" required minLength={8} className="w-full bg-surface rounded-xl px-4 py-2.5 text-sm border border-border outline-none focus:ring-2 focus:ring-primary/30" />
+            <PasswordInput name="newPassword" required minLength={8} className="w-full bg-surface rounded-xl px-4 py-2.5 text-sm border border-border outline-none focus:ring-2 focus:ring-primary/30" />
           </div>
           {passwordState?.error && <p className="text-sm text-red-500">{passwordState.error}</p>}
           {passwordState?.success && <p className="text-sm text-green-600">Password changed.</p>}

@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { registerAction } from "@/lib/actions/auth";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 import { UserPlus } from "lucide-react";
 
 export default function RegisterPage() {
@@ -52,8 +53,7 @@ export default function RegisterPage() {
           </div>
           <div>
             <label className="text-sm font-medium mb-1.5 block">Password</label>
-            <input
-              type="password"
+            <PasswordInput
               name="password"
               required
               minLength={8}

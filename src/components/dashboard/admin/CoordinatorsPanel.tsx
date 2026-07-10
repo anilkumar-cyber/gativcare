@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { Plus, Trash2, X } from "lucide-react";
 import { createCoordinatorAction, deleteCoordinatorAction } from "@/lib/actions/admin";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 
 type Coordinator = { id: string; name: string; email: string; phone: string | null; createdAt: Date };
 
@@ -33,7 +34,7 @@ export function CoordinatorsPanel({ coordinators }: { coordinators: Coordinator[
           <input name="name" placeholder="Full name" required className="bg-white dark:bg-slate-900 rounded-lg px-3 py-2 text-sm border border-border" />
           <input name="email" type="email" placeholder="Email" required className="bg-white dark:bg-slate-900 rounded-lg px-3 py-2 text-sm border border-border" />
           <input name="phone" placeholder="Phone" className="bg-white dark:bg-slate-900 rounded-lg px-3 py-2 text-sm border border-border" />
-          <input name="password" type="password" placeholder="Temporary password" required minLength={8} className="bg-white dark:bg-slate-900 rounded-lg px-3 py-2 text-sm border border-border" />
+          <PasswordInput name="password" placeholder="Temporary password" required minLength={8} className="w-full bg-white dark:bg-slate-900 rounded-lg px-3 py-2 text-sm border border-border" />
           {error && <p className="text-sm text-red-500 sm:col-span-2">{error}</p>}
           <button type="submit" disabled={pending} className="btn-primary text-sm px-4 py-2 sm:col-span-2 disabled:opacity-60">
             {pending ? "Creating..." : "Create coordinator account"}
