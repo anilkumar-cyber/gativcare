@@ -69,7 +69,7 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
       </button>
 
       {open && (
-        <div className="absolute top-full right-0 mt-2 w-64 rounded-xl border border-border bg-white dark:bg-slate-900 shadow-xl z-50 text-foreground flex flex-col max-h-80">
+        <div className="absolute top-full right-0 mt-2 w-64 rounded-xl border border-border bg-white dark:bg-slate-900 shadow-xl z-[60] text-foreground flex flex-col max-h-80">
           <div className="p-2 border-b border-border flex-shrink-0">
             <div className="relative">
               <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted" />

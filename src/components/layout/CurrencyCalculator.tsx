@@ -34,7 +34,7 @@ export function CurrencyCalculator({ compact = false }: { compact?: boolean }) {
       </button>
 
       {open && (
-        <div className="absolute top-full right-0 mt-2 w-72 rounded-xl border border-border bg-white dark:bg-slate-900 shadow-xl z-50 text-foreground p-4 space-y-3">
+        <div className="absolute top-full right-0 mt-2 w-72 rounded-xl border border-border bg-white dark:bg-slate-900 shadow-xl z-[60] text-foreground p-4 space-y-3">
           <p className="text-xs font-semibold text-muted uppercase">Currency Calculator</p>
 
           <input
