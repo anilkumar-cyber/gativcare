@@ -4,10 +4,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
-import { PersonStanding, Coins, TrendingDown, X, Smile, HeartPulse, Heart, Activity, Bone, Sparkles, Award, GraduationCap, ReceiptText, Plane, Headphones, ArrowRight, type LucideIcon } from "lucide-react";
+import { PersonStanding, IndianRupee, TrendingDown, X, Smile, HeartPulse, Heart, Activity, Bone, Sparkles, Award, GraduationCap, ReceiptText, Plane, Headphones, ArrowRight, type LucideIcon } from "lucide-react";
 import { getTreatmentPricing } from "@/lib/pricing";
-import { CURRENCIES } from "@/lib/currency";
-import { useCurrency } from "@/components/layout/CurrencyContext";
+import { formatCurrency, USD_TO_INR_RATE } from "@/lib/currency";
 
 const trustPoints: { title: string; description: string; icon: LucideIcon }[] = [
   { title: "JCI & NABH Accredited Hospitals", description: "Same global safety standards as US and UK hospitals", icon: Award },
@@ -39,8 +38,6 @@ function savingsPct(india: number, usa: number) {
 const maxSavings = Math.max(...bodyCostData.map((p) => savingsPct(p.india, p.usa)));
 
 export default function BodyCostMap() {
-  const { currency, display } = useCurrency();
-  const currencySymbol = CURRENCIES.find((c) => c.code === currency)?.symbol ?? "$";
   const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
@@ -54,7 +51,7 @@ export default function BodyCostMap() {
             <PersonStanding size={14} /> Interactive Cost Explorer
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Tap a Body Part, See the <span className="text-gradient-gold">Price in {currencySymbol}</span>
+            Tap a Body Part, See the <span className="text-gradient-gold">Price in ₹</span>
           </h2>
           <p className="text-lg text-muted max-w-2xl mx-auto">
             Hover or tap any highlighted point to see the treatment cost in India vs the USA.
@@ -130,12 +127,12 @@ export default function BodyCostMap() {
                           </div>
                           <div className="p-4">
                             <div className="flex items-center gap-1.5 text-green-600 font-bold text-lg mb-1">
-                              <Coins size={16} />
-                              {display(part.india)}
+                              <IndianRupee size={16} />
+                              {formatCurrency(part.india * USD_TO_INR_RATE, "INR").replace("₹", "")}
                             </div>
                             <p className="text-xs text-muted mb-2">in India</p>
                             <div className="flex items-center justify-between text-xs">
-                              <span className="text-muted line-through">{display(part.usa)} in USA</span>
+                              <span className="text-muted line-through">{formatCurrency(part.usa, "USD")} in USA</span>
                               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/10 text-green-600 font-bold">
                                 <TrendingDown size={11} /> {savings}%
                               </span>
@@ -170,7 +167,7 @@ export default function BodyCostMap() {
                       </span>
                       <span className="min-w-0">
                         <span className="block text-xs font-medium truncate">{part.name}</span>
-                        <span className="block text-sm font-bold text-green-600">{display(part.india)}</span>
+                        <span className="block text-sm font-bold text-green-600">{formatCurrency(part.india * USD_TO_INR_RATE, "INR")}</span>
                       </span>
                     </button>
                   </StaggerItem>

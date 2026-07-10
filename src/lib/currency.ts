@@ -41,9 +41,8 @@ export function convertFromUsd(amountUsd: number, currency: CurrencyCode): numbe
   return amountUsd * (info?.rateFromUsd ?? 1);
 }
 
-/** Pulls the numeric USD amount(s) out of strings like "$3,000" or "$3,000 - $7,000". */
-export function parseUsdAmounts(input: string | number): number[] {
-  if (typeof input === "number") return [input];
-  const matches = input.match(/[\d,]+(?:\.\d+)?/g) ?? [];
-  return matches.map((m) => Number(m.replace(/,/g, "")));
+export function convertBetween(amount: number, from: CurrencyCode, to: CurrencyCode): number {
+  const fromRate = CURRENCIES.find((c) => c.code === from)?.rateFromUsd ?? 1;
+  const toRate = CURRENCIES.find((c) => c.code === to)?.rateFromUsd ?? 1;
+  return (amount / fromRate) * toRate;
 }

@@ -5,10 +5,8 @@ import { Check, ArrowRight, Clock, Star } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { packages } from "@/lib/constants";
-import { useCurrency } from "@/components/layout/CurrencyContext";
 
 export default function Packages() {
-  const { display } = useCurrency();
   return (
     <section className="section-padding relative overflow-hidden" id="packages">
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[120px]" />
@@ -46,7 +44,7 @@ export default function Packages() {
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2">{pkg.name}</h3>
                   <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-3xl font-bold text-gradient">{display(pkg.price)}</span>
+                    <span className="text-3xl font-bold text-gradient">{pkg.price}</span>
                     <span className="text-sm text-muted">starting from</span>
                   </div>
                   <div className="flex items-center gap-1.5 text-sm text-muted mb-6">

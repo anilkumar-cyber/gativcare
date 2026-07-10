@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Search, Star, MapPin, Video, Calendar, GraduationCap, Languages } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
-import { useCurrency } from "@/components/layout/CurrencyContext";
 
 type Doctor = {
   id: string;
@@ -23,7 +22,6 @@ type Doctor = {
 };
 
 export default function DoctorsClient({ doctors }: { doctors: Doctor[] }) {
-  const { display } = useCurrency();
   const [search, setSearch] = useState("");
   const [selectedSpec, setSelectedSpec] = useState("All");
 
@@ -121,7 +119,7 @@ export default function DoctorsClient({ doctors }: { doctors: Doctor[] }) {
                   <div className="flex items-center justify-between pt-4 border-t border-border">
                     <div>
                       <span className="text-xs text-muted">Consultation</span>
-                      <span className="block text-lg font-bold text-primary">{display(doctor.fee)}</span>
+                      <span className="block text-lg font-bold text-primary">{doctor.fee}</span>
                     </div>
                     <div className="flex gap-2">
                       <Link

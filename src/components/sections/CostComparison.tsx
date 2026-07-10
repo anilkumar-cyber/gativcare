@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/components/ui/motion";
 import { treatmentPricing } from "@/lib/pricing";
-import { useCurrency } from "@/components/layout/CurrencyContext";
+import { formatCurrency } from "@/lib/currency";
 import { TrendingDown, DollarSign, ArrowRight } from "lucide-react";
 
 const countries = ["usa", "uk", "germany", "australia"] as const;
@@ -14,7 +14,6 @@ const countryField = { usa: "usaUSD", uk: "ukUSD", germany: "germanyUSD", austra
 const comparableTreatments = treatmentPricing.filter((t) => t.ukUSD !== undefined);
 
 export default function CostComparison() {
-  const { display } = useCurrency();
   const [selectedCountry, setSelectedCountry] = useState<string>("usa");
 
   return (
@@ -86,11 +85,11 @@ export default function CostComparison() {
                       <div className="font-medium text-sm sm:text-base">{item.treatment}</div>
                       <div className="sm:text-center">
                         <span className="sm:hidden text-xs text-muted mr-2">India:</span>
-                        <span className="text-green-600 font-bold">{display(item.indiaUSD)}</span>
+                        <span className="text-green-600 font-bold">{formatCurrency(item.indiaUSD, "USD")}</span>
                       </div>
                       <div className="sm:text-center">
                         <span className="sm:hidden text-xs text-muted mr-2">{countryLabels[selectedCountry]}:</span>
-                        <span className="text-muted line-through">{display(comparePrice)}</span>
+                        <span className="text-muted line-through">{formatCurrency(comparePrice, "USD")}</span>
                       </div>
                       <div className="sm:text-center">
                         <span className="sm:hidden text-xs text-muted mr-2">Savings:</span>
