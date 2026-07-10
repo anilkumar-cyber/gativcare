@@ -53,6 +53,25 @@ export async function getAllDoctors() {
   return prisma.doctor.findMany({ orderBy: { name: "asc" }, include: { hospital: true } });
 }
 
+/** Doctors formatted for the public marketing site (homepage + /doctors listing). */
+export async function getPublicDoctors() {
+  const doctors = await getAllDoctors();
+  return doctors.map((d) => ({
+    id: d.id,
+    name: d.name,
+    hospital: d.hospital.name,
+    city: d.hospital.city,
+    specialization: d.specialization,
+    experience: d.experience,
+    fee: d.fee,
+    rating: d.rating,
+    reviews: d.reviews,
+    languages: d.languages,
+    education: d.education ?? "—",
+    successRate: d.successRate ?? "—",
+  }));
+}
+
 export async function getAllPatients() {
   return prisma.patient.findMany({
     orderBy: { user: { createdAt: "desc" } },

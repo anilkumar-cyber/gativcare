@@ -5,13 +5,27 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Search, Star, MapPin, Video, Calendar, GraduationCap, Languages } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
-import { doctors } from "@/lib/constants";
 
-const specializations = ["All", ...Array.from(new Set(doctors.map((d) => d.specialization)))];
+type Doctor = {
+  id: string;
+  name: string;
+  hospital: string;
+  city: string;
+  specialization: string;
+  experience: number;
+  fee: string;
+  rating: number;
+  reviews: number;
+  languages: string[];
+  education: string;
+  successRate: string;
+};
 
-export default function DoctorsClient() {
+export default function DoctorsClient({ doctors }: { doctors: Doctor[] }) {
   const [search, setSearch] = useState("");
   const [selectedSpec, setSelectedSpec] = useState("All");
+
+  const specializations = ["All", ...Array.from(new Set(doctors.map((d) => d.specialization)))];
 
   const filtered = doctors.filter((d) => {
     const matchesSearch = d.name.toLowerCase().includes(search.toLowerCase()) ||

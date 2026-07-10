@@ -13,12 +13,16 @@ import Destinations from "@/components/sections/Destinations";
 import Concierge from "@/components/sections/Concierge";
 import FAQ from "@/components/sections/FAQ";
 import CTASection from "@/components/sections/CTASection";
-import { getPublishedFaqs, getPublishedTestimonials } from "@/lib/queries/admin";
+import { getPublishedFaqs, getPublishedTestimonials, getPublicDoctors } from "@/lib/queries/admin";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [faqs, testimonials] = await Promise.all([getPublishedFaqs(), getPublishedTestimonials()]);
+  const [faqs, testimonials, doctors] = await Promise.all([
+    getPublishedFaqs(),
+    getPublishedTestimonials(),
+    getPublicDoctors(),
+  ]);
 
   return (
     <>
@@ -26,7 +30,7 @@ export default async function Home() {
       <WhyIndia />
       <Treatments />
       <Hospitals />
-      <Doctors />
+      <Doctors doctors={doctors} />
       <CostComparison />
       <BodyCostMap />
       <PatientJourney />

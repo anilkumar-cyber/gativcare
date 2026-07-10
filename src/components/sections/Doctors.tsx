@@ -4,9 +4,23 @@ import { motion } from "framer-motion";
 import { Star, MapPin, ArrowRight, Video, Calendar, Languages, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
-import { doctors } from "@/lib/constants";
 
-export default function Doctors() {
+type Doctor = {
+  id: string;
+  name: string;
+  hospital: string;
+  city: string;
+  specialization: string;
+  experience: number;
+  fee: string;
+  rating: number;
+  reviews: number;
+  languages: string[];
+  education: string;
+  successRate: string;
+};
+
+export default function Doctors({ doctors }: { doctors: Doctor[] }) {
   return (
     <section className="section-padding relative overflow-hidden" id="doctors">
       <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px]" />
