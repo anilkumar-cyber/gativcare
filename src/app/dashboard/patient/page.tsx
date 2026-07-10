@@ -6,7 +6,9 @@ import { SettingsForm } from "@/components/dashboard/SettingsForm";
 import { PatientCountryForm } from "@/components/dashboard/PatientCountryForm";
 import { getPatientOverview, getPatientTreatmentContext, getPatientNotifications } from "@/lib/queries/patient";
 import { getPatientJourney, getPatientMessages, getRecoveryTasks } from "@/lib/queries/journey";
+import { getPatientPrescriptions } from "@/lib/queries/prescriptions";
 import { getAllDoctors } from "@/lib/queries/admin";
+import { PrescriptionList } from "@/components/dashboard/PrescriptionList";
 import { ReportUploadForm } from "@/components/dashboard/ReportUploadForm";
 import { RequestAppointmentForm } from "@/components/dashboard/patient/RequestAppointmentForm";
 import { JourneyTimeline } from "@/components/dashboard/JourneyTimeline";
@@ -151,6 +153,11 @@ export default async function PatientDashboard({
   if (activeTab === "messages") {
     const messages = await getPatientMessages(user.patient.id);
     return <MessageThread patientId={user.patient.id} currentUserId={user.id} messages={messages} />;
+  }
+
+  if (activeTab === "prescriptions") {
+    const prescriptions = await getPatientPrescriptions(user.patient.id);
+    return <PrescriptionList prescriptions={prescriptions} />;
   }
 
   if (activeTab === "recovery") {

@@ -80,6 +80,12 @@ enum FollowUpStatus {
   COMPLETED
 }
 
+enum PrescriptionStatus {
+  ACTIVE
+  COMPLETED
+  DISCONTINUED
+}
+
 model User {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -146,6 +152,7 @@ model Doctor {
   userId       String?       @unique
   user         User?         @relation(fields: [userId], references: [id])
   appointments Appointment[]
+  prescriptions Prescription[]
 }
 
 model Patient {
@@ -165,6 +172,7 @@ model Patient {
   messages     PatientMessage[]
   recoveryTasks RecoveryMilestone[]
   followUps    FollowUp[]
+  prescriptions Prescription[]
 }
 
 model JourneyMilestone {
@@ -298,6 +306,22 @@ model Testimonial {
   savings    String?
   published  Boolean  @default(true)
   createdAt  DateTime @default(now())
+}
+
+model Prescription {
+  id           String             @id @default(cuid())
+  patientId    String
+  doctorId     String
+  medication   String
+  dosage       String
+  frequency    String
+  duration     String?
+  instructions String?
+  status       PrescriptionStatus @default(ACTIVE)
+  createdAt    DateTime           @default(now())
+
+  patient Patient @relation(fields: [patientId], references: [id])
+  doctor  Doctor  @relation(fields: [doctorId], references: [id])
 }
 
 model MedicalReport {

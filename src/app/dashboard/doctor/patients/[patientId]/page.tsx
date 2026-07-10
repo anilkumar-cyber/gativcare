@@ -4,9 +4,11 @@ import { requireRole } from "@/lib/auth";
 import { Role } from "@prisma/client";
 import { getDoctorPatientIfOwned } from "@/lib/queries/doctor";
 import { getPatientJourney, getPatientMessages, getRecoveryTasks } from "@/lib/queries/journey";
+import { getPatientPrescriptions } from "@/lib/queries/prescriptions";
 import { JourneyTimeline } from "@/components/dashboard/JourneyTimeline";
 import { MessageThread } from "@/components/dashboard/MessageThread";
 import { RecoveryChecklist } from "@/components/dashboard/RecoveryChecklist";
+import { PrescriptionList } from "@/components/dashboard/PrescriptionList";
 import { TreatmentPlanForm } from "@/components/dashboard/TreatmentPlanForm";
 import { notFound } from "next/navigation";
 
@@ -18,10 +20,11 @@ export default async function DoctorPatientDetail({ params }: { params: Promise<
   const patient = await getDoctorPatientIfOwned(user.doctor.id, patientId);
   if (!patient) notFound();
 
-  const [journey, messages, tasks] = await Promise.all([
+  const [journey, messages, tasks, prescriptions] = await Promise.all([
     getPatientJourney(patientId),
     getPatientMessages(patientId),
     getRecoveryTasks(patientId),
+    getPatientPrescriptions(patientId),
   ]);
 
   return (
@@ -50,6 +53,8 @@ export default async function DoctorPatientDetail({ params }: { params: Promise<
       />
 
       <RecoveryChecklist patientId={patientId} tasks={tasks} canAdd />
+
+      <PrescriptionList prescriptions={prescriptions} patientId={patientId} canAdd canManage />
 
       <MessageThread patientId={patientId} currentUserId={user.id} messages={messages} />
     </div>

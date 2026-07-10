@@ -6,6 +6,8 @@ import { StatCard } from "@/components/dashboard/StatCard";
 import { SettingsForm } from "@/components/dashboard/SettingsForm";
 import { DoctorProfileForm } from "@/components/dashboard/DoctorProfileForm";
 import { getDoctorOverview, getDoctorPatients, getDoctorReports, getDoctorAnalytics } from "@/lib/queries/doctor";
+import { getDoctorPrescriptions } from "@/lib/queries/prescriptions";
+import { PrescriptionList } from "@/components/dashboard/PrescriptionList";
 import { markReportReviewedAction } from "@/lib/actions/reports";
 import { confirmAppointmentAction } from "@/lib/actions/appointments";
 import { getEffectiveTabs } from "@/lib/queries/permissions";
@@ -138,6 +140,22 @@ export default async function DoctorDashboard({
           </table>
         </div>
       </div>
+    );
+  }
+
+  if (activeTab === "prescriptions") {
+    const [prescriptions, patients] = await Promise.all([
+      getDoctorPrescriptions(user.doctor.id),
+      getDoctorPatients(user.doctor.id),
+    ]);
+    return (
+      <PrescriptionList
+        prescriptions={prescriptions}
+        patients={patients.map(({ patient }) => ({ id: patient.id, name: patient.user.name }))}
+        canAdd
+        canManage
+        showPatientName
+      />
     );
   }
 
