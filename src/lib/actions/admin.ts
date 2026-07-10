@@ -119,27 +119,41 @@ export async function deleteDoctorAction(formData: FormData) {
 const coordinatorSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
-  password: z.string().min(8, "Password must be at least 8 characters."),
+  password: z.string().min(8, "Password must be at least 8 characters.").optional(),
   phone: z.string().optional(),
 });
 
-export async function createCoordinatorAction(_prevState: { error?: string } | undefined, formData: FormData) {
+export async function saveCoordinatorAction(_prevState: { error?: string } | undefined, formData: FormData) {
   await requireRole(Role.ADMIN);
+  const id = str(formData, "id");
   const parsed = coordinatorSchema.safeParse({
     name: str(formData, "name"),
     email: str(formData, "email"),
-    password: str(formData, "password"),
+    password: str(formData, "password") || undefined,
     phone: str(formData, "phone") || undefined,
   });
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
+  if (!id && !parsed.data.password) return { error: "Password is required." };
 
   const existing = await prisma.user.findUnique({ where: { email: parsed.data.email } });
-  if (existing) return { error: "An account with this email already exists." };
+  if (existing && existing.id !== id) return { error: "An account with this email already exists." };
 
-  const passwordHash = await hashPassword(parsed.data.password);
-  await prisma.user.create({
-    data: { name: parsed.data.name, email: parsed.data.email, passwordHash, role: Role.COORDINATOR, phone: parsed.data.phone },
-  });
+  if (id) {
+    await prisma.user.update({
+      where: { id, role: Role.COORDINATOR },
+      data: {
+        name: parsed.data.name,
+        email: parsed.data.email,
+        phone: parsed.data.phone,
+        ...(parsed.data.password ? { passwordHash: await hashPassword(parsed.data.password) } : {}),
+      },
+    });
+  } else {
+    const passwordHash = await hashPassword(parsed.data.password!);
+    await prisma.user.create({
+      data: { name: parsed.data.name, email: parsed.data.email, passwordHash, role: Role.COORDINATOR, phone: parsed.data.phone },
+    });
+  }
   revalidatePath(ADMIN_PATH);
   return { error: undefined };
 }
