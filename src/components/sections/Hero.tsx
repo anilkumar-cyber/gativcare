@@ -47,10 +47,11 @@ export default function Hero() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="relative lg:min-h-[600px]">
-            {/* Full-bleed photo, right half on large screens only — mobile/tablet
+          <div className="relative lg:min-h-[480px]">
+            {/* Photo sized to its own aspect ratio and anchored to the bottom of
+                this block, so it doesn't leave dead air above it. Mobile/tablet
                 get a contained card version inside the grid below instead. */}
-            <div className="hidden lg:block absolute inset-y-0 right-0 w-1/2">
+            <div className="hidden lg:block absolute bottom-0 right-0 w-1/2 aspect-[3/2]">
               <Image
                 src="/images/hero-img.png"
                 alt="Patient family with GativCare doctor"
@@ -62,7 +63,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
-                className="absolute bottom-12 left-8 right-8 xl:right-auto bg-white dark:bg-slate-900 rounded-2xl p-4 flex items-center gap-3 shadow-xl"
+                className="absolute bottom-6 left-8 right-8 xl:right-auto bg-white dark:bg-slate-900 rounded-2xl p-4 flex items-center gap-3 shadow-xl"
               >
                 <div className="flex -space-x-3 shrink-0">
                   {["J", "S", "M"].map((letter, i) => (
@@ -169,7 +170,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="relative lg:hidden"
             >
-              <div className="relative h-[340px] sm:h-[420px]">
+              <div className="relative aspect-[3/2]">
                 <Image
                   src="/images/hero-img.png"
                   alt="Patient family with GativCare doctor"
