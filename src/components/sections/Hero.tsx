@@ -48,10 +48,11 @@ export default function Hero() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <div className="relative lg:min-h-[480px]">
-            {/* Photo sized to its own aspect ratio and anchored to the bottom of
-                this block, so it doesn't leave dead air above it. Mobile/tablet
+            {/* Photo sized to its own aspect ratio and anchored to the top of this
+                block, flush under the nav like the reference — any leftover slack
+                lands below the photo instead of as a gap above it. Mobile/tablet
                 get a contained card version inside the grid below instead. */}
-            <div className="hidden lg:block absolute bottom-0 right-0 w-1/2 aspect-[3/2]">
+            <div className="hidden lg:block absolute top-0 right-0 w-1/2 aspect-[3/2]">
               <Image
                 src="/images/hero-img.png"
                 alt="Patient family with GativCare doctor"
