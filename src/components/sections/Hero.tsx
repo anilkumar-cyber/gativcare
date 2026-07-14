@@ -30,15 +30,18 @@ const bottomBar = [
   { icon: ShieldCheck, label: "Patient Safety First", color: "text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30" },
 ];
 
+const softShadow = "shadow-[0_20px_60px_rgba(0,0,0,0.08)]";
+
 export default function Hero() {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const tab = tabs.find((t) => t.id === activeTab) ?? tabs[0];
 
   return (
     <>
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
         <div className="absolute inset-0 dark:hidden" aria-hidden="true">
           <Image src="/images/hero-bg.png" alt="" fill priority className="object-cover" />
+          <div className="absolute inset-0 bg-white/35" />
         </div>
         <div className="hidden absolute inset-0 dark:block" aria-hidden="true">
           <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
@@ -46,25 +49,33 @@ export default function Hero() {
           <div className="absolute -bottom-32 left-[8%] w-[32rem] h-[32rem] bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-[120px]" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="relative lg:min-h-[480px]">
-            {/* Photo sized to its own aspect ratio and anchored to the top of this
-                block, flush under the nav like the reference — any leftover slack
-                lands below the photo instead of as a gap above it. Mobile/tablet
-                get a contained card version inside the grid below instead. */}
-            <div className="hidden lg:block absolute top-0 right-0 w-1/2 aspect-[3/2]">
-              <Image
-                src="/images/hero-img.png"
-                alt="Patient family with GativCare doctor"
-                fill
-                className="object-contain object-bottom"
-                priority
-              />
+        <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+          <div className="relative lg:min-h-[560px]">
+            {/* Photo sized to its own aspect ratio, anchored bottom-right on large
+                screens. Mobile/tablet get a contained version inside the grid. */}
+            <div className="hidden lg:block absolute bottom-0 right-0 w-[55%] aspect-[3/2]">
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="relative w-full h-full"
+              >
+                <Image
+                  src="/images/hero-img.png"
+                  alt="Patient family with GativCare doctor"
+                  fill
+                  className="object-contain object-bottom"
+                  priority
+                />
+              </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="absolute bottom-6 left-8 right-8 xl:right-auto bg-white dark:bg-slate-900 rounded-2xl p-4 flex items-center gap-3 shadow-xl"
+                animate={{ opacity: 1, y: [0, -8, 0] }}
+                transition={{
+                  opacity: { duration: 0.5, delay: 0.7 },
+                  y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.7 },
+                }}
+                className={`absolute bottom-16 left-1/2 -translate-x-1/2 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-white/40 dark:border-white/10 rounded-[24px] p-4 flex items-center gap-3 ${softShadow}`}
               >
                 <div className="flex -space-x-3 shrink-0">
                   {["J", "S", "M"].map((letter, i) => (
@@ -77,7 +88,7 @@ export default function Hero() {
                     </div>
                   ))}
                 </div>
-                <p className="text-sm font-semibold leading-snug">
+                <p className="text-sm font-semibold leading-snug whitespace-nowrap">
                   Patients Welcomed From Around the World
                 </p>
               </motion.div>
@@ -87,13 +98,13 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-sm font-medium mb-6">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-sm font-medium mb-8">
                 <ShieldCheck size={14} /> Trusted by Patients Worldwide
               </span>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-[72px] font-extrabold leading-[1.05] mb-8 max-w-[650px]">
                 <span className="text-foreground">India&apos;s Most Trusted</span>
                 <br />
                 <span className="text-gradient">Medical Tourism</span>
@@ -101,15 +112,15 @@ export default function Hero() {
                 <span className="text-foreground">Platform</span>
               </h1>
 
-              <p className="text-lg text-muted max-w-xl mb-8 leading-relaxed">
+              <p className="text-lg text-muted max-w-[600px] mb-10 leading-relaxed">
                 We connect you with JCI-accredited hospitals, world-class doctors, and seamless
                 care — from consultation to recovery.
               </p>
 
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-8">
+              <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mb-10">
                 {features.map((f) => (
-                  <div key={f.label} className="flex items-center gap-2.5 max-w-[9rem]">
-                    <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <div key={f.label} className="flex items-center gap-3 max-w-[9rem]">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                       <f.icon size={16} className="text-primary" />
                     </div>
                     <span className="text-xs font-medium leading-snug">{f.label}</span>
@@ -117,13 +128,18 @@ export default function Hero() {
                 ))}
               </div>
 
-              <div className="glass-card rounded-2xl p-5">
-                <div className="flex items-center gap-5 border-b border-border mb-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className={`bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-[24px] p-8 ${softShadow}`}
+              >
+                <div className="flex items-center gap-6 border-b border-border mb-5">
                   {tabs.map((t) => (
                     <button
                       key={t.id}
                       onClick={() => setActiveTab(t.id)}
-                      className={`pb-3 text-sm font-semibold transition-colors relative ${
+                      className={`pb-4 text-sm font-semibold transition-colors relative ${
                         activeTab === t.id ? "text-primary" : "text-muted hover:text-foreground"
                       }`}
                     >
@@ -135,40 +151,47 @@ export default function Hero() {
                   ))}
                 </div>
 
-                <form action={tab.href} className="flex gap-2 mb-4">
+                <form action={tab.href} className="flex gap-3 mb-5">
                   <div className="relative flex-1">
-                    <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
+                    <Search size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                     <input
                       type="text"
                       name="q"
                       placeholder={tab.placeholder}
-                      className="w-full bg-white dark:bg-slate-900 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30 border border-border"
+                      className="w-full h-16 bg-white dark:bg-slate-900 rounded-2xl pl-12 pr-4 text-sm outline-none focus:ring-2 focus:ring-primary/30 border border-border"
                     />
                   </div>
-                  <button type="submit" className="btn-primary text-sm px-6">
+                  <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.2 }}
+                    type="submit"
+                    className="h-16 px-8 rounded-[18px] bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
+                  >
                     Search
-                  </button>
+                  </motion.button>
                 </form>
 
                 <div className="flex flex-wrap items-center gap-2 text-xs">
                   <span className="text-muted shrink-0">Popular Searches:</span>
                   {tab.searches.map((s) => (
-                    <Link
-                      key={s}
-                      href={tab.href}
-                      className="px-3 py-1.5 rounded-full bg-surface hover:bg-primary/10 hover:text-primary transition-colors border border-border"
-                    >
-                      {s}
-                    </Link>
+                    <motion.div key={s} whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
+                      <Link
+                        href={tab.href}
+                        className="px-3 py-1.5 rounded-full bg-surface hover:bg-primary/10 hover:text-primary transition-colors border border-border inline-block"
+                      >
+                        {s}
+                      </Link>
+                    </motion.div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="relative lg:hidden"
             >
               <div className="relative aspect-[3/2]">
@@ -184,8 +207,8 @@ export default function Hero() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="relative -mt-8 mx-6 sm:mx-8 bg-white dark:bg-slate-900 rounded-2xl p-4 flex items-center gap-3 shadow-xl"
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className={`relative -mt-8 mx-6 sm:mx-8 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-[24px] p-4 flex items-center gap-3 ${softShadow}`}
               >
                 <div className="flex -space-x-3 shrink-0">
                   {["J", "S", "M"].map((letter, i) => (
@@ -209,8 +232,8 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="glass-card rounded-2xl p-6 mt-20 lg:mt-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6"
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className={`bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-[30px] p-8 mt-14 lg:mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 max-w-[1300px] mx-auto ${softShadow}`}
           >
             {bottomBar.map((item) => (
               <div key={item.label} className="flex items-center gap-3">
