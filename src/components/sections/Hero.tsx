@@ -149,7 +149,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
-                className="absolute -bottom-6 left-6 right-6 sm:left-8 sm:right-auto glass-card rounded-2xl p-4 flex items-center gap-3 shadow-xl"
+                className="absolute -bottom-6 left-6 right-6 sm:left-8 sm:right-auto bg-white dark:bg-slate-900 rounded-2xl p-4 flex items-center gap-3 shadow-xl"
               >
                 <div className="flex -space-x-3 shrink-0">
                   {["J", "S", "M"].map((letter, i) => (
