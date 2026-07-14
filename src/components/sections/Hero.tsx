@@ -58,11 +58,11 @@ export default function Hero() {
               src="/images/hero-img.png"
               alt="Patient family with GativCare doctor"
               fill
-              className="object-cover object-right"
+              className="object-contain object-right-bottom"
               priority
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent" />
         </div>
 
         <div className="hidden absolute inset-0 dark:block" aria-hidden="true">
