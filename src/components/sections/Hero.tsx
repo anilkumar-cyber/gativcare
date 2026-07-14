@@ -44,10 +44,11 @@ export default function Hero() {
           <div className="absolute inset-0 bg-white/35" />
         </div>
 
-        {/* Full-width hero photo, aligned to the right, sitting behind everything.
-            A left-heavy light scrim keeps the text column legible. Mobile/tablet
-            get a separate contained version inside the grid below instead. */}
-        <div className="hidden lg:block absolute inset-0 dark:hidden" aria-hidden="true">
+        {/* Hero photo pinned to the true right edge of the section (not the
+            padded max-w content box, so it's genuinely edge-to-edge on wide
+            screens) and sized so it doesn't swallow the text column. Mobile/
+            tablet get a separate contained version inside the grid below. */}
+        <div className="hidden lg:block absolute inset-y-0 right-0 w-[42%] dark:hidden" aria-hidden="true">
           <motion.div
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -62,7 +63,6 @@ export default function Hero() {
               priority
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent" />
         </div>
 
         <div className="hidden absolute inset-0 dark:block" aria-hidden="true">
