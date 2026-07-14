@@ -46,9 +46,9 @@ export default function Hero() {
 
         {/* Hero photo pinned to the true right edge of the section (not the
             padded max-w content box, so it's genuinely edge-to-edge on wide
-            screens) and sized so it doesn't swallow the text column. Mobile/
-            tablet get a separate contained version inside the grid below. */}
-        <div className="hidden lg:block absolute inset-y-0 right-0 w-[42%] dark:hidden" aria-hidden="true">
+            screens), stopping above the stats bar rather than spanning the
+            full section height. Mobile/tablet get a contained version below. */}
+        <div className="hidden lg:block absolute top-0 h-[72vh] right-0 w-[42%] dark:hidden" aria-hidden="true">
           <motion.div
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -63,6 +63,31 @@ export default function Hero() {
               priority
             />
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: [0, -8, 0] }}
+            transition={{
+              opacity: { duration: 0.5, delay: 0.9 },
+              y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.9 },
+            }}
+            className={`absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-white/40 dark:border-white/10 rounded-[24px] p-4 flex items-center gap-3 ${softShadow}`}
+          >
+            <div className="flex -space-x-3 shrink-0">
+              {["J", "S", "M"].map((letter, i) => (
+                <div
+                  key={letter}
+                  className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent border-2 border-white dark:border-slate-900 flex items-center justify-center text-white text-sm font-bold"
+                  style={{ zIndex: 3 - i }}
+                >
+                  {letter}
+                </div>
+              ))}
+            </div>
+            <p className="text-sm font-semibold leading-snug whitespace-nowrap">
+              Patients Welcomed From Around the World
+            </p>
+          </motion.div>
         </div>
 
         <div className="hidden absolute inset-0 dark:block" aria-hidden="true">
@@ -70,31 +95,6 @@ export default function Hero() {
           <div className="absolute -top-24 -right-10 w-[36rem] h-[36rem] bg-gradient-to-br from-amber-500/10 to-orange-500/5 rounded-full blur-[110px]" />
           <div className="absolute -bottom-32 left-[8%] w-[32rem] h-[32rem] bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-[120px]" />
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: [0, -8, 0] }}
-          transition={{
-            opacity: { duration: 0.5, delay: 0.9 },
-            y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.9 },
-          }}
-          className={`hidden lg:flex absolute bottom-16 right-10 xl:right-16 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-white/40 dark:border-white/10 rounded-[24px] p-4 items-center gap-3 ${softShadow}`}
-        >
-          <div className="flex -space-x-3 shrink-0">
-            {["J", "S", "M"].map((letter, i) => (
-              <div
-                key={letter}
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent border-2 border-white dark:border-slate-900 flex items-center justify-center text-white text-sm font-bold"
-                style={{ zIndex: 3 - i }}
-              >
-                {letter}
-              </div>
-            ))}
-          </div>
-          <p className="text-sm font-semibold leading-snug whitespace-nowrap">
-            Patients Welcomed From Around the World
-          </p>
-        </motion.div>
 
         <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           <div className="relative">
