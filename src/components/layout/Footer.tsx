@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, Phone, Mail, MapPin, MessageCircle, ArrowUp } from "lucide-react";
+import { Heart, Mail, MapPin, ArrowUp } from "lucide-react";
 
 const footerLinks = {
   treatments: [
@@ -18,9 +18,7 @@ const footerLinks = {
   company: [
     { label: "About Us", href: "/about" },
     { label: "Our Hospitals", href: "/hospitals" },
-    { label: "Our Doctors", href: "/doctors" },
     { label: "Packages", href: "/packages" },
-    { label: "Testimonials", href: "/#testimonials" },
     { label: "Contact", href: "/contact" },
   ],
   support: [
@@ -54,21 +52,18 @@ export default function Footer() {
             </Link>
             <p className="text-sm text-slate-400 mb-6 max-w-sm leading-relaxed">
               India&apos;s premier medical tourism platform connecting international patients
-              with world-class healthcare. Trusted by 50,000+ patients from 65+ countries.
+              with world-class healthcare.
             </p>
             <div className="space-y-3 text-sm">
-              <a href="tel:+918886963612" className="flex items-center gap-3 hover:text-primary transition-colors">
-                <Phone size={16} className="text-primary" /> +91 88869 63612
-              </a>
               <a href="mailto:care@gativcare.com" className="flex items-center gap-3 hover:text-primary transition-colors">
                 <Mail size={16} className="text-primary" /> care@gativcare.com
+              </a>
+              <a href="mailto:support@gativcare.com" className="flex items-center gap-3 hover:text-primary transition-colors">
+                <Mail size={16} className="text-primary" /> support@gativcare.com
               </a>
               <div className="flex items-center gap-3">
                 <MapPin size={16} className="text-primary" /> New Delhi, India
               </div>
-              <a href="https://wa.me/918886963612" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-green-400 hover:text-green-300 transition-colors">
-                <MessageCircle size={16} /> WhatsApp: +91 88869 63612
-              </a>
             </div>
           </div>
 

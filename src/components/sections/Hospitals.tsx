@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, MapPin, Award, Users, ArrowRight, Building2 } from "lucide-react";
+import { MapPin, ArrowRight, Building2 } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { hospitals } from "@/lib/constants";
@@ -46,18 +46,12 @@ export default function Hospitals() {
                 </div>
 
                 <div className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">
-                        {hospital.name}
-                      </h3>
-                      <div className="flex items-center gap-1.5 text-sm text-muted mt-1">
-                        <MapPin size={13} /> {hospital.city}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/30 px-2.5 py-1 rounded-lg">
-                      <Star size={13} className="text-amber-500 fill-amber-500" />
-                      <span className="text-sm font-semibold text-amber-700 dark:text-amber-400">{hospital.rating}</span>
+                  <div className="mb-3">
+                    <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">
+                      {hospital.name}
+                    </h3>
+                    <div className="flex items-center gap-1.5 text-sm text-muted mt-1">
+                      <MapPin size={13} /> {hospital.city}
                     </div>
                   </div>
 
@@ -74,7 +68,7 @@ export default function Hospitals() {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-3 gap-3 mb-4 py-3 border-y border-border">
+                  <div className="grid grid-cols-2 gap-3 mb-4 py-3 border-y border-border">
                     <div className="text-center">
                       <div className="text-sm font-bold text-primary">{hospital.beds}</div>
                       <div className="text-[10px] text-muted">Beds</div>
@@ -83,16 +77,9 @@ export default function Hospitals() {
                       <div className="text-sm font-bold text-primary">{hospital.doctors}</div>
                       <div className="text-[10px] text-muted">Doctors</div>
                     </div>
-                    <div className="text-center">
-                      <div className="text-sm font-bold text-green-600">{hospital.successRate}</div>
-                      <div className="text-[10px] text-muted">Success</div>
-                    </div>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted flex items-center gap-1">
-                      <Users size={12} /> {hospital.reviews.toLocaleString()} reviews
-                    </span>
+                  <div className="flex items-center justify-end">
                     <Link
                       href="/hospitals"
                       className="text-sm font-medium text-primary flex items-center gap-1 hover:gap-2 transition-all"

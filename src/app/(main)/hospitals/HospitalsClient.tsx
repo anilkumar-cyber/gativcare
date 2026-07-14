@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Star, MapPin, Users, ArrowRight, Building2, Filter } from "lucide-react";
+import { Search, MapPin, ArrowRight, Building2 } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { hospitals } from "@/lib/constants";
@@ -29,7 +29,7 @@ export default function HospitalsClient() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-              <Building2 size={14} /> 250+ Partner Hospitals
+              <Building2 size={14} /> Partner Hospitals
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
               India&apos;s <span className="text-gradient">Top Hospitals</span>
@@ -87,15 +87,9 @@ export default function HospitalsClient() {
                   </div>
 
                   <div className="p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <h3 className="text-lg font-bold group-hover:text-primary transition-colors">{hospital.name}</h3>
-                        <p className="text-sm text-muted flex items-center gap-1 mt-1"><MapPin size={13} /> {hospital.city}</p>
-                      </div>
-                      <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/30 px-2.5 py-1 rounded-lg">
-                        <Star size={13} className="text-amber-500 fill-amber-500" />
-                        <span className="text-sm font-semibold text-amber-700 dark:text-amber-400">{hospital.rating}</span>
-                      </div>
+                    <div className="mb-3">
+                      <h3 className="text-lg font-bold group-hover:text-primary transition-colors">{hospital.name}</h3>
+                      <p className="text-sm text-muted flex items-center gap-1 mt-1"><MapPin size={13} /> {hospital.city}</p>
                     </div>
 
                     <div className="flex flex-wrap gap-1.5 mb-4">
@@ -104,7 +98,7 @@ export default function HospitalsClient() {
                       ))}
                     </div>
 
-                    <div className="grid grid-cols-3 gap-3 mb-4 py-3 border-y border-border">
+                    <div className="grid grid-cols-2 gap-3 mb-4 py-3 border-y border-border">
                       <div className="text-center">
                         <div className="text-sm font-bold text-primary">{hospital.beds}</div>
                         <div className="text-[10px] text-muted">Beds</div>
@@ -112,10 +106,6 @@ export default function HospitalsClient() {
                       <div className="text-center">
                         <div className="text-sm font-bold text-primary">{hospital.doctors}</div>
                         <div className="text-[10px] text-muted">Doctors</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-sm font-bold text-green-600">{hospital.successRate}</div>
-                        <div className="text-[10px] text-muted">Success</div>
                       </div>
                     </div>
 

@@ -56,16 +56,6 @@ export const destinations = [
   { id: 6, name: "Kerala", hospitals: 20, specialties: "Ayurveda, Wellness, Recovery", attraction: "Backwaters, Tea Gardens, Beaches", image: "🌴" },
 ];
 
-export const stats = [
-  { label: "International Patients", value: 50000, suffix: "+" },
-  { label: "Partner Hospitals", value: 250, suffix: "+" },
-  { label: "Expert Doctors", value: 3000, suffix: "+" },
-  { label: "Countries Served", value: 65, suffix: "+" },
-  { label: "Insurance Partners", value: 40, suffix: "+" },
-  { label: "Success Rate", value: 98, suffix: "%" },
-];
-
-
 export const journeySteps = [
   { step: 1, title: "Inquiry", description: "Submit your medical query or call our helpline", icon: "MessageCircle" },
   { step: 2, title: "Medical Report Upload", description: "Share your medical records securely", icon: "Upload" },
@@ -110,7 +100,6 @@ export const conciergeServices = [
 export const navLinks = [
   { label: "Treatments", href: "/treatments" },
   { label: "Hospitals", href: "/hospitals" },
-  { label: "Doctors", href: "/doctors" },
   { label: "Packages", href: "/packages" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },

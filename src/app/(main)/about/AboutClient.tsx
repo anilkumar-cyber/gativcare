@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Shield, Heart, Globe, Award, Target, Eye } from "lucide-react";
-import { FadeIn, StaggerContainer, StaggerItem, AnimatedCounter } from "@/components/ui/motion";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 
 const values = [
   { icon: Heart, title: "Patient First", description: "Every decision we make puts the patient's health, safety, and comfort at the center" },
@@ -13,12 +13,12 @@ const values = [
 
 const milestones = [
   { year: "2018", title: "Founded", description: "GativCare was born with a mission to make world-class healthcare accessible globally" },
-  { year: "2019", title: "100 Hospitals", description: "Partnered with 100+ accredited hospitals across 8 Indian cities" },
+  { year: "2019", title: "Hospital Network", description: "Partnered with accredited hospitals across 8 Indian cities" },
   { year: "2020", title: "Virtual Care", description: "Launched telemedicine platform enabling remote consultations during COVID-19" },
-  { year: "2021", title: "25,000 Patients", description: "Milestone of 25,000 international patients served from 40+ countries" },
+  { year: "2021", title: "Global Reach", description: "Expanded to serve international patients across multiple countries" },
   { year: "2022", title: "AI Integration", description: "Introduced AI-powered treatment matching and cost estimation" },
-  { year: "2023", title: "Global Expansion", description: "Offices in 5 countries, serving patients from 65+ nations" },
-  { year: "2024", title: "50,000+ Patients", description: "Crossed 50,000 patients with 98.5% satisfaction rate" },
+  { year: "2023", title: "Global Expansion", description: "Offices in 5 countries, serving patients worldwide" },
+  { year: "2024", title: "Continued Growth", description: "Ongoing expansion of our hospital network and patient care standards" },
 ];
 
 export default function AboutClient() {
@@ -43,21 +43,6 @@ export default function AboutClient() {
                 India&apos;s exceptional healthcare ecosystem. We combine cutting-edge technology
                 with compassionate care to deliver seamless medical travel experiences.
               </p>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { value: 50000, suffix: "+", label: "Patients Served" },
-                  { value: 250, suffix: "+", label: "Partner Hospitals" },
-                  { value: 65, suffix: "+", label: "Countries" },
-                  { value: 98, suffix: "%", label: "Satisfaction Rate" },
-                ].map((stat) => (
-                  <div key={stat.label} className="glass-card rounded-xl p-4">
-                    <div className="text-2xl font-bold text-gradient">
-                      <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                    </div>
-                    <div className="text-xs text-muted">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
             </FadeIn>
 
             <FadeIn delay={0.3}>

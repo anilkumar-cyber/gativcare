@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Menu, X, Phone, Moon, Sun, ChevronDown, MessageCircle } from "lucide-react";
+import { Menu, X, Phone, Moon, Sun, ChevronDown, Mail } from "lucide-react";
 import { navLinks, treatments, hospitals } from "@/lib/constants";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { CurrencyCalculator } from "@/components/layout/CurrencyCalculator";
@@ -61,8 +61,8 @@ export default function Navbar() {
       <div className="hidden lg:block bg-gradient-to-r from-primary to-accent text-white text-sm">
         <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
           <div className="flex items-center gap-6">
-            <span className="flex items-center gap-1.5"><Phone size={13} /> +91 88869 63612</span>
-            <span className="flex items-center gap-1.5"><MessageCircle size={13} /> WhatsApp Support</span>
+            <a href="mailto:care@gativcare.com" className="flex items-center gap-1.5 hover:underline"><Mail size={13} /> care@gativcare.com</a>
+            <a href="mailto:support@gativcare.com" className="flex items-center gap-1.5 hover:underline"><Mail size={13} /> support@gativcare.com</a>
           </div>
           <div className="flex items-center gap-4">
             <LanguageSwitcher compact />

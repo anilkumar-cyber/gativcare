@@ -1,12 +1,10 @@
-import { ShieldCheck, Award, BadgeCheck, Landmark, Star, HeartHandshake } from "lucide-react";
+import { ShieldCheck, Award, BadgeCheck, Landmark } from "lucide-react";
 
 const badges = [
   { icon: ShieldCheck, label: "JCI Accredited Hospitals" },
   { icon: Award, label: "NABH Certified" },
   { icon: BadgeCheck, label: "ISO 9001:2015" },
   { icon: Landmark, label: "Govt. Registered Facilitator" },
-  { icon: Star, label: "4.9/5 on Google Reviews" },
-  { icon: HeartHandshake, label: "250+ Partner Hospitals" },
 ];
 
 function BadgeRow({ ariaHidden = false }: { ariaHidden?: boolean }) {
