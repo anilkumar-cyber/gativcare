@@ -43,57 +43,61 @@ export default function Hero() {
           <Image src="/images/hero-bg.png" alt="" fill priority className="object-cover" />
           <div className="absolute inset-0 bg-white/35" />
         </div>
+
+        {/* Full-width hero photo, aligned to the right, sitting behind everything.
+            A left-heavy light scrim keeps the text column legible. Mobile/tablet
+            get a separate contained version inside the grid below instead. */}
+        <div className="hidden lg:block absolute inset-0 dark:hidden" aria-hidden="true">
+          <motion.div
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="absolute inset-0"
+          >
+            <Image
+              src="/images/hero-img.png"
+              alt="Patient family with GativCare doctor"
+              fill
+              className="object-cover object-right"
+              priority
+            />
+          </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent" />
+        </div>
+
         <div className="hidden absolute inset-0 dark:block" aria-hidden="true">
           <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
           <div className="absolute -top-24 -right-10 w-[36rem] h-[36rem] bg-gradient-to-br from-amber-500/10 to-orange-500/5 rounded-full blur-[110px]" />
           <div className="absolute -bottom-32 left-[8%] w-[32rem] h-[32rem] bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-[120px]" />
         </div>
 
-        <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-          <div className="relative lg:min-h-[560px]">
-            {/* Photo sized to its own aspect ratio, anchored bottom-right on large
-                screens. Mobile/tablet get a contained version inside the grid. */}
-            <div className="hidden lg:block absolute bottom-0 right-0 w-[55%] aspect-[3/2]">
-              <motion.div
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="relative w-full h-full"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: [0, -8, 0] }}
+          transition={{
+            opacity: { duration: 0.5, delay: 0.9 },
+            y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.9 },
+          }}
+          className={`hidden lg:flex absolute bottom-16 right-10 xl:right-16 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-white/40 dark:border-white/10 rounded-[24px] p-4 items-center gap-3 ${softShadow}`}
+        >
+          <div className="flex -space-x-3 shrink-0">
+            {["J", "S", "M"].map((letter, i) => (
+              <div
+                key={letter}
+                className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent border-2 border-white dark:border-slate-900 flex items-center justify-center text-white text-sm font-bold"
+                style={{ zIndex: 3 - i }}
               >
-                <Image
-                  src="/images/hero-img.png"
-                  alt="Patient family with GativCare doctor"
-                  fill
-                  className="object-contain object-bottom"
-                  priority
-                />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: [0, -8, 0] }}
-                transition={{
-                  opacity: { duration: 0.5, delay: 0.7 },
-                  y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.7 },
-                }}
-                className={`absolute bottom-16 left-1/2 -translate-x-1/2 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-white/40 dark:border-white/10 rounded-[24px] p-4 flex items-center gap-3 ${softShadow}`}
-              >
-                <div className="flex -space-x-3 shrink-0">
-                  {["J", "S", "M"].map((letter, i) => (
-                    <div
-                      key={letter}
-                      className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent border-2 border-white dark:border-slate-900 flex items-center justify-center text-white text-sm font-bold"
-                      style={{ zIndex: 3 - i }}
-                    >
-                      {letter}
-                    </div>
-                  ))}
-                </div>
-                <p className="text-sm font-semibold leading-snug whitespace-nowrap">
-                  Patients Welcomed From Around the World
-                </p>
-              </motion.div>
-            </div>
+                {letter}
+              </div>
+            ))}
+          </div>
+          <p className="text-sm font-semibold leading-snug whitespace-nowrap">
+            Patients Welcomed From Around the World
+          </p>
+        </motion.div>
 
+        <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+          <div className="relative">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
