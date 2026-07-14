@@ -38,9 +38,7 @@ export default function Hero() {
     <>
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 dark:hidden" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-rose-50 to-teal-50" />
-          <div className="absolute -top-24 -right-10 w-[36rem] h-[36rem] bg-gradient-to-br from-amber-200/60 to-orange-300/30 rounded-full blur-[110px]" />
-          <div className="absolute -bottom-32 left-[8%] w-[32rem] h-[32rem] bg-gradient-to-br from-primary/25 to-accent/20 rounded-full blur-[120px]" />
+          <Image src="/images/hero-bg.png" alt="" fill priority className="object-cover" />
         </div>
         <div className="hidden absolute inset-0 dark:block" aria-hidden="true">
           <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
@@ -139,7 +137,7 @@ export default function Hero() {
             >
               <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 aspect-[4/3]">
                 <Image
-                  src="/images/hero-doctor-patient.png"
+                  src="/images/hero-img.png"
                   alt="Patient family with GativCare doctor"
                   fill
                   className="object-cover"
