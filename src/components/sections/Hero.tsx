@@ -47,6 +47,40 @@ export default function Hero() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+          <div className="relative lg:min-h-[600px]">
+            {/* Full-bleed photo, right half on large screens only — mobile/tablet
+                get a contained card version inside the grid below instead. */}
+            <div className="hidden lg:block absolute inset-y-0 right-0 w-1/2">
+              <Image
+                src="/images/hero-img.png"
+                alt="Patient family with GativCare doctor"
+                fill
+                className="object-cover"
+                priority
+              />
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                className="absolute bottom-8 left-8 right-8 xl:right-auto bg-white dark:bg-slate-900 rounded-2xl p-4 flex items-center gap-3 shadow-xl"
+              >
+                <div className="flex -space-x-3 shrink-0">
+                  {["J", "S", "M"].map((letter, i) => (
+                    <div
+                      key={letter}
+                      className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent border-2 border-white dark:border-slate-900 flex items-center justify-center text-white text-sm font-bold"
+                      style={{ zIndex: 3 - i }}
+                    >
+                      {letter}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-sm font-semibold leading-snug">
+                  Patients Welcomed From Around the World
+                </p>
+              </motion.div>
+            </div>
+
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -133,7 +167,7 @@ export default function Hero() {
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="relative"
+              className="relative lg:hidden"
             >
               <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 aspect-[4/3]">
                 <Image
@@ -167,6 +201,7 @@ export default function Hero() {
                 </p>
               </motion.div>
             </motion.div>
+          </div>
           </div>
 
           <motion.div
