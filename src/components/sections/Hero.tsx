@@ -55,14 +55,14 @@ export default function Hero() {
                 src="/images/hero-img.png"
                 alt="Patient family with GativCare doctor"
                 fill
-                className="object-cover"
+                className="object-contain object-bottom"
                 priority
               />
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
-                className="absolute bottom-8 left-8 right-8 xl:right-auto bg-white dark:bg-slate-900 rounded-2xl p-4 flex items-center gap-3 shadow-xl"
+                className="absolute bottom-12 left-8 right-8 xl:right-auto bg-white dark:bg-slate-900 rounded-2xl p-4 flex items-center gap-3 shadow-xl"
               >
                 <div className="flex -space-x-3 shrink-0">
                   {["J", "S", "M"].map((letter, i) => (
@@ -169,12 +169,12 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="relative lg:hidden"
             >
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 aspect-[4/3]">
+              <div className="relative h-[340px] sm:h-[420px]">
                 <Image
                   src="/images/hero-img.png"
                   alt="Patient family with GativCare doctor"
                   fill
-                  className="object-cover"
+                  className="object-contain object-bottom"
                   priority
                 />
               </div>
@@ -183,7 +183,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
-                className="absolute -bottom-6 left-6 right-6 sm:left-8 sm:right-auto bg-white dark:bg-slate-900 rounded-2xl p-4 flex items-center gap-3 shadow-xl"
+                className="relative -mt-8 mx-6 sm:mx-8 bg-white dark:bg-slate-900 rounded-2xl p-4 flex items-center gap-3 shadow-xl"
               >
                 <div className="flex -space-x-3 shrink-0">
                   {["J", "S", "M"].map((letter, i) => (
