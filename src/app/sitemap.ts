@@ -8,6 +8,7 @@ const routes = [
   "/contact",
   "/hospitals",
   "/packages",
+  "/partner-with-us",
   "/treatments",
   "/faq",
   "/privacy",

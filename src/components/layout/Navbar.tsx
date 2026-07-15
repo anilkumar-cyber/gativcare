@@ -11,6 +11,7 @@ import { CurrencyCalculator } from "@/components/layout/CurrencyCalculator";
 
 const moreLinks = [
   { label: "FAQ", href: "/faq" },
+  { label: "Partner With Us", href: "/partner-with-us" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
   { label: "Refund Policy", href: "/refund" },

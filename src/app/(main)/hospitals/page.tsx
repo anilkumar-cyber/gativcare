@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import HospitalsClient from "./HospitalsClient";
 
 export const metadata: Metadata = {
-  title: "Partner Hospitals | GativCare",
-  description: "Explore JCI and NABH accredited hospitals across India partnered with GativCare for world-class, affordable medical treatment.",
+  title: "Hospital Networks We Facilitate | GativCare",
+  description: "GativCare is an independent medical travel facilitator. Explore JCI and NABH accredited hospital networks across India we help patients coordinate treatment with.",
 };
 
 export default function HospitalsPage() {

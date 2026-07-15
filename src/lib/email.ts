@@ -47,6 +47,34 @@ export async function sendLeadNotification(lead: {
   });
 }
 
+export async function sendPartnerInquiry(inquiry: {
+  companyName: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  message?: string | null;
+}) {
+  const to = process.env.ADMIN_NOTIFICATION_EMAIL || "care@gativcare.com";
+  const from = process.env.SMTP_USER || to;
+
+  await getTransport().sendMail({
+    from: `GativCare Partnerships <${from}>`,
+    to,
+    cc: "support@gativcare.com",
+    replyTo: inquiry.email,
+    subject: `New partnership inquiry: ${inquiry.companyName}`,
+    text: [
+      `Company: ${inquiry.companyName}`,
+      `Contact Name: ${inquiry.contactName}`,
+      `Email: ${inquiry.email}`,
+      `Phone: ${inquiry.phone}`,
+      inquiry.message ? `\nMessage:\n${inquiry.message}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n"),
+  });
+}
+
 const FOLLOW_UP_LABEL: Record<FollowUpType, string> = {
   DAY_30: "1 month",
   DAY_90: "3 months",

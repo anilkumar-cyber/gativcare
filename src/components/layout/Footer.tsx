@@ -19,6 +19,7 @@ const footerLinks = {
     { label: "About Us", href: "/about" },
     { label: "Our Hospitals", href: "/hospitals" },
     { label: "Packages", href: "/packages" },
+    { label: "Partner With Us", href: "/partner-with-us" },
     { label: "Contact", href: "/contact" },
   ],
   support: [
@@ -115,10 +116,17 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-slate-500">
-            © 2024 GativCare. All rights reserved. Made with <Heart size={14} className="inline text-red-500" /> in India
+        <div className="border-t border-slate-800 pt-8 flex flex-col gap-4">
+          <p className="text-xs text-slate-500 max-w-3xl">
+            GativCare is an independent medical travel facilitator and is not a healthcare provider.
+            We do not diagnose, treat, or perform medical procedures — we help patients coordinate
+            and compare treatment options across third-party hospital networks in India.
           </p>
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-slate-500">
+              © 2024 GativCare. All rights reserved. Made with <Heart size={14} className="inline text-red-500" /> in India
+            </p>
+          </div>
         </div>
       </div>
 

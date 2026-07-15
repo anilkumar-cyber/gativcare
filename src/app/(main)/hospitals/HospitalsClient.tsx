@@ -29,13 +29,18 @@ export default function HospitalsClient() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-              <Building2 size={14} /> Partner Hospitals
+              <Building2 size={14} /> Hospital Networks
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-              India&apos;s <span className="text-gradient">Top Hospitals</span>
+              Top Accredited <span className="text-gradient">Hospital Networks</span> We Facilitate
             </h1>
-            <p className="text-lg text-muted max-w-2xl mx-auto mb-8">
-              JCI and NABH accredited hospitals with world-class infrastructure
+            <p className="text-lg text-muted max-w-2xl mx-auto mb-2">
+              GativCare is an independent medical travel facilitator. We help patients coordinate and
+              compare world-class treatment options across India&apos;s leading healthcare networks,
+              including Apollo and Yashoda.
+            </p>
+            <p className="text-sm text-muted max-w-2xl mx-auto mb-8">
+              We are not a healthcare provider and do not have exclusive partnerships with the networks listed below.
             </p>
             <div className="max-w-xl mx-auto relative mb-6">
               <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
@@ -111,7 +116,7 @@ export default function HospitalsClient() {
 
                     <div className="flex gap-2">
                       <Link href="/contact" className="flex-1 text-center py-2.5 rounded-xl bg-primary text-white text-sm font-medium hover:bg-primary-dark transition-colors">
-                        Book Appointment
+                        Get a Free Consultation
                       </Link>
                       <button className="px-3 py-2.5 rounded-xl bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors">
                         <ArrowRight size={16} />
