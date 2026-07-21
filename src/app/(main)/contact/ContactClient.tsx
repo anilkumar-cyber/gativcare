@@ -89,7 +89,7 @@ export default function ContactClient({
                 { icon: Phone, label: "Phone / WhatsApp", value: "+91 88869 63612", href: "tel:+918886963612", color: "text-primary" },
                 { icon: Mail, label: "Email", value: "care@gativcare.com", href: "mailto:care@gativcare.com", color: "text-primary" },
                 { icon: MessageCircle, label: "WhatsApp", value: "+91 88869 63612", href: WHATSAPP_LINK, color: "text-green-500" },
-                { icon: MapPin, label: "Office", value: "Connaught Place, New Delhi, India 110001", href: "https://maps.google.com/?q=Connaught+Place+New+Delhi", color: "text-primary" },
+                { icon: MapPin, label: "Office", value: "Hyderabad, Telangana, India", href: "https://maps.google.com/?q=Hyderabad+India", color: "text-primary" },
               ].map((contact, i) => (
                 <FadeIn key={contact.label} delay={i * 0.1}>
                   <a href={contact.href} target={contact.href.startsWith("http") ? "_blank" : undefined} rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined} className="flex items-start gap-4 p-4 glass-card rounded-xl hover:bg-surface-hover transition-colors group">
@@ -119,7 +119,7 @@ export default function ContactClient({
                 <div className="glass-card rounded-xl p-5">
                   <h3 className="font-semibold mb-3 flex items-center gap-2"><Globe size={16} className="text-primary" /> Global Offices</h3>
                   <div className="space-y-2 text-sm text-muted">
-                    <p>🇮🇳 New Delhi, India (HQ)</p>
+                    <p>🇮🇳 Hyderabad, India (HQ)</p>
                     <p>🇦🇪 Dubai, UAE</p>
                     <p>🇬🇧 London, UK</p>
                     <p>🇺🇸 New York, USA</p>

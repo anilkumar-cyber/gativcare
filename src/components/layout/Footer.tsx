@@ -63,7 +63,7 @@ export default function Footer() {
                 <Mail size={16} className="text-primary" /> support@gativcare.com
               </a>
               <div className="flex items-center gap-3">
-                <MapPin size={16} className="text-primary" /> New Delhi, India
+                <MapPin size={16} className="text-primary" /> Hyderabad, India
               </div>
             </div>
           </div>

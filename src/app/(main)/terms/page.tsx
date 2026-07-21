@@ -61,7 +61,7 @@ export default function TermsPage() {
       </LegalSection>
 
       <LegalSection title="8. Governing Law">
-        <p>These terms are governed by the laws of India, with courts in New Delhi having exclusive jurisdiction.</p>
+        <p>These terms are governed by the laws of India, with courts in Hyderabad having exclusive jurisdiction.</p>
       </LegalSection>
 
       <LegalSection title="9. Contact Us">
