@@ -47,6 +47,8 @@ export default function Hero() {
 
         <div className="hidden absolute inset-0 dark:block" aria-hidden="true">
           <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+          <Image src="/images/hero-img.png" alt="" fill className="object-contain object-right-bottom opacity-90" priority />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-slate-950/10" />
           <div className="absolute -top-24 -right-10 w-[36rem] h-[36rem] bg-gradient-to-br from-amber-500/10 to-orange-500/5 rounded-full blur-[110px]" />
           <div className="absolute -bottom-32 left-[8%] w-[32rem] h-[32rem] bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-[120px]" />
         </div>
