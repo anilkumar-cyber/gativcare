@@ -1,24 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shield, Heart, Globe, Award, Target, Eye } from "lucide-react";
+import { Shield, Heart, Globe, Award, Target, Eye, MessageCircle, ClipboardList, Plane, HeartPulse } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 
 const values = [
   { icon: Heart, title: "Patient First", description: "Every decision we make puts the patient's health, safety, and comfort at the center" },
   { icon: Shield, title: "Trust & Transparency", description: "Honest pricing, verified hospitals, and clear communication throughout your journey" },
-  { icon: Globe, title: "Global Standards", description: "We partner only with JCI and NABH accredited hospitals meeting international quality benchmarks" },
+  { icon: Globe, title: "Global Standards", description: "We help patients access JCI and NABH accredited hospitals meeting international quality benchmarks" },
   { icon: Award, title: "Excellence", description: "Handpicked specialists with proven track records and exceptional patient outcomes" },
 ];
 
-const milestones = [
-  { year: "2018", title: "Founded", description: "GativCare was born with a mission to make world-class healthcare accessible globally" },
-  { year: "2019", title: "Hospital Network", description: "Partnered with accredited hospitals across 8 Indian cities" },
-  { year: "2020", title: "Virtual Care", description: "Launched telemedicine platform enabling remote consultations during COVID-19" },
-  { year: "2021", title: "Global Reach", description: "Expanded to serve international patients across multiple countries" },
-  { year: "2022", title: "AI Integration", description: "Introduced AI-powered treatment matching and cost estimation" },
-  { year: "2023", title: "Global Expansion", description: "Offices in 5 countries, serving patients worldwide" },
-  { year: "2024", title: "Continued Growth", description: "Ongoing expansion of our hospital network and patient care standards" },
+const steps = [
+  { icon: MessageCircle, title: "Free Consultation", description: "Share your medical reports and requirements — our care team reviews them and gets back to you within 24 hours" },
+  { icon: ClipboardList, title: "Personalized Treatment Plan", description: "We help you compare hospitals, specialists, and costs so you can choose the option that fits your needs" },
+  { icon: Plane, title: "Travel & Hospital Coordination", description: "We assist with appointments, travel logistics, and hospital coordination from arrival to admission" },
+  { icon: HeartPulse, title: "Recovery & Aftercare Support", description: "Our team stays in touch through treatment and recovery, coordinating follow-ups as needed" },
 ];
 
 export default function AboutClient() {
@@ -83,34 +80,27 @@ export default function AboutClient() {
       </section>
 
       <section className="section-padding bg-surface">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Our <span className="text-gradient">Journey</span></h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">How <span className="text-gradient">It Works</span></h2>
+            <p className="text-lg text-muted max-w-2xl mx-auto">
+              From first message to full recovery, here&apos;s how we support you at every step.
+            </p>
           </FadeIn>
-          <div className="relative">
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/30 via-accent/30 to-primary/30" />
-            <div className="space-y-8">
-              {milestones.map((milestone, i) => (
-                <motion.div
-                  key={milestone.year}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="relative pl-20"
-                >
-                  <div className="absolute left-4 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-xs font-bold shadow-lg">
-                    {milestone.year.slice(-2)}
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" staggerDelay={0.1}>
+            {steps.map((step, i) => (
+              <StaggerItem key={step.title}>
+                <motion.div className="glass-card rounded-2xl p-6 text-center card-hover h-full relative" whileHover={{ scale: 1.03 }}>
+                  <div className="absolute top-4 right-4 text-xs font-bold text-primary/40">0{i + 1}</div>
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center mx-auto mb-4">
+                    <step.icon size={24} className="text-primary" />
                   </div>
-                  <div className="glass-card rounded-xl p-5">
-                    <span className="text-xs font-bold text-primary">{milestone.year}</span>
-                    <h3 className="text-lg font-semibold mb-1">{milestone.title}</h3>
-                    <p className="text-sm text-muted">{milestone.description}</p>
-                  </div>
+                  <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
+                  <p className="text-sm text-muted">{step.description}</p>
                 </motion.div>
-              ))}
-            </div>
-          </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </div>
       </section>
 
