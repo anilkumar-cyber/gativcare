@@ -117,13 +117,9 @@ export default function ContactClient({
 
               <FadeIn delay={0.5}>
                 <div className="glass-card rounded-xl p-5">
-                  <h3 className="font-semibold mb-3 flex items-center gap-2"><Globe size={16} className="text-primary" /> Global Offices</h3>
+                  <h3 className="font-semibold mb-3 flex items-center gap-2"><Globe size={16} className="text-primary" /> Our Office</h3>
                   <div className="space-y-2 text-sm text-muted">
                     <p>🇮🇳 Hyderabad, India (HQ)</p>
-                    <p>🇦🇪 Dubai, UAE</p>
-                    <p>🇬🇧 London, UK</p>
-                    <p>🇺🇸 New York, USA</p>
-                    <p>🇧🇩 Dhaka, Bangladesh</p>
                   </div>
                 </div>
               </FadeIn>
