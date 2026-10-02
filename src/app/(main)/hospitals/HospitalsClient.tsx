@@ -1,15 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Search, MapPin, ArrowRight, Building2 } from "lucide-react";
+import { Search, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import { CityMap } from "@/components/sections/CityMap";
+import PartnerHospitals from "@/components/sections/PartnerHospitals";
+import type { PartnerLogo } from "@/components/sections/PartnerHospitalsCarousel";
 import { hospitals } from "@/lib/constants";
 
-const cities = ["All", ...Array.from(new Set(hospitals.map((h) => h.city)))];
+const uniqueCities = Array.from(new Set(hospitals.map((h) => h.city)));
+const cities = ["All", ...uniqueCities];
+const cityCounts = Object.fromEntries(uniqueCities.map((c) => [c, hospitals.filter((h) => h.city === c).length]));
 
-export default function HospitalsClient() {
+function Stat({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div>
+      <div className="text-sm font-bold text-primary tabular-nums">{value}</div>
+      <div className="text-[10px] text-muted uppercase tracking-wide">{label}</div>
+    </div>
+  );
+}
+
+export default function HospitalsClient({ partnerLogos }: { partnerLogos: PartnerLogo[] }) {
   const [search, setSearch] = useState("");
   const [selectedCity, setSelectedCity] = useState("All");
 
@@ -28,11 +41,8 @@ export default function HospitalsClient() {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-              <Building2 size={14} /> Hospital Networks
-            </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-              Top Accredited <span className="text-gradient">Hospital Networks</span> We Facilitate
+              Top Accredited Hospital Networks We Facilitate
             </h1>
             <p className="text-lg text-muted max-w-2xl mx-auto mb-2">
               GativCare is an independent medical travel facilitator. We help patients coordinate and
@@ -52,6 +62,8 @@ export default function HospitalsClient() {
                 className="w-full bg-white dark:bg-slate-900 rounded-2xl pl-12 pr-4 py-4 text-base outline-none focus:ring-2 focus:ring-primary/30 shadow-lg border border-border"
               />
             </div>
+            <CityMap cities={uniqueCities} counts={cityCounts} selectedCity={selectedCity} onSelect={setSelectedCity} />
+
             <div className="flex flex-wrap justify-center gap-2">
               {cities.map((city) => (
                 <button
@@ -71,61 +83,60 @@ export default function HospitalsClient() {
         </div>
       </section>
 
+      <PartnerHospitals logos={partnerLogos} />
+
       <section className="section-padding">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.1}>
+          <p className="text-sm text-muted mb-6">
+            {filtered.length} {filtered.length === 1 ? "network" : "networks"}
+            {selectedCity !== "All" ? ` in ${selectedCity}` : ""}
+          </p>
+
+          <StaggerContainer className="rounded-2xl border border-border divide-y divide-border overflow-hidden bg-white dark:bg-slate-900" staggerDelay={0.06}>
             {filtered.map((hospital) => (
               <StaggerItem key={hospital.id}>
-                <motion.div
-                  className="group glass-card rounded-2xl overflow-hidden card-hover h-full"
-                  whileHover={{ scale: 1.01 }}
-                >
-                  <div className="relative h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                    <span className="text-6xl">{hospital.image}</span>
-                    <div className="absolute top-4 right-4 flex gap-1.5">
+                <div className="flex flex-col lg:flex-row lg:items-center gap-5 p-6 hover:bg-surface/60 transition-colors">
+                  <div className="lg:w-64 shrink-0">
+                    <h3 className="text-lg font-bold">{hospital.name}</h3>
+                    <p className="text-sm text-muted flex items-center gap-1 mt-1"><MapPin size={13} /> {hospital.city} · est. {hospital.established}</p>
+                    <div className="flex flex-wrap gap-1.5 mt-3">
                       {hospital.accreditations.map((acc) => (
-                        <span key={acc} className="text-[10px] font-bold px-2 py-1 rounded-full bg-white/90 dark:bg-slate-800/90 text-primary shadow-sm">
+                        <span key={acc} className="text-[10px] font-bold px-2 py-1 rounded-full bg-primary/10 text-primary">
                           {acc}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <div className="p-6">
-                    <div className="mb-3">
-                      <h3 className="text-lg font-bold group-hover:text-primary transition-colors">{hospital.name}</h3>
-                      <p className="text-sm text-muted flex items-center gap-1 mt-1"><MapPin size={13} /> {hospital.city}</p>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {hospital.specialties.map((spec) => (
-                        <span key={spec} className="text-xs px-2.5 py-1 rounded-full bg-surface text-muted">{spec}</span>
-                      ))}
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 mb-4 py-3 border-y border-border">
-                      <div className="text-center">
-                        <div className="text-sm font-bold text-primary">{hospital.beds}</div>
-                        <div className="text-[10px] text-muted">Beds</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-sm font-bold text-primary">{hospital.doctors}</div>
-                        <div className="text-[10px] text-muted">Doctors</div>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2">
-                      <Link href="/contact" className="flex-1 text-center py-2.5 rounded-xl bg-primary text-white text-sm font-medium hover:bg-primary-dark transition-colors">
-                        Get a Free Consultation
-                      </Link>
-                      <button className="px-3 py-2.5 rounded-xl bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors">
-                        <ArrowRight size={16} />
-                      </button>
-                    </div>
+                  <div className="flex flex-wrap gap-1.5 lg:flex-1 lg:border-x lg:border-border lg:px-6">
+                    {hospital.specialties.map((spec) => (
+                      <span key={spec} className="text-xs px-2.5 py-1 rounded-full bg-surface text-muted">{spec}</span>
+                    ))}
                   </div>
-                </motion.div>
+
+                  <div className="flex gap-6 lg:w-72 shrink-0">
+                    <Stat label="Rating" value={`${hospital.rating} ★`} />
+                    <Stat label="Beds" value={hospital.beds} />
+                    <Stat label="Doctors" value={hospital.doctors} />
+                    <Stat label="Success" value={hospital.successRate} />
+                  </div>
+
+                  <div className="flex gap-2 lg:w-56 shrink-0">
+                    <Link href="/contact" className="flex-1 text-center py-2.5 rounded-xl bg-primary text-white text-sm font-medium hover:bg-primary-dark transition-colors">
+                      Get a Free Consultation
+                    </Link>
+                    <Link href="/contact" className="px-3 py-2.5 rounded-xl bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors flex items-center justify-center">
+                      <ArrowRight size={16} />
+                    </Link>
+                  </div>
+                </div>
               </StaggerItem>
             ))}
+            {filtered.length === 0 && (
+              <div className="p-10 text-center text-muted text-sm">
+                No hospital networks match &quot;{search}&quot;{selectedCity !== "All" ? ` in ${selectedCity}` : ""}.
+              </div>
+            )}
           </StaggerContainer>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import {
-  Users, Calendar, Building2, Activity, FileText, Stethoscope, Globe, CalendarCheck, Download,
+  Users, Calendar, Building2, Activity, FileText, Stethoscope, Globe, CalendarCheck, Download, Plus, Pencil, Eye, EyeOff,
 } from "lucide-react";
 import { ComingSoon } from "@/components/dashboard/DashboardShell";
 import { StatCard } from "@/components/dashboard/StatCard";
@@ -11,24 +11,28 @@ import { DoctorsPanel } from "@/components/dashboard/admin/DoctorsPanel";
 import { CoordinatorsPanel } from "@/components/dashboard/admin/CoordinatorsPanel";
 import { FaqPanel } from "@/components/dashboard/admin/FaqPanel";
 import { TestimonialsPanel } from "@/components/dashboard/admin/TestimonialsPanel";
+import { PartnerLogosPanel } from "@/components/dashboard/admin/PartnerLogosPanel";
 import { RolePermissionsPanel } from "@/components/dashboard/admin/RolePermissionsPanel";
 import { requireAnyRole } from "@/lib/auth";
 import { Role } from "@prisma/client";
 import {
   getAdminOverviewStats, getRecentLeads, getLeadStatusBreakdown,
   getAllHospitals, getAllDoctors, getAllPatients, getAllCoordinators, getAllAppointmentsAdmin,
-  getAdminAnalytics, getCountryBreakdown, getAllFaqs, getAllTestimonials,
+  getAdminAnalytics, getCountryBreakdown, getAllFaqs, getAllTestimonials, getAllPartnerLogos,
 } from "@/lib/queries/admin";
 import { getEffectiveTabs, getAllRolePermissions } from "@/lib/queries/permissions";
 import { getDueFollowUps } from "@/lib/queries/journey";
 import { SendFollowUpsButton } from "@/components/dashboard/admin/SendFollowUpsButton";
+import { DeleteBlogPostButton } from "@/components/dashboard/DeleteBlogPostButton";
+import { getAllBlogPostsAdmin } from "@/lib/queries/blog";
+import { togglePublishBlogPostAction } from "@/lib/actions/blog";
 
 const KNOWN_TABS = [
   "overview", "leads", "analytics", "reports", "hospitals", "doctors", "patients",
-  "coordinators", "appointments", "faq", "testimonials", "countries", "settings", "roles",
+  "coordinators", "appointments", "faq", "testimonials", "partner-logos", "countries", "settings", "roles", "cms",
 ];
 
-const ADMIN_ONLY_TABS = ["hospitals", "doctors", "coordinators", "faq", "testimonials", "reports", "roles"];
+const ADMIN_ONLY_TABS = ["hospitals", "doctors", "coordinators", "faq", "testimonials", "partner-logos", "reports", "roles", "cms"];
 
 export default async function AdminDashboard({
   searchParams,
@@ -56,6 +60,62 @@ export default async function AdminDashboard({
   if (activeTab === "roles") {
     const permissions = await getAllRolePermissions();
     return <RolePermissionsPanel permissions={permissions} />;
+  }
+
+  if (activeTab === "cms") {
+    const posts = await getAllBlogPostsAdmin();
+    return (
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-border p-6">
+        <div className="flex items-center justify-between mb-5">
+          <h3 className="font-semibold">Blog Posts</h3>
+          <a href="/dashboard/admin/blog/new" className="btn-primary text-sm py-2 px-4 flex items-center gap-1.5">
+            <Plus size={15} /> New Post
+          </a>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-2.5 text-muted font-medium">Title</th>
+                <th className="text-left py-2.5 text-muted font-medium">Status</th>
+                <th className="text-left py-2.5 text-muted font-medium">Date</th>
+                <th className="text-right py-2.5 text-muted font-medium">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {posts.map((post) => (
+                <tr key={post.id} className="border-b border-border last:border-0 hover:bg-surface transition-colors">
+                  <td className="py-3 font-medium max-w-xs truncate">{post.title}</td>
+                  <td className="py-3">
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${post.published ? "bg-green-500/10 text-green-600" : "bg-amber-500/10 text-amber-600"}`}>
+                      {post.published ? "Published" : "Draft"}
+                    </span>
+                  </td>
+                  <td className="py-3 text-muted text-xs">{(post.publishedAt ?? post.createdAt).toLocaleDateString()}</td>
+                  <td className="py-3">
+                    <div className="flex items-center justify-end gap-1">
+                      <form action={togglePublishBlogPostAction}>
+                        <input type="hidden" name="id" value={post.id} />
+                        <button type="submit" className="p-1.5 rounded-lg hover:bg-primary/10 text-muted hover:text-primary transition-colors" aria-label={post.published ? "Unpublish" : "Publish"}>
+                          {post.published ? <EyeOff size={15} /> : <Eye size={15} />}
+                        </button>
+                      </form>
+                      <a href={`/dashboard/admin/blog/${post.id}/edit`} className="p-1.5 rounded-lg hover:bg-primary/10 text-muted hover:text-primary transition-colors inline-block">
+                        <Pencil size={15} />
+                      </a>
+                      <DeleteBlogPostButton id={post.id} title={post.title} />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {posts.length === 0 && (
+                <tr><td colSpan={4} className="py-6 text-center text-muted">No blog posts yet. Create your first one.</td></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
   }
 
   if (activeTab === "leads") {
@@ -178,6 +238,11 @@ export default async function AdminDashboard({
   if (activeTab === "testimonials") {
     const testimonials = await getAllTestimonials();
     return <TestimonialsPanel testimonials={testimonials} />;
+  }
+
+  if (activeTab === "partner-logos") {
+    const logos = await getAllPartnerLogos();
+    return <PartnerLogosPanel logos={logos} />;
   }
 
   if (activeTab === "countries") {

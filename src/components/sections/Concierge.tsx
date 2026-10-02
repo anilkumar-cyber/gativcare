@@ -15,16 +15,12 @@ const iconMap: Record<string, React.ElementType> = {
 export default function Concierge() {
   return (
     <section className="section-padding relative overflow-hidden" id="concierge">
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-accent/5 rounded-full blur-[120px] -translate-y-1/2" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <FadeIn direction="right">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
-              Premium Services
-            </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-              Healthcare <span className="text-gradient">Concierge</span>
+              Healthcare Concierge
             </h2>
             <p className="text-lg text-muted mb-8 leading-relaxed">
               Experience luxury healthcare travel with our comprehensive concierge services.

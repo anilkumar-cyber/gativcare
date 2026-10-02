@@ -3,7 +3,7 @@ import {
   Users, Calendar, Building2, Settings, Activity, FileText, Stethoscope,
   TrendingUp, Star, Home, BarChart3, CreditCard, Globe, Shield,
   Megaphone, BookOpen, HelpCircle, UserCog, Lock, Eye, Mail, Smartphone,
-  Video, ClipboardList, Bed, Plane, Pill, HeartPulse, MessageCircle, Bell,
+  Video, ClipboardList, Bed, Plane, Pill, HeartPulse, MessageCircle, Bell, Handshake,
 } from "lucide-react";
 
 export type DashboardRole = "ADMIN" | "DOCTOR" | "HOSPITAL" | "PATIENT";
@@ -36,6 +36,7 @@ export const sectionsByRole: Record<DashboardRole, DashboardNavSection[]> = {
         { icon: BookOpen, label: "Blog / CMS", id: "cms" },
         { icon: HelpCircle, label: "FAQ", id: "faq" },
         { icon: Star, label: "Testimonials", id: "testimonials" },
+        { icon: Handshake, label: "Partner Logos", id: "partner-logos" },
         { icon: Globe, label: "Countries", id: "countries" },
       ],
     },

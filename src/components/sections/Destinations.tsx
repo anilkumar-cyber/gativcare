@@ -1,22 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Building2, ArrowRight } from "lucide-react";
+import { Building2, ArrowRight } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { destinations } from "@/lib/constants";
 
 export default function Destinations() {
   return (
     <section className="section-padding bg-surface relative overflow-hidden" id="destinations">
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-[120px]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn className="text-center mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-            <MapPin size={14} /> Medical Tourism Destinations
-          </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Top <span className="text-gradient">Destinations</span> in India
+            Top Destinations in India
           </h2>
           <p className="text-lg text-muted max-w-2xl mx-auto">
             World-class healthcare combined with incredible cultural experiences

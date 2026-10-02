@@ -18,13 +18,9 @@ export default function CostComparison() {
 
   return (
     <section className="section-padding bg-surface relative overflow-hidden" id="cost-comparison">
-      <div className="absolute top-1/3 right-0 w-96 h-96 bg-green-500/5 rounded-full blur-[120px]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn className="text-center mb-12">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 text-green-600 text-sm font-medium mb-4">
-            <TrendingDown size={14} /> Cost Savings
-          </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
             Save Up To <span className="text-gradient-gold">90%</span> on Treatment
           </h2>

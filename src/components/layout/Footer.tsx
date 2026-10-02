@@ -102,20 +102,6 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12 p-6 rounded-2xl bg-white/5 border border-white/10">
-          {[
-            { label: "NABH Accredited", icon: "🏆" },
-            { label: "JCI Certified", icon: "✅" },
-            { label: "ISO 9001:2015", icon: "📋" },
-            { label: "Govt. Approved", icon: "🇮🇳" },
-          ].map((cert) => (
-            <div key={cert.label} className="flex items-center gap-2 text-sm">
-              <span className="text-lg">{cert.icon}</span>
-              <span className="text-slate-300 font-medium">{cert.label}</span>
-            </div>
-          ))}
-        </div>
-
         <div className="border-t border-slate-800 pt-8 flex flex-col gap-4">
           <p className="text-xs text-slate-500 max-w-3xl">
             GativCare is an independent medical travel facilitator and is not a healthcare provider.
@@ -124,7 +110,7 @@ export default function Footer() {
           </p>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-slate-500">
-              © 2024 GativCare. All rights reserved. Made with <Heart size={14} className="inline text-red-500" /> in India
+              © 2026 GativCare. All rights reserved. Made with <Heart size={14} className="inline text-red-500" /> in India
             </p>
           </div>
         </div>

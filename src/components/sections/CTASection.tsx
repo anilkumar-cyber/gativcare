@@ -63,7 +63,7 @@ export default function CTASection() {
               <Upload size={18} /> Upload Reports
             </motion.a>
             <motion.a
-              href="https://wa.me/918886963612"
+              href="https://wa.me/918522920252"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-green-500 text-white font-semibold text-base shadow-xl shadow-green-500/30 hover:bg-green-600 transition-all"

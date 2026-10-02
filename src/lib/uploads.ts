@@ -42,3 +42,31 @@ export async function readUploadedFile(storedPath: string): Promise<Buffer> {
   const dir = getUploadsDir();
   return readFile(path.join(dir, storedPath));
 }
+
+const LOGO_MIME_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+const MAX_LOGO_SIZE_BYTES = 4 * 1024 * 1024; // 4MB
+
+export async function savePartnerLogoUpload(file: File): Promise<{ fileName: string; mimeType: string }> {
+  if (!LOGO_MIME_TYPES.has(file.type)) {
+    throw new UploadValidationError(`Unsupported file type: ${file.type || "unknown"}. Only JPG, PNG, and WEBP are allowed.`);
+  }
+  if (file.size > MAX_LOGO_SIZE_BYTES) {
+    throw new UploadValidationError("File exceeds the 4MB size limit.");
+  }
+
+  const dir = path.join(getUploadsDir(), "partners");
+  await mkdir(dir, { recursive: true });
+
+  const ext = file.type === "image/png" ? ".png" : file.type === "image/webp" ? ".webp" : ".jpg";
+  const storedName = `${randomUUID()}${ext}`;
+  const buffer = Buffer.from(await file.arrayBuffer());
+  await writeFile(path.join(dir, storedName), buffer);
+
+  return { fileName: storedName, mimeType: file.type };
+}
+
+export async function deletePartnerLogoFile(fileName: string): Promise<void> {
+  const { unlink } = await import("fs/promises");
+  const dir = path.join(getUploadsDir(), "partners");
+  await unlink(path.join(dir, fileName)).catch(() => {});
+}

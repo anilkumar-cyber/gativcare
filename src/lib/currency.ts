@@ -46,3 +46,11 @@ export function convertBetween(amount: number, from: CurrencyCode, to: CurrencyC
   const toRate = CURRENCIES.find((c) => c.code === to)?.rateFromUsd ?? 1;
   return (amount / fromRate) * toRate;
 }
+
+/** Extracts USD amounts from a value like 3000 or the string "$3,000 - $7,000". */
+export function parseUsdAmounts(input: string | number): number[] {
+  if (typeof input === "number") return [input];
+  const matches = input.match(/[\d,]+(?:\.\d+)?/g);
+  if (!matches) return [];
+  return matches.map((m) => Number(m.replace(/,/g, "")));
+}

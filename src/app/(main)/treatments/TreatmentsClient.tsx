@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, ArrowRight, Filter } from "lucide-react";
+import { Search, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import { AnimatedPrice } from "@/components/ui/AnimatedPrice";
 import { treatments } from "@/lib/constants";
 
 export default function TreatmentsClient() {
@@ -22,11 +23,8 @@ export default function TreatmentsClient() {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-              50+ Specialties
-            </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-              Treatment <span className="text-gradient">Categories</span>
+              Treatment Categories
             </h1>
             <p className="text-lg text-muted max-w-2xl mx-auto mb-8">
               Explore our comprehensive range of medical treatments available at India&apos;s top hospitals
@@ -57,7 +55,7 @@ export default function TreatmentsClient() {
                   <div className={`h-40 bg-gradient-to-br ${treatment.color} bg-opacity-10 flex items-center justify-center relative`}>
                     <span className="text-5xl group-hover:scale-110 transition-transform">{treatment.image}</span>
                     <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-white/90 dark:bg-slate-800/90 text-xs font-bold text-foreground">
-                      {treatment.cost}
+                      <AnimatedPrice value={treatment.cost} />
                     </div>
                   </div>
                   <div className="p-5">
