@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://gativcare.com"),
   title: "GativCare - World-Class Medical Tourism in India | Save up to 90%",
   description: "India's premier medical tourism platform. Connect with 250+ JCI-accredited hospitals and 3000+ specialist doctors. Save up to 90% on world-class healthcare with complete end-to-end assistance.",
   keywords: "medical tourism India, healthcare India, hospital India, treatment India, affordable healthcare, JCI hospitals, medical travel",
