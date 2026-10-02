@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, ArrowRight, Clock, Star } from "lucide-react";
+import { Check, ArrowRight, Clock } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { packages } from "@/lib/constants";
+import { AnimatedPrice } from "@/components/ui/AnimatedPrice";
 
 export default function PackagesClient() {
   return (
@@ -15,11 +16,8 @@ export default function PackagesClient() {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
-              <Star size={14} /> All-Inclusive
-            </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-              Medical Tourism <span className="text-gradient">Packages</span>
+              Medical Tourism Packages
             </h1>
             <p className="text-lg text-muted max-w-2xl mx-auto">
               Comprehensive packages covering treatment, accommodation, travel, and personal assistance
@@ -42,7 +40,7 @@ export default function PackagesClient() {
                   <div className="p-8">
                     <h3 className="text-2xl font-bold mb-3">{pkg.name}</h3>
                     <div className="flex items-baseline gap-2 mb-2">
-                      <span className="text-4xl font-bold text-gradient">{pkg.price}</span>
+                      <AnimatedPrice value={pkg.price} className="text-4xl font-bold text-gradient" />
                       <span className="text-sm text-muted">starting from</span>
                     </div>
                     <div className="flex items-center gap-1.5 text-sm text-muted mb-8">

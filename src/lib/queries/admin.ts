@@ -152,3 +152,7 @@ export async function getPublishedFaqs() {
 export async function getPublishedTestimonials() {
   return prisma.testimonial.findMany({ where: { published: true }, orderBy: { createdAt: "desc" } });
 }
+
+export async function getAllPartnerLogos() {
+  return prisma.partnerLogo.findMany({ orderBy: { order: "asc" } });
+}

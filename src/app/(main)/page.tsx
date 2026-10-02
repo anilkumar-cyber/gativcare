@@ -2,6 +2,7 @@ import Hero from "@/components/sections/Hero";
 import WhyIndia from "@/components/sections/WhyIndia";
 import Treatments from "@/components/sections/Treatments";
 import Hospitals from "@/components/sections/Hospitals";
+import PartnerHospitals from "@/components/sections/PartnerHospitals";
 import CostComparison from "@/components/sections/CostComparison";
 import BodyCostMap from "@/components/sections/BodyCostMap";
 import PatientJourney from "@/components/sections/PatientJourney";
@@ -12,12 +13,12 @@ import HealingJourney from "@/components/sections/HealingJourney";
 import Concierge from "@/components/sections/Concierge";
 import FAQ from "@/components/sections/FAQ";
 import CTASection from "@/components/sections/CTASection";
-import { getPublishedFaqs } from "@/lib/queries/admin";
+import { getPublishedFaqs, getAllPartnerLogos } from "@/lib/queries/admin";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const faqs = await getPublishedFaqs();
+  const [faqs, partnerLogos] = await Promise.all([getPublishedFaqs(), getAllPartnerLogos()]);
 
   return (
     <>
@@ -25,6 +26,7 @@ export default async function Home() {
       <WhyIndia />
       <Treatments />
       <Hospitals />
+      <PartnerHospitals logos={partnerLogos} />
       <CostComparison />
       <BodyCostMap />
       <PatientJourney />

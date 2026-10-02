@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { FadeIn } from "@/components/ui/motion";
 
 export type FaqItem = { q: string; a: string };
@@ -12,15 +12,11 @@ export default function FAQ({ faqs }: { faqs: FaqItem[] }) {
 
   return (
     <section className="section-padding bg-surface relative overflow-hidden" id="faq">
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]" />
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn className="text-center mb-12">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-            <HelpCircle size={14} /> FAQ
-          </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Frequently Asked <span className="text-gradient">Questions</span>
+            Frequently Asked Questions
           </h2>
           <p className="text-lg text-muted max-w-2xl mx-auto">
             Everything you need to know about medical tourism in India

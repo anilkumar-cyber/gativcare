@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Menu, X, Phone, Moon, Sun, ChevronDown, Mail } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, Mail } from "lucide-react";
 import { navLinks, treatments, hospitals } from "@/lib/constants";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { CurrencyCalculator } from "@/components/layout/CurrencyCalculator";
+import { CurrencySwitcher } from "@/components/layout/CurrencySwitcher";
 import { InstagramIcon, INSTAGRAM_URL } from "@/components/ui/InstagramIcon";
 
 const moreLinks = [
@@ -46,7 +47,6 @@ function NavDropdown({ label, href, items, viewAllLabel }: { label: string; href
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dark, setDark] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -54,18 +54,11 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
-  }, [dark]);
-
   return (
     <>
       <div className="hidden lg:block bg-gradient-to-r from-primary to-accent text-white text-sm">
         <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
-          <div className="flex items-center gap-6">
-            <a href="mailto:care@gativcare.com" className="flex items-center gap-1.5 hover:underline"><Mail size={13} /> care@gativcare.com</a>
-            <a href="mailto:support@gativcare.com" className="flex items-center gap-1.5 hover:underline"><Mail size={13} /> support@gativcare.com</a>
-          </div>
+          <a href="mailto:care@gativcare.com" className="flex items-center gap-1.5 hover:underline"><Mail size={13} /> care@gativcare.com</a>
           <div className="flex items-center gap-4">
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:underline">
               <InstagramIcon size={13} /> Follow us on Instagram
@@ -73,8 +66,7 @@ export default function Navbar() {
             <span>|</span>
             <LanguageSwitcher compact />
             <CurrencyCalculator compact />
-            <span>|</span>
-            <span>Free Consultation</span>
+            <CurrencySwitcher compact />
           </div>
         </div>
       </div>
@@ -139,20 +131,12 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center gap-3">
-              <button
-                onClick={() => setDark(!dark)}
-                className="p-2 rounded-xl hover:bg-surface transition-colors"
-                aria-label="Toggle theme"
-              >
-                {dark ? <Sun size={18} /> : <Moon size={18} />}
-              </button>
-
-              <Link
+<Link
                 href="/contact"
                 className="hidden sm:flex btn-primary text-sm py-2.5 px-5 items-center gap-2"
               >
                 <Phone size={14} />
-                Get a FREE Quote
+                Get a free quote
               </Link>
 
               <button
@@ -206,9 +190,13 @@ export default function Navbar() {
                   <span className="text-xs text-muted">Currency</span>
                   <CurrencyCalculator />
                 </div>
+                <div className="pt-3 mt-2 border-t border-border flex items-center justify-between">
+                  <span className="text-xs text-muted">Preferred Currency</span>
+                  <CurrencySwitcher />
+                </div>
                 <div className="pt-3 border-t border-border">
                   <Link href="/contact" className="block btn-primary text-center text-sm py-3">
-                    Get a FREE Quote
+                    Get a free quote
                   </Link>
                 </div>
               </div>

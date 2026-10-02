@@ -23,11 +23,11 @@ const tabs = [
 ];
 
 const bottomBar = [
-  { icon: Building2, label: "Top Hospitals", color: "text-blue-600 bg-blue-100 dark:bg-blue-900/30" },
-  { icon: Stethoscope, label: "Expert Doctors", color: "text-green-600 bg-green-100 dark:bg-green-900/30" },
-  { icon: Globe, label: "Global Reach", color: "text-rose-600 bg-rose-100 dark:bg-rose-900/30" },
-  { icon: Headphones, label: "Round-the-Clock Support", color: "text-purple-600 bg-purple-100 dark:bg-purple-900/30" },
-  { icon: ShieldCheck, label: "Patient Safety First", color: "text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30" },
+  { icon: Building2, label: "Top Hospitals", color: "text-primary bg-primary/10" },
+  { icon: Stethoscope, label: "Expert Doctors", color: "text-accent bg-accent/10" },
+  { icon: Globe, label: "Global Reach", color: "text-primary bg-primary/10" },
+  { icon: Headphones, label: "Round-the-Clock Support", color: "text-accent bg-accent/10" },
+  { icon: ShieldCheck, label: "Patient Safety First", color: "text-primary bg-primary/10" },
 ];
 
 const softShadow = "shadow-[0_20px_60px_rgba(0,0,0,0.08)]";
@@ -64,17 +64,15 @@ export default function Hero() {
                 <ShieldCheck size={14} /> Trusted by Patients Worldwide
               </span>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-[72px] font-extrabold leading-[1.05] mb-8 max-w-[650px]">
-                <span className="text-foreground">India&apos;s Most Trusted</span>
-                <br />
-                <span className="text-gradient">Medical Tourism</span>
-                <br />
-                <span className="text-foreground">Platform</span>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[72px] font-extrabold leading-[1.15] mb-8 max-w-full sm:max-w-[500px] lg:max-w-[650px] text-balance">
+                <span className="text-foreground">World-class hospitals, </span>
+                <span className="text-gradient-animated">60–90% lower cost</span>{" "}
+                <span className="text-foreground">coordinated for you.</span>
               </h1>
 
               <p className="text-lg text-muted max-w-[600px] mb-10 leading-relaxed">
-                We connect you with JCI-accredited hospitals, world-class doctors, and seamless
-                care — from consultation to recovery.
+                We connect you with JCI-accredited hospitals, expert specialists, and seamless
+                care — from first consultation to recovery.
               </p>
 
               <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mb-10">

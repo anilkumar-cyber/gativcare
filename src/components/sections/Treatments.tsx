@@ -9,15 +9,11 @@ import { treatments } from "@/lib/constants";
 export default function Treatments() {
   return (
     <section className="section-padding relative overflow-hidden" id="treatments">
-      <div className="absolute top-1/2 left-0 w-[600px] h-[600px] -translate-y-1/2 -translate-x-1/2 bg-accent/5 rounded-full blur-[120px]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn className="text-center mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
-            Our Specialties
-          </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Treatment <span className="text-gradient">Categories</span>
+            Treatment Categories
           </h2>
           <p className="text-lg text-muted max-w-2xl mx-auto">
             Comprehensive medical treatments across 50+ specialties with world-class outcomes

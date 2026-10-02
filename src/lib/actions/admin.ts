@@ -5,6 +5,7 @@ import { requireRole, requireAnyRole, requireSession, hashPassword, verifyPasswo
 import { prisma } from "@/lib/db";
 import { Role, AppointmentStatus } from "@prisma/client";
 import { z } from "zod";
+import { savePartnerLogoUpload, deletePartnerLogoFile, UploadValidationError } from "@/lib/uploads";
 
 const ADMIN_PATH = "/dashboard/admin";
 
@@ -252,6 +253,77 @@ export async function deleteTestimonialAction(formData: FormData) {
   await prisma.testimonial.delete({ where: { id } }).catch(() => null);
   revalidatePath(ADMIN_PATH);
   revalidatePath("/");
+}
+
+// ---------- Partner Logos ----------
+
+export async function addPartnerLogoAction(_prevState: { error?: string } | undefined, formData: FormData) {
+  await requireRole(Role.ADMIN);
+  const name = str(formData, "name");
+  if (name.length < 2) return { error: "Enter a partner name." };
+
+  const file = formData.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "Choose a logo image to upload." };
+
+  try {
+    const saved = await savePartnerLogoUpload(file);
+    const maxOrder = await prisma.partnerLogo.aggregate({ _max: { order: true } });
+    await prisma.partnerLogo.create({
+      data: { name, logoUrl: `/api/uploads/public/${saved.fileName}`, order: (maxOrder._max.order ?? 0) + 1 },
+    });
+  } catch (err) {
+    if (err instanceof UploadValidationError) return { error: err.message };
+    throw err;
+  }
+
+  revalidatePath(ADMIN_PATH);
+  revalidatePath("/");
+  revalidatePath("/hospitals");
+  return { error: undefined };
+}
+
+export async function deletePartnerLogoAction(formData: FormData) {
+  await requireRole(Role.ADMIN);
+  const id = str(formData, "id");
+  if (!id) return;
+
+  const logo = await prisma.partnerLogo.findUnique({ where: { id } });
+  if (!logo) return;
+
+  await prisma.partnerLogo.delete({ where: { id } }).catch(() => null);
+  const uploadedPrefix = "/api/uploads/public/";
+  if (logo.logoUrl.startsWith(uploadedPrefix)) {
+    await deletePartnerLogoFile(logo.logoUrl.slice(uploadedPrefix.length));
+  }
+
+  revalidatePath(ADMIN_PATH);
+  revalidatePath("/");
+  revalidatePath("/hospitals");
+}
+
+export async function movePartnerLogoAction(formData: FormData) {
+  await requireRole(Role.ADMIN);
+  const id = str(formData, "id");
+  const direction = str(formData, "direction");
+  if (!id || (direction !== "up" && direction !== "down")) return;
+
+  const logos = await prisma.partnerLogo.findMany({ orderBy: { order: "asc" } });
+  const index = logos.findIndex((l) => l.id === id);
+  if (index === -1) return;
+
+  const swapIndex = direction === "up" ? index - 1 : index + 1;
+  if (swapIndex < 0 || swapIndex >= logos.length) return;
+
+  const current = logos[index];
+  const swapWith = logos[swapIndex];
+  await prisma.$transaction([
+    prisma.partnerLogo.update({ where: { id: current.id }, data: { order: swapWith.order } }),
+    prisma.partnerLogo.update({ where: { id: swapWith.id }, data: { order: current.order } }),
+  ]);
+
+  revalidatePath(ADMIN_PATH);
+  revalidatePath("/");
+  revalidatePath("/hospitals");
 }
 
 // ---------- Profile settings (shared across roles) ----------

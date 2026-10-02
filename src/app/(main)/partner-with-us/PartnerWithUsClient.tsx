@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Handshake, Send, CheckCircle2 } from "lucide-react";
+import { Send, CheckCircle2 } from "lucide-react";
 import { FadeIn } from "@/components/ui/motion";
 
 export default function PartnerWithUsClient() {
@@ -49,11 +49,8 @@ export default function PartnerWithUsClient() {
         </div>
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-              <Handshake size={14} /> For Hospitals & Healthcare Networks
-            </span>
             <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-              Partner <span className="text-gradient">With Us</span>
+              Partner With Us
             </h1>
             <p className="text-lg text-muted max-w-2xl mx-auto">
               GativCare is an independent medical travel facilitator connecting international

@@ -2,11 +2,12 @@
 
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, MessageCircle, Send, Upload, Clock, Globe, CheckCircle2, ArrowRight } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Send, Upload, Clock, Globe, ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/ui/motion";
+import { AnimatedCheck } from "@/components/ui/AnimatedCheck";
 import { InstagramIcon, INSTAGRAM_URL } from "@/components/ui/InstagramIcon";
 
-const WHATSAPP_LINK = "https://wa.me/918886963612";
+const WHATSAPP_LINK = "https://wa.me/918522920252";
 
 export default function ContactClient({
   prefillDoctor,
@@ -65,11 +66,8 @@ export default function ContactClient({
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-              <Phone size={14} /> 24/7 Available
-            </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-              Get In <span className="text-gradient">Touch</span>
+              Get In Touch
             </h1>
             <p className="text-lg text-muted max-w-2xl mx-auto">
               Our medical coordinators are available round the clock to assist you with your healthcare needs
@@ -89,7 +87,7 @@ export default function ContactClient({
               {[
                 { icon: Phone, label: "Phone / WhatsApp", value: "+91 88869 63612", href: "tel:+918886963612", color: "text-primary" },
                 { icon: Mail, label: "Email", value: "care@gativcare.com", href: "mailto:care@gativcare.com", color: "text-primary" },
-                { icon: MessageCircle, label: "WhatsApp", value: "+91 88869 63612", href: WHATSAPP_LINK, color: "text-green-500" },
+                { icon: MessageCircle, label: "WhatsApp", value: "+91 85229 20252", href: WHATSAPP_LINK, color: "text-green-500" },
                 { icon: InstagramIcon, label: "Instagram", value: "@gativcare_official", href: INSTAGRAM_URL, color: "text-pink-500" },
                 { icon: MapPin, label: "Office", value: "Hyderabad, Telangana, India", href: "https://maps.google.com/?q=Hyderabad+India", color: "text-primary" },
               ].map((contact, i) => (
@@ -154,7 +152,7 @@ export default function ContactClient({
                     className="glass-card rounded-2xl p-12 text-center"
                   >
                     <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-6">
-                      <CheckCircle2 size={40} className="text-green-500" />
+                      <AnimatedCheck size={40} className="text-green-500" />
                     </div>
                     <h3 className="text-2xl font-bold mb-3">Thank You!</h3>
                     <p className="text-muted mb-6">

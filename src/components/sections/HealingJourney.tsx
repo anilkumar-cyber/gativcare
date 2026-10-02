@@ -14,7 +14,7 @@ export default function HealingJourney() {
         <FadeIn className="mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
             Treatment Is Medicine. <br className="hidden sm:block" />
-            <span className="text-gradient">Recovery Is a Journey.</span>
+            Recovery Is a Journey.
           </h2>
           <p className="text-lg text-muted max-w-2xl mx-auto">
             We pair world-class care with restorative time in India — because healing is more than a procedure.

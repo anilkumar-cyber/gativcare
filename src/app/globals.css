@@ -177,6 +177,22 @@ body {
 }
 
 .text-gradient {
+  background: linear-gradient(135deg, #0e7490, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .text-gradient {
+  background: linear-gradient(135deg, #22d3ee, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Reserved for a single flagship moment per visit (the homepage hero)
+   — everywhere else uses the static .text-gradient above. */
+.text-gradient-animated {
   background: linear-gradient(135deg, #0e7490, #7c3aed, #0e7490);
   background-size: 200% 200%;
   -webkit-background-clip: text;
@@ -185,12 +201,19 @@ body {
   animation: gradient-shift 5s ease infinite;
 }
 
-.dark .text-gradient {
+.dark .text-gradient-animated {
   background: linear-gradient(135deg, #22d3ee, #a78bfa, #22d3ee);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-gradient-animated {
+    animation: none;
+    background-size: 100% 100%;
+  }
 }
 
 .text-gradient-gold {

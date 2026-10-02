@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, ArrowRight, Clock, Star } from "lucide-react";
+import { Check, ArrowRight, Clock } from "lucide-react";
 import Link from "next/link";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { packages } from "@/lib/constants";
@@ -9,15 +9,11 @@ import { packages } from "@/lib/constants";
 export default function Packages() {
   return (
     <section className="section-padding relative overflow-hidden" id="packages">
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[120px]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn className="text-center mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
-            <Star size={14} /> All-Inclusive Packages
-          </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Medical Tourism <span className="text-gradient">Packages</span>
+            Medical Tourism Packages
           </h2>
           <p className="text-lg text-muted max-w-2xl mx-auto">
             Comprehensive packages covering treatment, accommodation, travel, and personal assistance
