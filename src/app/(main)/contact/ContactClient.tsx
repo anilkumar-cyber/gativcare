@@ -2,8 +2,9 @@
 
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, MessageCircle, Send, Upload, Clock, Globe, CheckCircle2 } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Send, Upload, Clock, Globe, CheckCircle2, ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/ui/motion";
+import { InstagramIcon, INSTAGRAM_URL } from "@/components/ui/InstagramIcon";
 
 const WHATSAPP_LINK = "https://wa.me/918886963612";
 
@@ -89,6 +90,7 @@ export default function ContactClient({
                 { icon: Phone, label: "Phone / WhatsApp", value: "+91 88869 63612", href: "tel:+918886963612", color: "text-primary" },
                 { icon: Mail, label: "Email", value: "care@gativcare.com", href: "mailto:care@gativcare.com", color: "text-primary" },
                 { icon: MessageCircle, label: "WhatsApp", value: "+91 88869 63612", href: WHATSAPP_LINK, color: "text-green-500" },
+                { icon: InstagramIcon, label: "Instagram", value: "@gativcare_official", href: INSTAGRAM_URL, color: "text-pink-500" },
                 { icon: MapPin, label: "Office", value: "Hyderabad, Telangana, India", href: "https://maps.google.com/?q=Hyderabad+India", color: "text-primary" },
               ].map((contact, i) => (
                 <FadeIn key={contact.label} delay={i * 0.1}>
@@ -122,6 +124,24 @@ export default function ContactClient({
                     <p>🇮🇳 Hyderabad, India (HQ)</p>
                   </div>
                 </div>
+              </FadeIn>
+
+              <FadeIn delay={0.6}>
+                <a
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-5 rounded-xl bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white shadow-lg hover:shadow-pink-500/30 hover:-translate-y-0.5 transition-all"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                    <InstagramIcon size={22} />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold">Follow us on Instagram</p>
+                    <p className="text-sm text-white/85">Patient stories &amp; updates — @gativcare_official</p>
+                  </div>
+                  <ArrowRight size={18} />
+                </a>
               </FadeIn>
             </div>
 

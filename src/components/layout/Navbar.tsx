@@ -8,6 +8,7 @@ import { Menu, X, Phone, Moon, Sun, ChevronDown, Mail } from "lucide-react";
 import { navLinks, treatments, hospitals } from "@/lib/constants";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { CurrencyCalculator } from "@/components/layout/CurrencyCalculator";
+import { InstagramIcon, INSTAGRAM_URL } from "@/components/ui/InstagramIcon";
 
 const moreLinks = [
   { label: "FAQ", href: "/faq" },
@@ -66,6 +67,10 @@ export default function Navbar() {
             <a href="mailto:support@gativcare.com" className="flex items-center gap-1.5 hover:underline"><Mail size={13} /> support@gativcare.com</a>
           </div>
           <div className="flex items-center gap-4">
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:underline">
+              <InstagramIcon size={13} /> Follow us on Instagram
+            </a>
+            <span>|</span>
             <LanguageSwitcher compact />
             <CurrencyCalculator compact />
             <span>|</span>

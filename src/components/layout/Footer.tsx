@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, Mail, MapPin, ArrowUp } from "lucide-react";
+import { InstagramIcon, INSTAGRAM_URL } from "@/components/ui/InstagramIcon";
 
 const footerLinks = {
   treatments: [
@@ -65,6 +66,9 @@ export default function Footer() {
               <div className="flex items-center gap-3">
                 <MapPin size={16} className="text-primary" /> Hyderabad, India
               </div>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-primary transition-colors">
+                <InstagramIcon size={16} className="text-pink-500" /> @gativcare_official
+              </a>
             </div>
           </div>
 
