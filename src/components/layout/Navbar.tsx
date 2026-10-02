@@ -13,7 +13,7 @@ import { InstagramIcon, INSTAGRAM_URL } from "@/components/ui/InstagramIcon";
 
 const moreLinks = [
   { label: "FAQ", href: "/faq" },
-  { label: "Partner With Us", href: "/partner-with-us" },
+  { label: "Packages", href: "/packages" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
   { label: "Refund Policy", href: "/refund" },
@@ -108,7 +108,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="relative px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors rounded-lg hover:bg-primary/5 group"
+                  className="relative px-4 py-2 text-sm font-medium whitespace-nowrap text-foreground/80 hover:text-primary transition-colors rounded-lg hover:bg-primary/5 group"
                 >
                   {link.label}
                   <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full group-hover:w-3/4 transition-all duration-300" />

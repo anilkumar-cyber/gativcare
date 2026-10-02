@@ -100,7 +100,7 @@ export const conciergeServices = [
 export const navLinks = [
   { label: "Treatments", href: "/treatments" },
   { label: "Hospitals", href: "/hospitals" },
-  { label: "Packages", href: "/packages" },
+  { label: "Partner With Us", href: "/partner-with-us" },
   { label: "Cost Estimator", href: "/cost-estimator" },
   { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
