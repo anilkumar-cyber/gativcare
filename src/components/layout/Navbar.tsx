@@ -10,6 +10,7 @@ import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { CurrencyCalculator } from "@/components/layout/CurrencyCalculator";
 import { CurrencySwitcher } from "@/components/layout/CurrencySwitcher";
 import { InstagramIcon, INSTAGRAM_URL } from "@/components/ui/InstagramIcon";
+import { LinkedInIcon, LINKEDIN_URL } from "@/components/ui/LinkedInIcon";
 
 const moreLinks = [
   { label: "FAQ", href: "/faq" },
@@ -62,6 +63,9 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:underline">
               <InstagramIcon size={13} /> Follow us on Instagram
+            </a>
+            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:underline">
+              <LinkedInIcon size={13} /> LinkedIn
             </a>
             <span>|</span>
             <LanguageSwitcher compact />

@@ -6,6 +6,7 @@ import { Phone, Mail, MapPin, MessageCircle, Send, Upload, Clock, Globe, ArrowRi
 import { FadeIn } from "@/components/ui/motion";
 import { AnimatedCheck } from "@/components/ui/AnimatedCheck";
 import { InstagramIcon, INSTAGRAM_URL } from "@/components/ui/InstagramIcon";
+import { LinkedInIcon, LINKEDIN_URL } from "@/components/ui/LinkedInIcon";
 
 const WHATSAPP_LINK = "https://wa.me/918522920252";
 
@@ -87,8 +88,9 @@ export default function ContactClient({
               {[
                 { icon: Phone, label: "Phone / WhatsApp", value: "+91 88869 63612", href: "tel:+918886963612", color: "text-primary" },
                 { icon: Mail, label: "Email", value: "care@gativcare.com", href: "mailto:care@gativcare.com", color: "text-primary" },
-                { icon: MessageCircle, label: "WhatsApp", value: "+91 85229 20252", href: WHATSAPP_LINK, color: "text-green-500" },
-                { icon: InstagramIcon, label: "Instagram", value: "@gativcare_official", href: INSTAGRAM_URL, color: "text-pink-500" },
+                { icon: MessageCircle, label: "WhatsApp", value: "+91 85229 20252", href: WHATSAPP_LINK, color: "text-primary" },
+                { icon: InstagramIcon, label: "Instagram", value: "@gativcare_official", href: INSTAGRAM_URL, color: "text-primary" },
+                { icon: LinkedInIcon, label: "LinkedIn", value: "GativCare", href: LINKEDIN_URL, color: "text-primary" },
                 { icon: MapPin, label: "Office", value: "Hyderabad, Telangana, India", href: "https://maps.google.com/?q=Hyderabad+India", color: "text-primary" },
               ].map((contact, i) => (
                 <FadeIn key={contact.label} delay={i * 0.1}>
