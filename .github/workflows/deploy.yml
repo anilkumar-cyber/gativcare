@@ -1,15 +1,14 @@
 name: Deploy
 
+# Disabled 2026-11-11: gativcare.com was taken down from the VPS (/docker/gativcare removed).
+# Restore the workflow_run trigger and the `if` below to re-enable auto-deploy.
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types: [completed]
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
+    if: false
     steps:
       - name: Deploy to VPS over SSH
         uses: appleboy/ssh-action@v1.2.0
